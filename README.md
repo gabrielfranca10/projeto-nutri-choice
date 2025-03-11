@@ -1,2 +1,7 @@
 # PROJETO NUTRI CHOICE
-Uma plataforma que cria planos alimentares personalizados com base nas preferências e restrições do usuário.
+# EQUIPE
+- Caio Leimig
+- Fernando Soares
+- Gabriel França
+- Guilherme Burle
+- Yan Nunes
