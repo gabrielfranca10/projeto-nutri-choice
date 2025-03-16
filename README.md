@@ -15,5 +15,6 @@ Nutri Choice é uma plataforma inovadora de nutrição que gera planos alimentar
 - Guilherme Burle
 - Yan Nunes
 
-# 🔗 Links 
-https://www.figma.com/design/jQSgfpDlNCRetoDEvQjKXb/Untitled?node-id=0-1&p=f&t=L4Ae5OJ66n1Ktpue-0
+## 🔗 Links Úteis
+- 🎨 [Protótipo no Figma](https://www.figma.com/design/jQSgfpDlNCRetoDEvQjKXb/Untitled?node-id=0-1&p=f&t=L4Ae5OJ66n1Ktpue-0)
+
