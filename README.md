@@ -18,6 +18,5 @@ Nutri Choice é uma plataforma inovadora de nutrição que gera planos alimentar
 ## 🔗 Links Úteis
 - <img src="https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg" alt="Figma Logo" width="20" height="20"> [Protótipo no Figma](https://www.figma.com/design/jQSgfpDlNCRetoDEvQjKXb/Untitled?node-id=0-1&p=f&t=L4Ae5OJ66n1Ktpue-0)
 ![Logo do JIRA](https://www.atlassian.com/dam/jcr:2e5d9b92-7b4a-457d-aeea-4a0cfef70f89/jira-logo.svg)
-[Visite o Quadro do JIRA](https://nutrichoic.atlassian.net/jira/software/projects/NUT/boards/3/backlog)
 
 
