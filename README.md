@@ -21,5 +21,9 @@ Nutri Choice é uma plataforma inovadora de nutrição que gera planos alimentar
 - Vídeo: [ScreenCast](https://youtu.be/tU3ncCQZz28)
 
 
+## ENTREGA 1
+![Captura de tela 2025-03-21 162702](https://github.com/user-attachments/assets/894e98c8-b136-4c97-99f1-47e0db0bd5c7)
+![Captura de tela 2025-03-21 162731](https://github.com/user-attachments/assets/ae0be3b2-6f64-46c8-8fff-e4eadff19a18)
+
 
 
