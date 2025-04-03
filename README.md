@@ -11,6 +11,7 @@ Nutri Choice é uma plataforma inovadora de nutrição que gera planos alimentar
 - Caio Leimig
 - Fernando Soares
 - Gabriel França
+- Guilherme Baltar
 - Guilherme Burle
 - Yan Nunes
 
