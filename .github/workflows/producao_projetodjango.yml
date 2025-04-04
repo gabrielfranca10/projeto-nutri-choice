@@ -80,12 +80,10 @@ jobs:
           app-name: 'projetodjango'
           slot-name: 'Production'
           
-      - name: Cleaning testing files
+      - name: Cleaning testing files (if they exist)
         run: |
-          cd meu_projeto/
-          rm db.sqlite3
-          rm .env
-          cd ..
+          [ -f db.sqlite3 ] && rm db.sqlite3
+          [ -f .env ] && rm .env
           
       - name: Zip artifact for deployment
         run: |
