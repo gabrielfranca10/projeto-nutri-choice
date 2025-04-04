@@ -20,11 +20,13 @@ Nutri Choice é uma plataforma inovadora de nutrição que gera planos alimentar
 - JIRA: [QUADRO DO JIRA](https://nutrichoic.atlassian.net/jira/software/projects/NUT/boards/3)
 - DOCS: [Google Docs do Projeto](https://docs.google.com/document/d/1g-iEXbBWo8eqiBazO2CRx4VPKwG2W7-mh7Tq9704AgU/edit?tab=t.0)
 - Vídeo: [ScreenCast](https://youtu.be/tU3ncCQZz28)
+<details>
 
-
-## ENTREGA 1
+<summary>📧 Entrega 1</summary>
 ![QUADRO](https://github.com/user-attachments/assets/00a49322-2f32-4162-b0a8-ea3d50052a46)
 ![image](https://github.com/user-attachments/assets/b727bb05-9185-4612-9eda-ea1c8a633c3c)
+
+</details>
 ## Entrega 2
 
 
