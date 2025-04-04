@@ -79,3 +79,13 @@ jobs:
           app-name: 'projetodjango'
           slot-name: 'Production'
           
+      - name: Cleaning testing files
+        run: |
+          cd projetodjango/
+          rm db.sqlite3
+          rm .env
+          cd ..
+
+        
+
+          
