@@ -34,21 +34,16 @@ Nutri Choice é uma plataforma inovadora de nutrição que gera planos alimentar
 
 <summary>📧 Entrega 2</summary>
 
-##
-Otimização do Desenvolvimento e Trabalho Colaborativo
-Nosso principal foco foi aprimorar a organização do desenvolvimento para garantir que as tarefas fossem concluídas de forma eficiente e com alta qualidade. Para isso, estruturamos um processo de divisão de trabalho que acelerou a implementação das funcionalidades e evitou gargalos na produção.
+# 🖥️ Programação em Par Experimentada: 
 
-Estratégia de Distribuição de Tarefas
-Desde o início, adotamos uma abordagem estratégica para distribuir as atividades. Organizamos o time em duplas, atribuindo a cada uma a responsabilidade por três histórias específicas. Essa distribuição permitiu que o trabalho fosse conduzido de maneira equilibrada, com cada integrante contribuindo ativamente para a entrega. Além disso, utilizamos um documento compartilhado onde cada membro indicava suas preferências, tornando a alocação mais eficiente.
+Otimização do Desenvolvimento e Trabalho Colaborativo Nosso principal foco foi aprimorar a organização do desenvolvimento para garantir que as tarefas fossem concluídas de forma eficiente e com alta qualidade. Para isso, estruturamos um processo de divisão de trabalho que acelerou a implementação das funcionalidades e evitou gargalos na produção.
 
-Outra medida importante foi a especialização dentro das duplas: enquanto alguns focavam na implementação das funcionalidades, outros se dedicavam aos testes e ao processo de deploy. Assim, garantimos que todas as etapas do desenvolvimento fossem devidamente atendidas.
+## Estratégia de Distribuição de Tarefas:
+Desde o início, adotamos uma abordagem estratégica para distribuir as atividades. Organizamos o time em duplas, atribuindo a cada uma a responsabilidade por três histórias específicas. Essa distribuição permitiu que o trabalho fosse conduzido de maneira equilibrada, com cada integrante contribuindo ativamente para a entrega. Além disso, utilizamos um documento compartilhado onde cada membro indicava suas preferências, tornando a alocação mais eficiente. Outra medida importante foi a especialização dentro das duplas: enquanto alguns focavam na implementação das funcionalidades, outros se dedicavam aos testes e ao processo de deploy. Assim, garantimos que todas as etapas do desenvolvimento fossem devidamente atendidas.
 
-Metodologia e Ferramentas
-Para fortalecer a colaboração e evitar retrabalho, utilizamos sessões de pair programming com o Live Share. Essa prática facilitou a comunicação entre as duplas, permitindo ajustes rápidos no código e aprimoramento das soluções em tempo real. O compartilhamento contínuo de conhecimento foi essencial para manter um padrão de qualidade elevado no projeto.
+## Metodologia e Ferramentas
+Para fortalecer a colaboração e evitar retrabalho, utilizamos sessões de pair programming com o Live Share. Essa prática facilitou a comunicação entre as duplas, permitindo ajustes rápidos no código e aprimoramento das soluções em tempo real. O compartilhamento contínuo de conhecimento foi essencial para manter um padrão de qualidade elevado no projeto. Além disso, adotamos o uso de branches no GitHub para estruturar melhor as entregas. Cada dupla trabalhava em sua própria ramificação, realizando fusões (merges) organizadas para evitar conflitos no código. Esse método garantiu uma integração fluida e segura entre as partes do sistema.
 
-Além disso, adotamos o uso de branches no GitHub para estruturar melhor as entregas. Cada dupla trabalhava em sua própria ramificação, realizando fusões (merges) organizadas para evitar conflitos no código. Esse método garantiu uma integração fluida e segura entre as partes do sistema.
-
-Resultados e Aprendizados
+## Resultados e Aprendizados
 Com essa abordagem bem definida, conseguimos cumprir os prazos sem comprometer a qualidade do código. O uso das ferramentas certas, aliado a uma comunicação eficiente, tornou o processo mais dinâmico e produtivo. A experiência reforçou a importância da colaboração e mostrou como uma organização estruturada pode impactar positivamente o desenvolvimento de um projeto.
 </details> 
-
