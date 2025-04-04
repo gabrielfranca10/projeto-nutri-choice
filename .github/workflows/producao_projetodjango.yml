@@ -85,6 +85,7 @@ jobs:
           rm db.sqlite3
           rm .env
           cd ..
+          
       - name: Zip artifact for deployment
         run: |
           cd projetodjango/
