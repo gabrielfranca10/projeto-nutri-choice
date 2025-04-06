@@ -47,3 +47,5 @@ Para fortalecer a colaboração e evitar retrabalho, Utilizamos o aplicativo Dis
 ## Resultados e Aprendizados
 Com essa forma de trabalhar bem definida, conseguimos entregar tudo no prazo e manter a qualidade do código. Usar as ferramentas certas e manter uma boa comunicação deixou tudo mais ágil e produtivo.
 </details> 
+
+#Quadro da Sprint 01 e do Backlog:
