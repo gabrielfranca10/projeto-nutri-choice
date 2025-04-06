@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - NutriChoice</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-gradient-to-br from-yellow-100 via-lime-100 to-green-100 min-h-screen flex items-center justify-center">
+    <div class="bg-white shadow-2xl rounded-3xl p-10 max-w-md w-full space-y-6">
+      <div class="text-center">
+        <img
+          class="w-16 h-16 mx-auto mb-2 animate-bounce"
+          src="https://cdn-icons-png.flaticon.com/512/415/415682.png"
+          alt="Logo de um abacaxi"
+        />
+        <h1 class="text-3xl font-extrabold text-green-600">NutriChoice</h1>
+        <p class="text-sm text-gray-500 mt-1">Sua jornada saudável começa aqui 🍍</p>
+      </div>
+
+      <form method="post" class="space-y-4">
+        {% csrf_token %}
+        <div>
+          <label for="username" class="block text-sm font-medium text-gray-700">Usuário</label>
+          <div class="relative">
+            <input
+              type="text"
+              name="username"
+              id="username"
+              class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-green-400"
+              placeholder="seu_nome"
+            />
+            <div class="absolute left-3 top-2.5 text-gray-400">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"
+                viewBox="0 0 24 24">
+                <path d="M5.121 17.804A11.95 11.95 0 0112 15c2.31 0 4.463.656 6.293 1.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <label for="password" class="block text-sm font-medium text-gray-700">Senha</label>
+          <div class="relative">
+            <input
+              type="password"
+              name="password"
+              id="password"
+              class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-green-400"
+              placeholder="••••••••"
+            />
+            <div class="absolute left-3 top-2.5 text-gray-400">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"
+                viewBox="0 0 24 24">
+                <path d="M12 15c1.656 0 3-1.344 3-3s-1.344-3-3-3-3 1.344-3 3 1.344 3 3 3z" />
+                <path d="M2.458 12C3.732 7.943 7.523 5 12 5s8.268 2.943 9.542 7c-1.274 4.057-5.065 7-9.542 7s-8.268-2.943-9.542-7z" />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-lg transition duration-200"
+        >
+          Entrar
+        </button>
+      </form>
+
+      <p class="text-center text-sm text-gray-600">
+        Não tem conta?
+        <a href="{% url 'cadastro' %}" class="text-green-600 font-medium hover:underline">
+          Cadastre-se aqui
+        </a>
+      </p>
+    </div>
+  </body>
+</html>

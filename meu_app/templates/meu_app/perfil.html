@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Perfil</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-50 dark:bg-gray-900 min-h-screen flex items-center justify-center">
+    <div class="w-full max-w-md bg-white rounded-lg shadow p-6 dark:bg-gray-800">
+      <div class="text-center mb-4">
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Seu Perfil Nutricional</h2>
+        <p class="text-sm text-gray-500 dark:text-gray-400">Confira seus dados cadastrados</p>
+      </div>
+      <div class="space-y-2 text-gray-700 dark:text-gray-300">
+        <p><strong>Idade:</strong> {{ perfil.idade }}</p>
+        <p><strong>Peso:</strong> {{ perfil.peso }} kg</p>
+        <p><strong>Altura:</strong> {{ perfil.altura }} cm</p>
+        <p><strong>Objetivo:</strong> {{ perfil.get_objetivo_display }}</p>
+      </div>
+    </div>
+  </body>
+</html>
