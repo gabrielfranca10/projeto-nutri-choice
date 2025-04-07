@@ -88,7 +88,8 @@ Para fortalecer a colaboração e evitar retrabalho, Utilizamos o aplicativo Dis
 #### 🛠️ Board
 ![Board](https://github.com/user-attachments/assets/30018c55-dd53-4bf8-8477-f39d1597b6c7)
 
-- 📌 [**Quadro no Jira atualizado**](https://nutrichoic.atlassian.net/jira/software/projects/NUT/boards/3)  
+- 📌 [**Quadro no Jira atualizado**](https://nutrichoic.atlassian.net/jira/software/projects/NUT/boards/3)
+- 📄 [**3 Histórias implementadas no docs atualizadas**](https://docs.google.com/document/d/1g-iEXbBWo8eqiBazO2CRx4VPKwG2W7-mh7Tq9704AgU/edit?tab=t.0)  
 
 ## 🚀DEPLOY
 - 📌 [**Link do site**](https://projetodjango-e7fvgbbchbapdvgn.brazilsouth-01.azurewebsites.net/)
