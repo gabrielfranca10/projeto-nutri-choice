@@ -58,5 +58,6 @@ Com essa forma de trabalhar bem definida, conseguimos entregar tudo no prazo e m
 
 ## DEPLOY
 - Link do site: https://projetodjango-e7fvgbbchbapdvgn.brazilsouth-01.azurewebsites.net
+- 🎥 Screencast implementando as 3 histórias: 
 
 </details> 
