@@ -72,14 +72,14 @@ As sessões de pareamento aconteceram via Discord, com compartilhamento de tela,
 ### ✅ Histórias Implementadas
 
 #### 🧾 História 1 – Questionário + Criar Perfil Nutricional  
-![Questionário](https://github.com/user-attachments/assets/73529d99-b4f4-41a8-ab3c-d546363186a0)  
-![Perfil Nutricional](https://github.com/user-attachments/assets/594bc5e5-d5f1-482e-b9a3-6e44e93aa69b)
+![Questionário]![image](https://github.com/user-attachments/assets/ef5197db-159c-4675-813b-dc2dbb3b8ff8)
+![Perfil Nutricional](![image]https://github.com/user-attachments/assets/b6d3a87f-e322-46c1-bab9-3f8fdf303b80)
 
 #### 🚫 História 4 – Falha no Cadastro  
-![Erro Cadastro](https://github.com/user-attachments/assets/f53e6762-73a3-403e-91fe-c7f03ec8b80f)
+![Erro Cadastro](![image]https://github.com/user-attachments/assets/214ed832-e767-4a12-9a15-db97d99e3d26)
 
 #### 🍽️ História 2 – Geração de Cardápio Personalizado  
-![Cardápio](https://github.com/user-attachments/assets/932558c1-68f9-4b9b-b13b-f336034affe8)
+![Cardápio]()
 
 ---
 
@@ -92,7 +92,7 @@ As sessões de pareamento aconteceram via Discord, com compartilhamento de tela,
 ![Board](https://github.com/user-attachments/assets/30018c55-dd53-4bf8-8477-f39d1597b6c7)
 
 - 📌 [**Quadro no Jira Atualizado**](https://nutrichoic.atlassian.net/jira/software/projects/NUT/boards/3)  
-- 📄 [**Histórias no Google Docs**](https://docs.google.com/document/d/1g-iEXbBWo8eqiBazO2CRx4VPKwG2W7-mh7Tq9704AgU/edit?tab=t.0)
+- 📄 [**Histórias no Google Docs**]()
 
 </details>
 
@@ -100,8 +100,8 @@ As sessões de pareamento aconteceram via Discord, com compartilhamento de tela,
 
 ## 🚀 Deploy
 
-- 🌐 [**Acesse o site**](https://projetodjango-e7fvgbbchbapdvgn.brazilsouth-01.azurewebsites.net/)  
-- 🎥 [**Screencast com as 3 Histórias Implementadas**](https://youtu.be/o_xb736QwW4)
+- 🌐 [**Acesse o site**]()  
+- 🎥 [**Screencast com as 3 Histórias Implementadas**]()
 
 ---
 
