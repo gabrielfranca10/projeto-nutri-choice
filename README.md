@@ -90,7 +90,7 @@ Para fortalecer a colaboração e evitar retrabalho, Utilizamos o aplicativo Dis
 
 ## 🚀DEPLOY
 - Link do site:
-- 🎥 [**Screencast com as 3 histórias implementadas**](https://youtu.be/tU3ncCQZz28)
+- 🎥 [**Screencast com as 3 histórias implementadas**](https://youtu.be/o_xb736QwW4)
 
 
 </details>
