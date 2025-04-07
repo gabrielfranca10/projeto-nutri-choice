@@ -92,6 +92,7 @@ Para fortalecer a colaboração e evitar retrabalho, Utilizamos o aplicativo Dis
 - 📌 [**Link do site**](https://youtu.be/o_xb736QwW4)
 - 🎥 [**Screencast com as 3 histórias implementadas**](https://youtu.be/o_xb736QwW4)
 
+## ⚠️ISSUES/BUG TRACKER
 
 </details>
 
