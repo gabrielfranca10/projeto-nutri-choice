@@ -68,7 +68,7 @@
 
 ### ✅ Histórias Implementadas
 
-#### 🧾 História 1 – Questionário + Perfil Nutricional
+#### 🧾 História 1 – Questionário + criar Perfil Nutricional
 ![Questionário](https://github.com/user-attachments/assets/73529d99-b4f4-41a8-ab3c-d546363186a0)  
 ![Perfil Nutricional](https://github.com/user-attachments/assets/594bc5e5-d5f1-482e-b9a3-6e44e93aa69b)
 
