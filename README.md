@@ -83,7 +83,7 @@
 ### 🗂️ Jira - Sprint 01
 
 #### 🔃 Backlog
-(![image](https://github.com/user-attachments/assets/092f00a1-c0e8-4f86-b487-5c4a918734fe)
+![image](https://github.com/user-attachments/assets/092f00a1-c0e8-4f86-b487-5c4a918734fe)
 
 #### 🛠️ Board
 ![Board](https://github.com/user-attachments/assets/30018c55-dd53-4bf8-8477-f39d1597b6c7)
