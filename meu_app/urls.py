@@ -9,6 +9,5 @@ urlpatterns = [
     path('cadastro/', views.register, name='cadastro'),
     path('perfil/', views.perfil_view, name='perfil'),
     path('questionario/', views.questionario_view, name='questionario'),
-    path('confirmacao/', views.confirmacao_questionario, name='confirmacao_questionario'),
     path('cardapio/', views.cardapio_view, name='cardapio'),
 ]

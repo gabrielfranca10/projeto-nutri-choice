@@ -53,3 +53,9 @@ class QuestionarioForm(forms.ModelForm):
             'sono': 'Quantas horas de sono por noite?',
             'agua': 'Quantos copos de água por dia?',
         }
+
+    def clean_sono(self):
+        sono = self.cleaned_data.get('sono')
+        if sono is None or not isinstance(sono, int):
+            raise forms.ValidationError("Informe um número válido de horas de sono.")
+        return sono

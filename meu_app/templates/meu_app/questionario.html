@@ -26,25 +26,37 @@
         <!-- Objetivo -->
         <div>
           <label class="block text-sm font-semibold text-gray-700">Qual seu objetivo principal?</label>
-          <select name="objetivo" class="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400">
+          <select name="objetivo" required class="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400">
             <option value="">Selecione...</option>
-            <option value="perder_peso">Perder peso</option>
-            <option value="ganhar_massa">Ganhar massa muscular</option>
+            <option value="perder">Perder peso</option>
+            <option value="ganhar">Ganhar massa muscular</option>
             <option value="manter">Manter o peso atual</option>
           </select>
+        </div>
+
+        <!-- Gosta de legumes -->
+        <div class="flex items-center space-x-2">
+          <input type="checkbox" name="gosta_de_legumes" class="form-checkbox h-5 w-5 text-green-600">
+          <label class="text-sm font-semibold text-gray-700">Você gosta de legumes?</label>
+        </div>
+
+        <!-- Come carne -->
+        <div class="flex items-center space-x-2">
+          <input type="checkbox" name="come_carne" class="form-checkbox h-5 w-5 text-green-600">
+          <label class="text-sm font-semibold text-gray-700">Você consome carne?</label>
         </div>
 
         <!-- Refeições -->
         <div>
           <label class="block text-sm font-semibold text-gray-700">Quantas refeições você faz por dia?</label>
-          <input type="number" name="refeicoes" min="1" max="10" placeholder="ex: 4"
+          <input type="number" name="refeicoes_por_dia" min="1" max="10" required placeholder="ex: 4"
             class="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400">
         </div>
 
         <!-- Restrições -->
         <div>
           <label class="block text-sm font-semibold text-gray-700">Tem alguma restrição alimentar?</label>
-          <input type="text" name="restricoes" placeholder="ex: lactose, glúten, frutos do mar"
+          <input type="text" name="tem_restricao" placeholder="ex: lactose, glúten, frutos do mar"
             class="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400">
         </div>
 
@@ -72,7 +84,7 @@
         <!-- Atividade física -->
         <div>
           <label class="block text-sm font-semibold text-gray-700">Com que frequência você pratica atividades físicas?</label>
-          <select name="atividade" class="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400">
+          <select name="atividade_fisica" required class="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400">
             <option value="">Selecione...</option>
             <option value="nunca">Nunca</option>
             <option value="1-2x">1-2 vezes por semana</option>

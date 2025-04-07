@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import CadastroForm, PerfilForm, QuestionarioForm
 from .models import PerfilNutricional, Questionario
 from django.contrib import messages
+from collections import defaultdict
 
 # Cadastro + Perfil
 def register(request):
@@ -36,7 +37,7 @@ def perfil_view(request):
     except PerfilNutricional.DoesNotExist:
         messages.warning(request, "Você ainda não criou seu perfil nutricional.")
         return redirect('register')
-    
+
     return render(request, 'meu_app/perfil.html', {'perfil': perfil})
 
 # Preenchimento do Questionário
@@ -48,18 +49,14 @@ def questionario_view(request):
             questionario = form.save(commit=False)
             questionario.user = request.user
             questionario.save()
-            return redirect('confirmacao_questionario')
+
+            return redirect('cardapio')
         else:
             messages.error(request, "Por favor, corrija os erros abaixo.")
     else:
         form = QuestionarioForm()
-    
-    return render(request, 'meu_app/questionario.html', {'form': form})
 
-# Confirmação após envio do questionário
-@login_required
-def confirmacao_questionario(request):
-    return render(request, 'meu_app/confirmacao.html')
+    return render(request, 'meu_app/questionario.html', {'form': form})
 
 # Exibir cardápio personalizado
 @login_required
@@ -67,24 +64,29 @@ def cardapio_view(request):
     perfil = get_object_or_404(PerfilNutricional, user=request.user)
     questionario = get_object_or_404(Questionario, user=request.user)
 
-    # Lógica básica personalizada
     sugestoes = []
 
     if perfil.objetivo == 'ganhar':
-        sugestoes.append("Café da manhã: Omelete com aveia e banana")
-        sugestoes.append("Almoço: Arroz integral, frango grelhado, legumes")
-        sugestoes.append("Lanche: Shake de proteína com pasta de amendoim")
-        sugestoes.append("Jantar: Macarrão integral com carne moída e salada")
+        sugestoes.extend([
+            "Café da manhã: Omelete com aveia e banana",
+            "Almoço: Arroz integral, frango grelhado, legumes",
+            "Lanche: Shake de proteína com pasta de amendoim",
+            "Jantar: Macarrão integral com carne moída e salada"
+        ])
     elif perfil.objetivo == 'perder':
-        sugestoes.append("Café da manhã: Iogurte natural com frutas")
-        sugestoes.append("Almoço: Salada com frango grelhado e batata doce")
-        sugestoes.append("Lanche: Mix de castanhas")
-        sugestoes.append("Jantar: Sopa de legumes")
+        sugestoes.extend([
+            "Café da manhã: Iogurte natural com frutas",
+            "Almoço: Salada com frango grelhado e batata doce",
+            "Lanche: Mix de castanhas",
+            "Jantar: Sopa de legumes"
+        ])
     else:
-        sugestoes.append("Café da manhã: Pão integral com ovo")
-        sugestoes.append("Almoço: Arroz, feijão, carne magra e salada")
-        sugestoes.append("Lanche: Frutas")
-        sugestoes.append("Jantar: Omelete leve com legumes")
+        sugestoes.extend([
+            "Café da manhã: Pão integral com ovo",
+            "Almoço: Arroz, feijão, carne magra e salada",
+            "Lanche: Frutas",
+            "Jantar: Omelete leve com legumes"
+        ])
 
     if not questionario.come_carne:
         sugestoes = [s.replace("frango", "tofu").replace("carne", "lentilha") for s in sugestoes]
@@ -92,21 +94,15 @@ def cardapio_view(request):
     if not questionario.gosta_de_legumes:
         sugestoes = [s.replace("legumes", "outros vegetais") for s in sugestoes]
 
-    # Preparar para exibição no template
-    cardapio_formatado = []
+    # Agrupar por refeição
+    cardapio_formatado = defaultdict(list)
     for s in sugestoes:
         if ":" in s:
             tipo, descricao = s.split(":", 1)
-            cardapio_formatado.append({
-                'refeicao': tipo.strip(),
-                'descricao': descricao.strip()
-            })
+            cardapio_formatado[tipo.strip()].append(descricao.strip())
         else:
-            cardapio_formatado.append({
-                'refeicao': 'Refeição',
-                'descricao': s
-            })
+            cardapio_formatado["Refeição"].append(s)
 
     return render(request, 'meu_app/cardapio.html', {
-        'cardapio': cardapio_formatado
+        'cardapio': dict(cardapio_formatado)
     })
