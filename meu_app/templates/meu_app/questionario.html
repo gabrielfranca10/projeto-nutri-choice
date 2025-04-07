@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Questionário Nutricional</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-gradient-to-br from-yellow-50 to-green-50 min-h-screen py-10 px-4">
+    <div class="max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow-xl">
+      <div class="text-center mb-6">
+        <img class="w-14 h-14 mx-auto mb-2" src="https://cdn-icons-png.flaticon.com/512/415/415682.png" alt="Abacaxi" />
+        <h1 class="text-3xl font-bold text-green-700">Questionário Nutricional</h1>
+        <p class="text-gray-500">Nos ajude a entender seus hábitos para criar um plano ideal pra você 🍍</p>
+      </div>
+
+      <form method="post" class="space-y-6">
+        {% csrf_token %}
+
+        <!-- Objetivo -->
+        <div>
+          <label class="block text-sm font-semibold text-gray-700">Qual seu objetivo principal?</label>
+          <select name="objetivo" required class="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400">
+            <option value="">Selecione...</option>
+            <option value="perder">Perder peso</option>
+            <option value="ganhar">Ganhar massa muscular</option>
+            <option value="manter">Manter o peso atual</option>
+          </select>
+        </div>
+
+        <!-- Gosta de legumes -->
+        <div class="flex items-center space-x-2">
+          <input type="checkbox" name="gosta_de_legumes" class="form-checkbox h-5 w-5 text-green-600">
+          <label class="text-sm font-semibold text-gray-700">Você gosta de legumes?</label>
+        </div>
+
+        <!-- Come carne -->
+        <div class="flex items-center space-x-2">
+          <input type="checkbox" name="come_carne" class="form-checkbox h-5 w-5 text-green-600">
+          <label class="text-sm font-semibold text-gray-700">Você consome carne?</label>
+        </div>
+
+        <!-- Refeições -->
+        <div>
+          <label class="block text-sm font-semibold text-gray-700">Quantas refeições você faz por dia?</label>
+          <input type="number" name="refeicoes_por_dia" min="1" max="10" required placeholder="ex: 4"
+            class="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400">
+        </div>
+
+        <!-- Restrições -->
+        <div>
+          <label class="block text-sm font-semibold text-gray-700">Tem alguma restrição alimentar?</label>
+          <input type="text" name="tem_restricao" placeholder="ex: lactose, glúten, frutos do mar"
+            class="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400">
+        </div>
+
+        <!-- Preferências -->
+        <div>
+          <label class="block text-sm font-semibold text-gray-700">Quais alimentos você gosta ou prefere evitar?</label>
+          <textarea name="preferencias" rows="3" placeholder="Ex: gosto de frango, evito atum e batata doce"
+            class="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400"></textarea>
+        </div>
+
+        <!-- Água -->
+        <div>
+          <label class="block text-sm font-semibold text-gray-700">Quantos copos de água você bebe por dia?</label>
+          <input type="number" name="agua" min="0" max="20" placeholder="ex: 8"
+            class="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400">
+        </div>
+
+        <!-- Sono -->
+        <div>
+          <label class="block text-sm font-semibold text-gray-700">Quantas horas você costuma dormir por noite?</label>
+          <input type="number" name="sono" min="0" max="24" placeholder="ex: 7"
+            class="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400">
+        </div>
+
+        <!-- Atividade física -->
+        <div>
+          <label class="block text-sm font-semibold text-gray-700">Com que frequência você pratica atividades físicas?</label>
+          <select name="atividade_fisica" required class="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400">
+            <option value="">Selecione...</option>
+            <option value="nunca">Nunca</option>
+            <option value="1-2x">1-2 vezes por semana</option>
+            <option value="3-4x">3-4 vezes por semana</option>
+            <option value="5+">5 ou mais vezes por semana</option>
+          </select>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit"
+          class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-lg transition duration-200 text-lg">
+          Enviar Respostas
+        </button>
+      </form>
+    </div>
+  </body>
+</html>

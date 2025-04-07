@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadastro - NutriChoice</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-gradient-to-br from-yellow-100 via-lime-100 to-green-100 min-h-screen flex items-center justify-center">
+    <div class="bg-white shadow-2xl rounded-3xl p-10 max-w-lg w-full space-y-6">
+      <div class="text-center">
+        <img
+          class="w-16 h-16 mx-auto mb-2 animate-bounce"
+          src="https://cdn-icons-png.flaticon.com/512/415/415682.png"
+          alt="Logo de um abacaxi"
+        />
+        <h1 class="text-3xl font-extrabold text-green-600">NutriChoice</h1>
+        <p class="text-sm text-gray-500 mt-1">Crie sua conta para começar 🍍</p>
+      </div>
+
+      <form method="post" class="space-y-4">
+        {% csrf_token %}
+
+        {{ form_user.non_field_errors }}
+        {% for field in form_user %}
+          <div>
+            <label class="block text-sm font-medium text-gray-700">{{ field.label }}</label>
+            {{ field }}
+            {% if field.errors %}
+              <p class="text-xs text-red-600 mt-1">{{ field.errors.0 }}</p>
+            {% endif %}
+          </div>
+        {% endfor %}
+
+        <hr class="border-gray-300 my-4">
+
+        <h2 class="text-lg font-semibold text-gray-700">Perfil Nutricional</h2>
+
+        {% for field in form_perfil %}
+          <div>
+            <label class="block text-sm font-medium text-gray-700">{{ field.label }}</label>
+            {{ field }}
+            {% if field.errors %}
+              <p class="text-xs text-red-600 mt-1">{{ field.errors.0 }}</p>
+            {% endif %}
+          </div>
+        {% endfor %}
+
+        <button
+          type="submit"
+          class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-lg transition duration-200"
+        >
+          Cadastrar
+        </button>
+      </form>
+
+      <p class="text-center text-sm text-gray-600">
+        Já tem uma conta?
+        <a href="{% url 'login' %}" class="text-green-600 font-medium hover:underline">
+          Faça login
+        </a>
+      </p>
+    </div>
+  </body>
+</html>

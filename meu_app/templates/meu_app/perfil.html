@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Perfil - NutriChoice</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-gradient-to-br from-yellow-100 via-lime-100 to-green-100 min-h-screen flex items-center justify-center">
+    <div class="bg-white shadow-2xl rounded-3xl p-10 max-w-md w-full space-y-6">
+      <div class="text-center">
+        <img
+          class="w-16 h-16 mx-auto mb-2 animate-bounce"
+          src="https://cdn-icons-png.flaticon.com/512/415/415682.png"
+          alt="Logo de um abacaxi"
+        />
+        <h1 class="text-3xl font-extrabold text-green-600">NutriChoice</h1>
+        <p class="text-sm text-gray-500 mt-1">Aqui está seu perfil nutricional 🍎</p>
+      </div>
+
+      <div class="space-y-4 text-sm text-gray-700">
+        <div class="flex justify-between">
+          <span class="font-semibold text-gray-600">Idade:</span>
+          <span>{{ perfil.idade }}</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="font-semibold text-gray-600">Peso:</span>
+          <span>{{ perfil.peso }} kg</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="font-semibold text-gray-600">Altura:</span>
+          <span>{{ perfil.altura }} cm</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="font-semibold text-gray-600">Objetivo:</span>
+          <span>{{ perfil.get_objetivo_display }}</span>
+        </div>
+      </div>
+
+      <div class="text-center mt-6">
+        <a href="{% url 'questionario' % }" class="text-green-600 hover:underline text-sm font-medium"></a>
+      </div>
+    </div>
+  </body>
+</html>
