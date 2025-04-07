@@ -96,6 +96,13 @@
 - 🎥 [**Screencast com as 3 histórias implementadas**](https://youtu.be/o_xb736QwW4)
 
 ## ⚠️ISSUES/BUG TRACKER
+![image](https://github.com/user-attachments/assets/92e86aea-947e-45e2-a1e8-59c6886eba24)
+
+![image](https://github.com/user-attachments/assets/ba317738-9d4a-4c27-a095-4e04573013a0)
+
+![image](https://github.com/user-attachments/assets/caeba1cc-f9c7-4ddc-ba72-631b6815b12c)
+
+![image](https://github.com/user-attachments/assets/de2afe0d-d5df-4559-bc1f-c128e26d03f6)
 
 </details>
 
