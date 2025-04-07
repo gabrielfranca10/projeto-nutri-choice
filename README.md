@@ -37,15 +37,20 @@ Nutri Choice é uma plataforma inovadora de nutrição que gera planos alimentar
 # 🖥️ Programação em Par Experimentada: 
 
 Otimização do Desenvolvimento e Trabalho Colaborativo Nosso principal foco foi aprimorar a organização do desenvolvimento para garantir que as tarefas fossem concluídas de forma eficiente e com alta qualidade. Para isso, estruturamos um processo de divisão de trabalho que acelerou a implementação das funcionalidades e evitou gargalos na produção.
-
-## Estratégia de Distribuição de Tarefas:
 Desde o início, adotamos uma abordagem estratégica para distribuir as atividades. Organizamos o time em duplas, atribuindo a cada um a responsabilidade por uma história específica. Essa distribuição permitiu que o trabalho fosse conduzido de maneira equilibrada, com cada integrante contribuindo ativamente para a entrega. Além disso, utilizamos um documento compartilhado onde cada membro indicava suas preferências, tornando a alocação mais eficiente. Outra medida importante foi a especialização dentro das duplas: enquanto alguns focavam na implementação das funcionalidades, outros se dedicavam aos testes e ao processo de deploy. Assim, garantimos que todas as etapas do desenvolvimento fossem devidamente atendidas.
-
-## Metodologia e Ferramentas
 Para fortalecer a colaboração e evitar retrabalho, Utilizamos o aplicativo Discord para compartilhar a tela, o que facilitou a compreensão dos códigos entre as dupla. Essa prática facilitou a comunicação entre as duplas, permitindo ajustes rápidos no código e aprimoramento das soluções em tempo real. O compartilhamento contínuo de conhecimento foi essencial para manter um padrão de qualidade elevado no projeto.
-
-## Resultados e Aprendizados
 Com essa forma de trabalhar bem definida, conseguimos entregar tudo no prazo e manter a qualidade do código. Usar as ferramentas certas e manter uma boa comunicação deixou tudo mais ágil e produtivo.
+
+## HISTÓRIAS IMPLEMENTADAS
+1 - Responder questionário e criar perfil nutricional
+![image](https://github.com/user-attachments/assets/73529d99-b4f4-41a8-ab3c-d546363186a0)
+![image](https://github.com/user-attachments/assets/594bc5e5-d5f1-482e-b9a3-6e44e93aa69b)
+
+2 - Falha no cadastro de usuário
+![image](https://github.com/user-attachments/assets/f53e6762-73a3-403e-91fe-c7f03ec8b80f)
+
+3 - Gerar um cardápio atualizado 
+![image](https://github.com/user-attachments/assets/932558c1-68f9-4b9b-b13b-f336034affe8)
 
 # Quadro da Sprint 01 e do Backlog:
 </details> 
