@@ -52,8 +52,11 @@ Com essa forma de trabalhar bem definida, conseguimos entregar tudo no prazo e m
 ## HISTÓRIA 2 - Gerar um cardápio personalizado
 ![image](https://github.com/user-attachments/assets/932558c1-68f9-4b9b-b13b-f336034affe8)
 
-# Quadro da Sprint 01 e do Backlog:
+## Quadro da Sprint 01 e do Backlog:
 ![image](https://github.com/user-attachments/assets/fafce7a2-6d1e-4ebd-83f1-da72ea530301)
 ![image](https://github.com/user-attachments/assets/30018c55-dd53-4bf8-8477-f39d1597b6c7)
+
+## DEPLOY
+- Link do site: 
 
 </details> 
