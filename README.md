@@ -89,7 +89,7 @@ Para fortalecer a colaboração e evitar retrabalho, Utilizamos o aplicativo Dis
 ![Board](https://github.com/user-attachments/assets/30018c55-dd53-4bf8-8477-f39d1597b6c7)
 
 ## 🚀DEPLOY
-- Link do site:
+- 📌 [**Link do site**](https://youtu.be/o_xb736QwW4)
 - 🎥 [**Screencast com as 3 histórias implementadas**](https://youtu.be/o_xb736QwW4)
 
 
