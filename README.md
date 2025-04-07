@@ -43,7 +43,6 @@
 - 📌 [**Quadro no Jira**](https://nutrichoic.atlassian.net/jira/software/projects/NUT/boards/3)  
 - 📄 [**Documentação no Google Docs**](https://docs.google.com/document/d/1g-iEXbBWo8eqiBazO2CRx4VPKwG2W7-mh7Tq9704AgU/edit?tab=t.0)  
 - 🎥 [**Screencast do Projeto**](https://youtu.be/tU3ncCQZz28)  
-- 🌐 [**Deploy do Projeto**](https://projetodjango-e7fvgbbchbapdvgn.brazilsouth-01.azurewebsites.net)
 
 ---
 
@@ -63,11 +62,9 @@
 <summary>🚀 <strong>Entrega 2</strong></summary>
 
 ### 🤝 Programação em Par Experimentada
-
-Nos organizamos em duplas com divisão clara de responsabilidades:  
-- 💻 Implementação de funcionalidades  
-- 🧪 Testes e deploy  
-- 🎮 Compartilhamento de tela via Discord para facilitar revisão de código e aprendizado coletivo
+Otimização do Desenvolvimento e Trabalho Colaborativo Nosso principal foco foi aprimorar a organização do desenvolvimento para garantir que as tarefas fossem concluídas de forma eficiente e com alta qualidade. Para isso, estruturamos um processo de divisão de trabalho que acelerou a implementação das funcionalidades e evitou gargalos na produção.
+Desde o início, adotamos uma abordagem estratégica para distribuir as atividades. Organizamos o time em duplas, atribuindo a cada um a responsabilidade por uma história específica. Essa distribuição permitiu que o trabalho fosse conduzido de maneira equilibrada, com cada integrante contribuindo ativamente para a entrega. Além disso, utilizamos um documento compartilhado onde cada membro indicava suas preferências, tornando a alocação mais eficiente. Outra medida importante foi a especialização dentro das duplas: enquanto alguns focavam na implementação das funcionalidades, outros se dedicavam aos testes e ao processo de deploy. Assim, garantimos que todas as etapas do desenvolvimento fossem devidamente atendidas.
+Para fortalecer a colaboração e evitar retrabalho, Utilizamos o aplicativo Discord para compartilhar a tela, o que facilitou a compreensão dos códigos entre as dupla. Essa prática facilitou a comunicação entre as duplas, permitindo ajustes rápidos no código e aprimoramento das soluções em tempo real. O compartilhamento contínuo de conhecimento foi essencial para manter um padrão de qualidade elevado no projeto.
 
 ### ✅ Histórias Implementadas
 
