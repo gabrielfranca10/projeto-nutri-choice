@@ -72,11 +72,12 @@ As sessões de pareamento aconteceram via Discord, com compartilhamento de tela,
 ### ✅ Histórias Implementadas
 
 #### 🧾 História 1 – Questionário + Criar Perfil Nutricional  
-![Questionário]![image](https://github.com/user-attachments/assets/ef5197db-159c-4675-813b-dc2dbb3b8ff8)
-![Perfil Nutricional](![image]https://github.com/user-attachments/assets/b6d3a87f-e322-46c1-bab9-3f8fdf303b80)
+![Questionário]
+![Perfil Nutricional]
 
 #### 🚫 História 4 – Falha no Cadastro  
-![Erro Cadastro](![image]https://github.com/user-attachments/assets/214ed832-e767-4a12-9a15-db97d99e3d26)
+![Erro Cadastro]![image](https://github.com/user-attachments/assets/b799f13a-fc30-45b4-a92c-9625debe7e50)
+
 
 #### 🍽️ História 2 – Geração de Cardápio Personalizado  
 ![Cardápio]()
