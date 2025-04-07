@@ -57,6 +57,6 @@ Com essa forma de trabalhar bem definida, conseguimos entregar tudo no prazo e m
 ![image](https://github.com/user-attachments/assets/30018c55-dd53-4bf8-8477-f39d1597b6c7)
 
 ## DEPLOY
-- Link do site: 
+- Link do site: https://projetodjango-e7fvgbbchbapdvgn.brazilsouth-01.azurewebsites.net
 
 </details> 
