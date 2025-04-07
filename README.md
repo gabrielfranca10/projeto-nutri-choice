@@ -42,14 +42,14 @@ Para fortalecer a colaboração e evitar retrabalho, Utilizamos o aplicativo Dis
 Com essa forma de trabalhar bem definida, conseguimos entregar tudo no prazo e manter a qualidade do código. Usar as ferramentas certas e manter uma boa comunicação deixou tudo mais ágil e produtivo.
 
 ## HISTÓRIAS IMPLEMENTADAS
-1 - Responder questionário e criar perfil nutricional
+## HISTÓRIA 1 - Responder questionário e criar perfil nutricional
 ![image](https://github.com/user-attachments/assets/73529d99-b4f4-41a8-ab3c-d546363186a0)
 ![image](https://github.com/user-attachments/assets/594bc5e5-d5f1-482e-b9a3-6e44e93aa69b)
 
-2 - Falha no cadastro de usuário
+## HISTÓRIA 4 - Falha no cadastro do usuário
 ![image](https://github.com/user-attachments/assets/f53e6762-73a3-403e-91fe-c7f03ec8b80f)
 
-3 - Gerar um cardápio atualizado 
+## HISTÓRIA 2 - Gerar um cardápio personalizado
 ![image](https://github.com/user-attachments/assets/932558c1-68f9-4b9b-b13b-f336034affe8)
 
 # Quadro da Sprint 01 e do Backlog:
