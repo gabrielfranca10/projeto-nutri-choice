@@ -63,10 +63,11 @@
 
 ### 🤝 Programação em Par
 
-Para otimizar o desenvolvimento e garantir entregas de qualidade, organizamos nossa equipe em duplas. Cada dupla ficou responsável por uma história específica, garantindo foco e eficiência.
+Para otimizar o desenvolvimento e garantir entregas de qualidade, organizamos a equipe em duplas, com cada uma responsável por uma história específica. Isso ajudou a manter o foco e a aumentar a eficiência de cada tarefa.
 
-As sessões de pareamento aconteceram via Discord, com compartilhamento de tela, possibilitando revisão de código em tempo real e comunicação constante. Essa abordagem aumentou a produtividade, reduziu retrabalho e elevou a qualidade final do projeto.
+As sessões de pareamento aconteceram via Discord, com compartilhamento de tela, o que facilitou a comunicação e a revisão de código em tempo real. Fernando e França, por exemplo, trabalharam juntos em uma história, ajustando e revisando o código na hora. Caio e Yan fizeram o mesmo em outra história, resolvendo dúvidas rapidamente. Burle também esteve em uma dupla, contribuindo com soluções e ajudando o time a avançar.
 
+Esse modelo de colaboração constante não só acelerou o desenvolvimento, como também reduziu retrabalho e melhorou a qualidade do código final. Com todos trocando ideias e ajudando uns aos outros, conseguimos entregar um produto mais robusto e alinhado com as expectativas do cliente.
 ---
 
 ### ✅ Histórias Implementadas
