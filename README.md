@@ -5,9 +5,9 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/status-em desenvolvimento-blue?style=flat-square">
+  <img src="https://img.shields.io/badge/status-em%20desenvolvimento-blue?style=flat-square">
   <img src="https://img.shields.io/badge/framework-Django-green?style=flat-square">
-  <img src="https://img.shields.io/badge/design-figma-purple?style=flat-square">
+  <img src="https://img.shields.io/badge/design-Figma-purple?style=flat-square">
 </p>
 
 ---
@@ -20,9 +20,9 @@
 
 ## 📌 Funcionalidades
 
-- 📊 **Planos alimentares personalizados** com base nas respostas do usuário.
-- 🛒 **Lista de compras inteligente**, com os alimentos necessários para o plano.
-- 📈 **Acompanhamento do progresso nutricional** e ajustes automáticos nas recomendações.
+- 📊 **Planos alimentares personalizados** com base nas respostas do usuário  
+- 🛒 **Lista de compras inteligente**, com os alimentos necessários para o plano  
+- 📈 **Acompanhamento do progresso nutricional** com ajustes automáticos nas recomendações  
 
 ---
 
@@ -42,7 +42,7 @@
 - 🎨 [**Figma do Projeto**](https://www.figma.com/design/jQSgfpDlNCRetoDEvQjKXb/Untitled?node-id=0-1&p=f&t=L4Ae5OJ66n1Ktpue-0)  
 - 📌 [**Quadro no Jira**](https://nutrichoic.atlassian.net/jira/software/projects/NUT/boards/3)  
 - 📄 [**Documentação no Google Docs**](https://docs.google.com/document/d/1g-iEXbBWo8eqiBazO2CRx4VPKwG2W7-mh7Tq9704AgU/edit?tab=t.0)  
-- 🎥 [**Screencast do Projeto**](https://youtu.be/tU3ncCQZz28)  
+- 🎥 [**Screencast do Projeto**](https://youtu.be/tU3ncCQZz28)
 
 ---
 
@@ -51,7 +51,7 @@
 
 ### 🔍 Visão Geral
 
-![Entrega 1 - Quadro](https://github.com/user-attachments/assets/00a49322-2f32-4162-b0a8-ea3d50052a46)
+![Entrega 1 - Quadro](https://github.com/user-attachments/assets/00a49322-2f32-4162-b0a8-ea3d50052a46)  
 ![Entrega 1 - Tela](https://github.com/user-attachments/assets/b727bb05-9185-4612-9eda-ea1c8a633c3c)
 
 </details>
@@ -61,38 +61,55 @@
 <details>
 <summary>🚀 <strong>Entrega 2</strong></summary>
 
-### 🤝 Programação em Par Experimentada
-Otimização do Desenvolvimento e Trabalho Colaborativo Nosso principal foco foi aprimorar a organização do desenvolvimento para garantir que as tarefas fossem concluídas de forma eficiente e com alta qualidade. Para isso, estruturamos um processo de divisão de trabalho que acelerou a implementação das funcionalidades e evitou gargalos na produção.
-Desde o início, adotamos uma abordagem estratégica para distribuir as atividades. Organizamos o time em duplas, atribuindo a cada um a responsabilidade por uma história específica. Essa distribuição permitiu que o trabalho fosse conduzido de maneira equilibrada, com cada integrante contribuindo ativamente para a entrega. Além disso, utilizamos um documento compartilhado onde cada membro indicava suas preferências, tornando a alocação mais eficiente. Outra medida importante foi a especialização dentro das duplas: enquanto alguns focavam na implementação das funcionalidades, outros se dedicavam aos testes e ao processo de deploy. Assim, garantimos que todas as etapas do desenvolvimento fossem devidamente atendidas.
-Para fortalecer a colaboração e evitar retrabalho, Utilizamos o aplicativo Discord para compartilhar a tela, o que facilitou a compreensão dos códigos entre as dupla. Essa prática facilitou a comunicação entre as duplas, permitindo ajustes rápidos no código e aprimoramento das soluções em tempo real. O compartilhamento contínuo de conhecimento foi essencial para manter um padrão de qualidade elevado no projeto.
+### 🤝 Programação em Par
+
+Para otimizar o desenvolvimento e garantir entregas de qualidade, decidimos organizar nossa equipe em duplas, com cada uma responsável por uma história específica. Essa abordagem ajudou a manter o foco em tarefas claras e divididas, aumentando a eficiência no desenvolvimento de cada funcionalidade e permitindo que cada dupla se aprofundasse nas necessidades específicas de cada história.
+As sessões de pareamento aconteceram via Discord, com compartilhamento de tela, o que facilitou a comunicação instantânea e a revisão de código em tempo real. Fernando e França, por exemplo, ficaram responsáveis por uma das histórias e, com a ajuda do pareamento, conseguiram revisar o código em tempo real, discutindo e ajustando a implementação rapidamente. Caio e Yan trabalharam em outra história, também compartilhando suas telas e resolvendo dúvidas assim que surgiam, o que ajudou a manter o fluxo de trabalho ágil. Burle, em sua dupla, contribuiu com suas experiências e soluções criativas, agregando ainda mais valor à colaboração entre todos.
+Esse modelo de trabalho, com colaboração constante, não só acelerou o processo de desenvolvimento, mas também reduziu o retrabalho, já que as dúvidas eram resolvidas na hora e todos estavam alinhados com as decisões do projeto. A troca contínua de ideias e a revisão mútua de código garantiram uma qualidade superior no produto final. Com todos os membros colaborando de maneira tão integrada, conseguimos entregar um código mais robusto, sem erros, e perfeitamente alinhado com as expectativas do cliente, elevando a qualidade geral do projeto.
+
+---
 
 ### ✅ Histórias Implementadas
 
-#### 🧾 História 1 – Questionário + Perfil Nutricional
-![Questionário](https://github.com/user-attachments/assets/73529d99-b4f4-41a8-ab3c-d546363186a0)  
-![Perfil Nutricional](https://github.com/user-attachments/assets/594bc5e5-d5f1-482e-b9a3-6e44e93aa69b)
+#### 🧾 História 1 – Responder questionário
+![image](https://github.com/user-attachments/assets/41fdb94e-7714-4310-816b-962f1f091d8d)
 
-#### 🚫 História 4 – Falha no Cadastro
-![Erro Cadastro](https://github.com/user-attachments/assets/f53e6762-73a3-403e-91fe-c7f03ec8b80f)
+####  História 8 – Dicas de alimentação
+![image](https://github.com/user-attachments/assets/a19e3a9e-31b5-4f72-9f59-c09182aefb47)
+![image](https://github.com/user-attachments/assets/0de9c6ea-3d53-48a3-995a-922ba51375a3)
 
-#### 🍽️ História 2 – Geração de Cardápio Personalizado
-![Cardápio](https://github.com/user-attachments/assets/932558c1-68f9-4b9b-b13b-f336034affe8)
+#### 🍽️ História 2 – Geração de Cardápio Personalizado  
+![image](https://github.com/user-attachments/assets/079c880d-bd3b-4b40-b36c-4416e94a937e)
+
 
 ---
 
 ### 🗂️ Jira - Sprint 01
 
-#### 🔃 Backlog
-![Backlog](https://github.com/user-attachments/assets/fafce7a2-6d1e-4ebd-83f1-da72ea530301)
+#### 🔃 Backlog  
+![image](https://github.com/user-attachments/assets/ecee12c4-79ee-476a-a16c-640eee7c7374)
 
-#### 🛠️ Board
-![Board](https://github.com/user-attachments/assets/30018c55-dd53-4bf8-8477-f39d1597b6c7)
+#### 🛠️ Board  
+![image](https://github.com/user-attachments/assets/cca0b168-7336-46de-ab17-f2efda99bff5)
 
-## 🚀DEPLOY
-- 📌 [**Link do site**](https://youtu.be/o_xb736QwW4)
-- 🎥 [**Screencast com as 3 histórias implementadas**](https://youtu.be/o_xb736QwW4)
+- 📌 [**Quadro no Jira Atualizado**](https://nutrichoic.atlassian.net/jira/software/projects/NUT/boards/3)  
+- 📄 [**Histórias no Google Docs**](https://docs.google.com/document/d/1g-iEXbBWo8eqiBazO2CRx4VPKwG2W7-mh7Tq9704AgU/edit?tab=t.0)
 
-## ⚠️ISSUES/BUG TRACKER
+## 🚀 Deploy
+
+- 🌐 [**Acesse o site**](https://projetodjango-e7fvgbbchbapdvgn.brazilsouth-01.azurewebsites.net/login/)  
+- 🎥 [**Screencast com as 3 Histórias Implementadas**](https://youtu.be/08-acdYSACA)
+
+---
+
+## ⚠️ Issues / Bug Tracker
+![image](https://github.com/user-attachments/assets/5fa13a52-cb6c-49fa-9e76-9f261b12a33c)
 
 </details>
+
+
+
+
+
+
 
