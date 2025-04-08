@@ -110,7 +110,3 @@ As sessões de pareamento aconteceram via Discord, com compartilhamento de tela,
 
 ## ⚠️ Issues / Bug Tracker
 
-![Bug 1](https://github.com/user-attachments/assets/92e86aea-947e-45e2-a1e8-59c6886eba24)  
-![Bug 2](https://github.com/user-attachments/assets/ba317738-9d4a-4c27-a095-4e04573013a0)  
-![Bug 3](https://github.com/user-attachments/assets/caeba1cc-f9c7-4ddc-ba72-631b6815b12c)  
-![Bug 4](https://github.com/user-attachments/assets/de2afe0d-d5df-4559-bc1f-c128e26d03f6)
