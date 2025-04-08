@@ -30,9 +30,40 @@
       </div>
     {% endfor %}
 
-    <div class="text-center mt-10">
+    <div class="text-center mt-10 flex justify-center gap-4">
       <a href="{% url 'questionario' %}" class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded-lg transition duration-200">Refazer Questionário</a>
+      <!-- Botão para abrir o modal de dicas -->
+      <button onclick="openModal()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition duration-200">Dicas de Alimentação</button>
     </div>
   </div>
+
+  <!-- Modal de Dicas de Alimentação -->
+  <div id="modal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center hidden">
+    <div class="bg-white p-8 rounded-lg w-96">
+      <h2 class="text-2xl font-semibold text-green-600 mb-4">Dicas de Alimentação</h2>
+      <ul class="list-disc list-inside text-gray-700 space-y-2">
+        <li>Coma alimentos frescos e naturais sempre que possível.</li>
+        <li>Evite alimentos processados e ricos em açúcares.</li>
+        <li>Mantenha uma boa hidratação ao longo do dia.</li>
+        <li>Varie os tipos de vegetais e proteínas em sua alimentação.</li>
+        <li>Coma em intervalos regulares para manter o metabolismo equilibrado.</li>
+      </ul>
+      <div class="mt-4 text-center">
+        <button onclick="closeModal()" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-6 rounded-lg transition duration-200">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Função para abrir o modal
+    function openModal() {
+      document.getElementById('modal').classList.remove('hidden');
+    }
+
+    // Função para fechar o modal
+    function closeModal() {
+      document.getElementById('modal').classList.add('hidden');
+    }
+  </script>
 </body>
 </html>
