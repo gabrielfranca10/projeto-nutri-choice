@@ -98,7 +98,7 @@ Esse modelo de trabalho, com colaboração constante, não só acelerou o proces
 ## 🚀 Deploy
 
 - 🌐 [**Acesse o site**](https://projetodjango-e7fvgbbchbapdvgn.brazilsouth-01.azurewebsites.net/login/)  
-- 🎥 [**Screencast com as 3 Histórias Implementadas**](https://youtu.be/dnjRHgTVOB0)
+- 🎥 [**Screencast com as 3 Histórias Implementadas**](https://youtu.be/08-acdYSACA)
 
 ---
 
