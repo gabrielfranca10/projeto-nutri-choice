@@ -87,7 +87,7 @@ Esse modelo de trabalho, com colaboração constante, não só acelerou o proces
 ### 🗂️ Jira - Sprint 01
 
 #### 🔃 Backlog  
-![image](https://github.com/user-attachments/assets/e54ced3d-c74d-45c2-a0bc-881ffd231359)
+![image](https://github.com/user-attachments/assets/ecee12c4-79ee-476a-a16c-640eee7c7374)
 
 #### 🛠️ Board  
 ![image](https://github.com/user-attachments/assets/cca0b168-7336-46de-ab17-f2efda99bff5)
