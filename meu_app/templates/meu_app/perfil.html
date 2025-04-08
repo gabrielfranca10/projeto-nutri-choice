@@ -1,51 +1,66 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Perfil - NutriChoice</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-      body {
-        font-family: 'Inter', sans-serif;
-      }
-    </style>
-  </head>
-  <body class="bg-gradient-to-br from-yellow-100 via-lime-100 to-green-100 min-h-screen flex items-center justify-center">
-    <div class="bg-white shadow-2xl rounded-3xl p-10 max-w-md w-full space-y-6">
-      <div class="text-center">
-        <img
-          class="w-16 h-16 mx-auto mb-2 animate-bounce"
-          src="https://cdn-icons-png.flaticon.com/512/415/415682.png"
-          alt="Logo de um abacaxi"
-        />
-        <h1 class="text-3xl font-extrabold text-green-600">NutriChoice</h1>
-        <p class="text-sm text-gray-500 mt-1">Aqui está seu perfil nutricional 🍎</p>
-      </div>
-
-      <div class="space-y-4 text-sm text-gray-700">
-        <div class="flex justify-between">
-          <span class="font-semibold text-gray-600">Idade:</span>
-          <span>{{ perfil.idade }}</span>
-        </div>
-        <div class="flex justify-between">
-          <span class="font-semibold text-gray-600">Peso:</span>
-          <span>{{ perfil.peso }} kg</span>
-        </div>
-        <div class="flex justify-between">
-          <span class="font-semibold text-gray-600">Altura:</span>
-          <span>{{ perfil.altura }} cm</span>
-        </div>
-        <div class="flex justify-between">
-          <span class="font-semibold text-gray-600">Objetivo:</span>
-          <span>{{ perfil.get_objetivo_display }}</span>
-        </div>
-      </div>
-
-      <div class="text-center mt-6">
-        <a href="{% url 'questionario' % }" class="text-green-600 hover:underline text-sm font-medium"></a>
-      </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perfil Nutricional</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-yellow-50 to-green-50 min-h-screen py-10 px-4">
+  <div class="max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow-xl">
+    <div class="text-center mb-6">
+      <img class="w-14 h-14 mx-auto mb-2" src="https://cdn-icons-png.flaticon.com/512/415/415682.png" alt="Logo Frutas" />
+      <h1 class="text-3xl font-bold text-green-700">Perfil Nutricional</h1>
+      <p class="text-gray-500">Veja abaixo o resumo das suas respostas 🍽️</p>
     </div>
-  </body>
+
+    {% if dados %}
+    <ul class="space-y-2 text-gray-700 text-base">
+      <li><strong>Nome:</strong> {{ dados.nome }}</li>
+      <li><strong>Idade:</strong> {{ dados.idade }}</li>
+      <li><strong>Gênero:</strong> {{ dados.genero }}</li>
+      <li><strong>Objetivo:</strong> {{ dados.objetivo }}</li>
+      <li><strong>Refeições por dia:</strong> {{ dados.refeicoes_por_dia }}</li>
+      <li><strong>Consome carne:</strong> {{ dados.come_carne|yesno:"Sim,Não" }}</li>
+      <li><strong>Gosta de legumes:</strong> {{ dados.gosta_de_legumes|yesno:"Sim,Não" }}</li>
+      <li><strong>Água por dia:</strong> {{ dados.agua }} copos</li>
+      <li><strong>Horas de sono:</strong> {{ dados.sono }}</li>
+      <li><strong>Atividade física:</strong> {{ dados.atividade_fisica }}</li>
+      <li><strong>Usa suplementos:</strong> {{ dados.usa_suplementos|yesno:"Sim,Não" }}</li>
+      <li><strong>Nível de estresse:</strong> {{ dados.estresse }}</li>
+      <li><strong>Restrições alimentares:</strong> {{ dados.restricoes }}</li>
+      <li><strong>Preferências:</strong> {{ dados.preferencia }}</li>
+    </ul>
+
+    <div class="mt-8">
+      <h2 class="text-xl font-semibold text-green-700 mb-3">Cardápio sugerido 🌿</h2>
+      <ul class="list-disc pl-5 text-gray-800">
+        {% for refeicao, comidas in cardapio.items %}
+          <li>
+            <strong>{{ refeicao|capfirst }}:</strong>
+            {{ comidas|join:", " }}
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% else %}
+    <p class="text-red-600">Nenhum dado encontrado. Faça o questionário primeiro.</p>
+    {% endif %}
+
+    <div class="mt-10 flex justify-between">
+      <a href="{% url 'questionario' %}" class="bg-yellow-400 hover:bg-yellow-500 text-white font-semibold px-6 py-2 rounded-lg shadow transition">
+        Refazer Questionário
+      </a>
+      <a href="{% url 'perfil_nutricional' %}" class="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-lg shadow transition">
+        Ver Perfil Nutricional
+      </a>
+    </div>
+  </div>
+</body>
 </html>

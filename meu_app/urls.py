@@ -1,13 +1,11 @@
 from django.urls import path
 from . import views
-from django.contrib.auth.views import LoginView, LogoutView
 
 urlpatterns = [
-    path('', LoginView.as_view(template_name='meu_app/login.html'), name='login'),
-    path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
-
-    path('cadastro/', views.register, name='cadastro'),
-    path('perfil/', views.perfil_view, name='perfil'),
+    path('', views.redirecionar_para_login, name='home'),
+    path('login/', views.login_view, name='login'),
+    path('cadastro/', views.cadastro_view, name='cadastro'),
     path('questionario/', views.questionario_view, name='questionario'),
-    path('cardapio/', views.cardapio_view, name='cardapio'),
+    path('perfil/', views.perfil_nutricional_view, name='perfil_nutricional'),
+    path('cardapio/', views.cardapio_view, name='cardapio_personalizado'),  # nova rota para cardápio
 ]
