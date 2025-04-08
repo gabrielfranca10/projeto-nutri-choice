@@ -71,14 +71,12 @@ Esse modelo de trabalho, com colaboração constante, não só acelerou o proces
 
 ### ✅ Histórias Implementadas
 
-#### 🧾 História 1 – Questionário + Criar Perfil Nutricional  
+#### 🧾 História 1 – Responder questionário
 ![image](https://github.com/user-attachments/assets/41fdb94e-7714-4310-816b-962f1f091d8d)
-![image](https://github.com/user-attachments/assets/83038495-1a1f-42fc-bc22-01a7cfcf3772)
 
-
-#### 🚫 História 4 – Falha no Cadastro  
-![image](https://github.com/user-attachments/assets/b710b533-a94f-4960-ad29-3189a0a83de8)
-
+####  História 8 – Dicas de alimentação
+![image](https://github.com/user-attachments/assets/a19e3a9e-31b5-4f72-9f59-c09182aefb47)
+![image](https://github.com/user-attachments/assets/0de9c6ea-3d53-48a3-995a-922ba51375a3)
 
 #### 🍽️ História 2 – Geração de Cardápio Personalizado  
 ![image](https://github.com/user-attachments/assets/079c880d-bd3b-4b40-b36c-4416e94a937e)
