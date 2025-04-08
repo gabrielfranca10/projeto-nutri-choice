@@ -97,10 +97,6 @@ As sessões de pareamento aconteceram via Discord, com compartilhamento de tela,
 - 📌 [**Quadro no Jira Atualizado**](https://nutrichoic.atlassian.net/jira/software/projects/NUT/boards/3)  
 - 📄 [**Histórias no Google Docs**](https://docs.google.com/document/d/1g-iEXbBWo8eqiBazO2CRx4VPKwG2W7-mh7Tq9704AgU/edit?tab=t.0)
 
-</details>
-
----
-
 ## 🚀 Deploy
 
 - 🌐 [**Acesse o site**](https://projetodjango-e7fvgbbchbapdvgn.brazilsouth-01.azurewebsites.net/login/)  
@@ -110,6 +106,10 @@ As sessões de pareamento aconteceram via Discord, com compartilhamento de tela,
 
 ## ⚠️ Issues / Bug Tracker
 ![image](https://github.com/user-attachments/assets/5fa13a52-cb6c-49fa-9e76-9f261b12a33c)
+
+</details>
+
+
 
 
 
