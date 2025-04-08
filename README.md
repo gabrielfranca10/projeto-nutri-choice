@@ -103,7 +103,7 @@ As sessões de pareamento aconteceram via Discord, com compartilhamento de tela,
 
 ## 🚀 Deploy
 
-- 🌐 [**Acesse o site**]()  
+- 🌐 [**Acesse o site**](https://projetodjango-e7fvgbbchbapdvgn.brazilsouth-01.azurewebsites.net/login/)  
 - 🎥 [**Screencast com as 3 Histórias Implementadas**]()
 
 ---
