@@ -89,10 +89,11 @@ Esse modelo de trabalho, com colaboração constante, não só acelerou o proces
 ### 🗂️ Jira - Sprint 01
 
 #### 🔃 Backlog  
-![Backlog](https://github.com/user-attachments/assets/6ef42ed0-840e-4c21-8e91-4761f1e0187a)
+![Backlog](https://github.com/user-attachments/assets/13688328-ea0f-46cf-865c-85133799375e)
+
 
 #### 🛠️ Board  
-![Board](https://github.com/user-attachments/assets/23250b61-3b1a-482d-8ebe-6d44a5631e75)
+![Board](https://github.com/user-attachments/assets/6ef42ed0-840e-4c21-8e91-4761f1e0187a)
 
 - 📌 [**Quadro no Jira Atualizado**](https://nutrichoic.atlassian.net/jira/software/projects/NUT/boards/3)  
 - 📄 [**Histórias no Google Docs**](https://docs.google.com/document/d/1g-iEXbBWo8eqiBazO2CRx4VPKwG2W7-mh7Tq9704AgU/edit?tab=t.0)
