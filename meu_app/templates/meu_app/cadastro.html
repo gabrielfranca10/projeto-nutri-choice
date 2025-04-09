@@ -26,7 +26,7 @@
 
         <form method="POST" class="space-y-4 text-left">
             {% csrf_token %}
-            
+
             <div>
                 <label class="block text-sm font-medium text-gray-700">Username</label>
                 <input type="text" name="username" required placeholder="seu_nome"
@@ -39,16 +39,34 @@
                     class="w-full mt-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-400">
             </div>
 
-            <div>
+            <div class="relative">
                 <label class="block text-sm font-medium text-gray-700">Senha</label>
-                <input type="password" name="password" required
-                    class="w-full mt-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-400">
+                <input type="password" name="password" id="senha"
+                    class="w-full mt-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-400 pr-10" required>
+                <span onclick="toggleSenha('senha', this)" class="absolute right-3 top-9 cursor-pointer text-gray-500 hover:text-gray-700">
+                    <svg id="icon-senha" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                </span>
             </div>
 
-            <div>
+            <div class="relative">
                 <label class="block text-sm font-medium text-gray-700">Confirme a senha</label>
-                <input type="password" name="password2" required
-                    class="w-full mt-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-400">
+                <input type="password" name="password2" id="senha2"
+                    class="w-full mt-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-400 pr-10" required>
+                <span onclick="toggleSenha('senha2', this)" class="absolute right-3 top-9 cursor-pointer text-gray-500 hover:text-gray-700">
+                    <svg id="icon-senha2" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                </span>
             </div>
 
             <hr class="my-4">
@@ -91,5 +109,24 @@
         </p>
     </div>
 
+    <script>
+        function toggleSenha(inputId, spanElement) {
+            const input = document.getElementById(inputId);
+            const svg = spanElement.querySelector('svg');
+            const isPassword = input.type === 'password';
+
+            input.type = isPassword ? 'text' : 'password';
+
+            svg.innerHTML = isPassword
+                ? `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7a9.957 9.957 0 012.241-3.592M9.88 9.88a3 3 0 104.24 4.24M6.1 6.1l11.8 11.8" />
+                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M2 2l20 20" />`
+                : `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />`;
+        }
+    </script>
 </body>
 </html>
