@@ -1,13 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages  # Para mensagens de sucesso/erro
 from .models import Questionario
-
-
-# Redireciona a raiz do site para a tela de login
-def redirecionar_para_login(request):
-    return redirect('login')
-
 
 # === TELA DE LOGIN ===
 def login_view(request):
@@ -16,9 +12,8 @@ def login_view(request):
         password = request.POST.get('password')
 
         if not username or not password:
-            return render(request, 'meu_app/login.html', {
-                'erro': 'Preencha todos os campos'
-            })
+            messages.error(request, 'Preencha todos os campos')
+            return render(request, 'meu_app/login.html')
 
         user = authenticate(request, username=username, password=password)
 
@@ -26,37 +21,52 @@ def login_view(request):
             login(request, user)
             return redirect('perfil_nutricional')
         else:
-            return render(request, 'meu_app/login.html', {
-                'erro': 'Credenciais inválidas'
-            })
+            messages.error(request, 'Credenciais inválidas')
+            return render(request, 'meu_app/login.html')
 
     return render(request, 'meu_app/login.html')
 
 
 # === TELA DE CADASTRO ===
+# Função de cadastro
 def cadastro_view(request):
     if request.method == 'POST':
         username = request.POST.get('username')
-        password = request.POST.get('password')
+        email = request.POST.get('email')
+        password = request.POST.get('senha')
+        password2 = request.POST.get('confirmar_senha')
 
-        if not username or not password:
-            return render(request, 'meu_app/cadastro.html', {
-                'erro': 'Preencha todos os campos'
-            })
+        # Verificando se todos os campos estão preenchidos
+        if not all([username, email, password, password2]):
+            messages.error(request, 'Preencha todos os campos')
+            return render(request, 'meu_app/cadastro.html')
+
+        if password != password2:
+            messages.error(request, 'As senhas não coincidem')
+            return render(request, 'meu_app/cadastro.html')
 
         if User.objects.filter(username=username).exists():
-            return render(request, 'meu_app/cadastro.html', {
-                'erro': 'Usuário já existe'
-            })
+            messages.error(request, 'Nome de usuário já existe')
+            return render(request, 'meu_app/cadastro.html')
 
-        user = User.objects.create_user(username=username, password=password)
-        login(request, user)  # Login automático
-        return redirect('questionario')
+        # Criação do usuário
+        user = User.objects.create_user(username=username, email=email, password=password)
+        user.save()
+
+        # Faz login automaticamente após o cadastro
+        login(request, user)
+
+        # Mensagem de sucesso
+        messages.success(request, 'Cadastro realizado com sucesso!')
+
+        # Redireciona para a página do questionário após o cadastro
+        return redirect('questionario')  # Redireciona para a página do questionário
 
     return render(request, 'meu_app/cadastro.html')
 
 
 # === QUESTIONÁRIO NUTRICIONAL ===
+@login_required
 def questionario_view(request):
     if request.method == 'POST':
         dados = {
@@ -64,23 +74,28 @@ def questionario_view(request):
             'restricoes': request.POST.get('restricoes') or '',
             'preferencia': request.POST.get('preferencia') or '',
             'refeicoes_por_dia': request.POST.get('refeicoes_por_dia'),
-            'come_carne': request.POST.get('come_carne') == 'on',
-            'gosta_de_legumes': request.POST.get('gosta_de_legumes') == 'on',
+            'come_carne': request.POST.get('come_carne') == 'sim',
+            'gosta_de_legumes': request.POST.get('gosta_de_legumes') == 'sim',
             'agua': request.POST.get('agua') or '0',
             'sono': request.POST.get('sono') or '0',
             'atividade_fisica': request.POST.get('atividade_fisica'),
-            'usa_suplementos': request.POST.get('usa_suplementos') == 'on',
+            'usa_suplementos': request.POST.get('usa_suplementos') == 'sim',
             'estresse': request.POST.get('estresse'),
         }
 
         campos_obrigatorios = ['objetivo', 'refeicoes_por_dia', 'atividade_fisica', 'estresse']
         for campo in campos_obrigatorios:
             if not dados[campo]:
-                return render(request, 'meu_app/questionario.html', {
-                    'erro': 'Preencha todos os campos obrigatórios'
-                })
+                messages.error(request, 'Preencha todos os campos obrigatórios')
+                return render(request, 'meu_app/questionario.html')
 
-        Questionario.objects.create(**dados)
+        # Cria ou atualiza os dados do questionário para o usuário
+        Questionario.objects.update_or_create(
+            usuario=request.user,
+            defaults=dados
+        )
+
+        # Gerar o cardápio personalizado com base nos dados preenchidos
         cardapio = gerar_cardapio_personalizado(dados)
         return render(request, 'meu_app/cardapio.html', {'cardapio': cardapio, 'dados': dados})
 
@@ -96,17 +111,17 @@ def gerar_cardapio_personalizado(dados):
         'Jantar': [],
     }
 
-    if dados['objetivo'] == 'ganhar':
+    if dados['objetivo'].lower() == 'ganhar':
         cardapio['Café da Manhã'].append("Ovos mexidos + pão integral + vitamina de banana com aveia")
         cardapio['Almoço'].append("Arroz integral + frango grelhado + legumes no vapor")
         cardapio['Lanche da Tarde'].append("Iogurte natural com granola")
         cardapio['Jantar'].append("Omelete com batata doce e salada")
-    elif dados['objetivo'] == 'perder':
+    elif dados['objetivo'].lower() == 'perder':
         cardapio['Café da Manhã'].append("Iogurte desnatado + frutas vermelhas")
         cardapio['Almoço'].append("Peito de frango + salada verde com azeite e quinoa")
         cardapio['Lanche da Tarde'].append("Castanhas e uma fruta")
         cardapio['Jantar'].append("Sopa de legumes com frango desfiado")
-    elif dados['objetivo'] == 'manter':
+    elif dados['objetivo'].lower() == 'saude':
         cardapio['Café da Manhã'].append("Pão integral com queijo branco + café sem açúcar")
         cardapio['Almoço'].append("Arroz + feijão + carne magra + salada")
         cardapio['Lanche da Tarde'].append("Fruta + iogurte")
@@ -128,13 +143,28 @@ def gerar_cardapio_personalizado(dados):
 
 
 # === PERFIL NUTRICIONAL FINAL ===
+@login_required
 def perfil_nutricional_view(request):
-    ultimo = Questionario.objects.last()
-    return render(request, 'meu_app/perfil.html', {'dados': ultimo})
+    ultimo = Questionario.objects.filter(usuario=request.user).last()
+    if ultimo:
+        return render(request, 'meu_app/perfil.html', {'dados': ultimo})
+    else:
+        messages.error(request, 'Complete o questionário para ver seu perfil nutricional!')
+        return render(request, 'meu_app/perfil.html')
 
 
 # === CARDÁPIO PERSONALIZADO ===
+@login_required
 def cardapio_view(request):
-    ultimo = Questionario.objects.last()
-    cardapio = gerar_cardapio_personalizado(vars(ultimo))
-    return render(request, 'meu_app/cardapio.html', {'cardapio': cardapio, 'dados': ultimo})
+    ultimo = Questionario.objects.filter(usuario=request.user).last()
+    if ultimo:
+        cardapio = gerar_cardapio_personalizado(vars(ultimo))
+        return render(request, 'meu_app/cardapio.html', {'cardapio': cardapio, 'dados': ultimo})
+    else:
+        messages.error(request, 'Complete o questionário para ver seu cardápio personalizado!')
+        return render(request, 'meu_app/cardapio.html')
+
+
+# Função para redirecionar para a página de login
+def redirecionar_para_login(request):
+    return redirect('login')  # 'login' é o nome da URL de login

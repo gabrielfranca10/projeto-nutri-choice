@@ -5,47 +5,155 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login - NutriChoice</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    body {
+      cursor: url('https://cdn-icons-png.flaticon.com/512/1642/1642495.png'), auto;
+    }
+
+    .bg-image {
+      background: url('https://images.unsplash.com/photo-1617957743097-0d20aa2ea762?q=80&w=1932&auto=format&fit=crop') no-repeat center center fixed;
+      background-size: cover;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -2;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    .bg-overlay {
+      background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.1));
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+    }
+
+    .input-shadow:focus {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .registration-box {
+      background-color: rgba(255, 255, 255, 0.8); /* Fundo semitransparente */
+      border-radius: 1.5rem;
+      padding: 3rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 400px; /* Largura ajustada */
+      color: #333;
+      transition: transform 0.3s ease;
+    }
+
+    .registration-box:hover {
+      transform: scale(1.03);
+    }
+
+    .registration-box h2 {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .registration-box p {
+      font-size: 1rem;
+      color: #666;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .registration-box a {
+      font-weight: bold;
+      background-color: #4CAF50; /* Cor mais forte */
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 30px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .registration-box a:hover {
+      background-color: #45a049;
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 1024px) {
+      .registration-box {
+        width: 90%; /* Ajuste para telas menores */
+      }
+    }
+  </style>
 </head>
-<body class="bg-gradient-to-br from-lime-100 to-green-100 min-h-screen flex items-center justify-center font-sans">
-  <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
-    <!-- LOGO -->
-    <div class="flex justify-center mb-4">
-      <img src="https://cdn-icons-png.flaticon.com/512/415/415744.png" alt="Logo" class="w-16 h-16">
+<body class="font-sans text-white flex items-center justify-center min-h-screen overflow-hidden">
+
+  <div class="bg-image"></div>
+  <div class="bg-overlay"></div>
+
+  <!-- Caixa principal -->
+  <div class="backdrop-blur-md bg-white bg-opacity-10 rounded-2xl shadow-2xl flex flex-col lg:flex-row w-full max-w-6xl mx-4 p-10 gap-10 relative">
+
+    <!-- Lado Login -->
+    <div class="flex-1 pr-6 relative">
+      <div class="flex justify-center mb-4">
+        <img src="https://cdn-icons-png.flaticon.com/512/415/415744.png" alt="Logo" class="w-14 h-14 transition-all hover:rotate-12 hover:scale-110">
+      </div>
+
+      <h1 class="text-3xl font-bold text-center text-lime-300">NutriChoice</h1>
+      <p class="text-center text-gray-200 mb-6">Acesse sua conta 🍀</p>
+
+      {% if erro %}
+        <div class="bg-red-500 bg-opacity-70 text-white px-4 py-2 rounded mb-4 text-sm">
+          {{ erro }}
+        </div>
+      {% endif %}
+
+      <form action="{% url 'login' %}" method="POST" class="space-y-5">
+        {% csrf_token %}
+
+        <div>
+          <label for="username" class="block text-sm font-medium text-white">Usuário</label>
+          <input type="text" id="username" name="username" required placeholder="seu_nome"
+            class="mt-1 w-full px-4 py-2 bg-white bg-opacity-80 text-black border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-400 input-shadow transition-all" />
+        </div>
+
+        <div>
+          <label for="password" class="block text-sm font-medium text-white">Senha</label>
+          <input type="password" id="password" name="password" required placeholder="••••••••"
+            class="mt-1 w-full px-4 py-2 bg-white bg-opacity-80 text-black border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-400 input-shadow transition-all" />
+        </div>
+
+        <button type="submit"
+          class="w-full bg-lime-500 hover:bg-lime-600 text-white py-2 px-4 rounded-lg font-semibold transition-all transform hover:scale-105">
+          Entrar
+        </button>
+      </form>
+
+      <!-- Divisória decorativa -->
+      <div class="absolute top-0 right-0 h-full w-[1px] bg-gradient-to-b from-white/30 via-white/20 to-transparent"></div>
     </div>
-    <h1 class="text-2xl font-bold text-center text-green-600">NutriChoice</h1>
-    <p class="text-center text-gray-500 mb-6">Sua jornada saudável começa aqui 👇</p>
 
-    {% if erro %}
-      <div class="bg-red-100 text-red-700 px-4 py-2 rounded mb-4 text-sm">
-        {{ erro }}
+    <!-- Lado Cadastro - Caixa Estilizada -->
+    <div class="flex-1 flex items-center justify-center">
+      <div class="registration-box">
+        <h2>Sua jornada saudável começa aqui 🍎</h2>
+        <p>Ainda não tem uma conta? <br>
+          <span class="font-medium">Faça parte da comunidade NutriChoice e cuide melhor de você.</span>
+        </p>
+        <a href="{% url 'cadastro' %}">
+          Cadastre-se agora
+        </a>
       </div>
-    {% endif %}
+    </div>
 
-    <form action="{% url 'login' %}" method="POST" class="space-y-4">
-      {% csrf_token %}
-      
-      <div>
-        <label for="username" class="block text-sm font-medium text-gray-700">Usuário</label>
-        <input type="text" id="username" name="username" required placeholder="seu_nome"
-          class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400" />
-      </div>
-
-      <div>
-        <label for="password" class="block text-sm font-medium text-gray-700">Senha</label>
-        <input type="password" id="password" name="password" required placeholder="••••••••"
-          class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400" />
-      </div>
-
-      <button type="submit"
-        class="w-full bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-lg font-semibold transition-all">
-        Entrar
-      </button>
-    </form>
-
-    <p class="text-center text-sm text-gray-600 mt-6">
-      Não tem conta?
-      <a href="{% url 'cadastro' %}" class="text-green-600 hover:underline font-medium">Cadastre-se aqui</a>
-    </p>
   </div>
+
 </body>
 </html>

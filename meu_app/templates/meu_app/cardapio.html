@@ -3,26 +3,79 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Seu Cardápio</title>
+  <title>Seu Cardápio - NutriChoice</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Poppins', sans-serif;
+      cursor: url('https://cdn-icons-png.flaticon.com/512/1642/1642495.png'), auto;
+    }
+
+    .bg-image {
+      background: url('https://images.unsplash.com/photo-1617957743097-0d20aa2ea762?q=80&w=1932&auto=format&fit=crop') no-repeat center center fixed;
+      background-size: cover;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -2;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    .bg-overlay {
+      background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.1));
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+    }
+
+    .main-box {
+      background-color: rgba(255, 255, 255, 0.15);
+      border-radius: 1.5rem;
+      padding: 3rem;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .main-box:hover {
+      transform: scale(1.01);
+      transition: transform 0.3s ease;
+    }
+
+    .animated-icon {
+      animation: float 3s ease-in-out infinite;
     }
   </style>
 </head>
-<body class="bg-gradient-to-br from-green-50 to-white min-h-screen py-10 px-4">
-  <div class="max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow-xl">
-    <div class="text-center mb-6">
-      <h1 class="text-3xl font-bold text-green-700">Seu Cardápio Personalizado 🥗</h1>
-      <p class="text-gray-500">Montado com base nas suas respostas</p>
+<body class="flex items-center justify-center min-h-screen overflow-hidden text-white">
+
+  <div class="bg-image"></div>
+  <div class="bg-overlay"></div>
+
+  <div class="w-full max-w-4xl mx-4 main-box">
+    <div class="text-center mb-10">
+      <h1 class="text-3xl md:text-4xl font-bold flex items-center justify-center gap-3">
+        <img src="https://cdn-icons-png.flaticon.com/512/869/869636.png" alt="logo" class="w-10 h-10 animated-icon">
+        Seu Cardápio Personalizado 🥗
+      </h1>
+      <p class="text-white text-opacity-80 mt-2">Montado com base nas suas respostas</p>
     </div>
 
     {% for refeicao, itens in cardapio.items %}
       <div class="mb-6">
-        <h2 class="text-xl font-semibold text-green-600 mb-2">{{ refeicao }}</h2>
-        <ul class="list-disc list-inside text-gray-700 space-y-1">
+        <h2 class="text-xl font-semibold text-lime-300 mb-2">{{ refeicao }}</h2>
+        <ul class="list-disc list-inside text-white text-opacity-90 space-y-1">
           {% for item in itens %}
             <li>{{ item }}</li>
           {% endfor %}
@@ -30,37 +83,40 @@
       </div>
     {% endfor %}
 
-    <div class="text-center mt-10 flex justify-center gap-4">
-      <a href="{% url 'questionario' %}" class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded-lg transition duration-200">Refazer Questionário</a>
-      <!-- Botão para abrir o modal de dicas -->
-      <button onclick="openModal()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition duration-200">Dicas de Alimentação</button>
+    <div class="flex justify-center gap-4 mt-10 flex-wrap">
+      <a href="{% url 'questionario' %}" class="bg-lime-500 hover:bg-lime-600 text-white font-semibold py-2 px-6 rounded-full shadow-lg transition-transform transform hover:scale-105">
+        Refazer Questionário
+      </a>
+      <button onclick="openModal()" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-full shadow-lg transition-transform transform hover:scale-105">
+        Dicas de Alimentação
+      </button>
     </div>
   </div>
 
-  <!-- Modal de Dicas de Alimentação -->
-  <div id="modal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center hidden">
-    <div class="bg-white p-8 rounded-lg w-96">
-      <h2 class="text-2xl font-semibold text-green-600 mb-4">Dicas de Alimentação</h2>
-      <ul class="list-disc list-inside text-gray-700 space-y-2">
+  <!-- Modal -->
+  <div id="modal" class="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center hidden z-50">
+    <div class="bg-white text-black p-6 rounded-xl w-96 shadow-2xl">
+      <h2 class="text-2xl font-semibold text-lime-600 mb-4 text-center">Dicas de Alimentação</h2>
+      <ul class="list-disc list-inside space-y-2 text-gray-800">
         <li>Coma alimentos frescos e naturais sempre que possível.</li>
         <li>Evite alimentos processados e ricos em açúcares.</li>
         <li>Mantenha uma boa hidratação ao longo do dia.</li>
         <li>Varie os tipos de vegetais e proteínas em sua alimentação.</li>
         <li>Coma em intervalos regulares para manter o metabolismo equilibrado.</li>
       </ul>
-      <div class="mt-4 text-center">
-        <button onclick="closeModal()" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-6 rounded-lg transition duration-200">Fechar</button>
+      <div class="mt-6 text-center">
+        <button onclick="closeModal()" class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-full font-semibold transition-transform transform hover:scale-105">
+          Fechar
+        </button>
       </div>
     </div>
   </div>
 
   <script>
-    // Função para abrir o modal
     function openModal() {
       document.getElementById('modal').classList.remove('hidden');
     }
 
-    // Função para fechar o modal
     function closeModal() {
       document.getElementById('modal').classList.add('hidden');
     }
