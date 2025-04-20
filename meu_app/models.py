@@ -1,8 +1,12 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Questionario(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     nome = models.CharField(max_length=100, blank=True)
     idade = models.IntegerField(null=True, blank=True)
+    peso = models.FloatField(null=True, blank=True)   # Novo campo
+    altura = models.FloatField(null=True, blank=True) # Novo campo
     genero = models.CharField(max_length=20, blank=True)
     objetivo = models.CharField(max_length=100)
     restricoes = models.TextField(blank=True)

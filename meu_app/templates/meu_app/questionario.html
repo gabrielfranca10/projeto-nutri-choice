@@ -1,32 +1,90 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Questionário Nutricional</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
-      body {
-        font-family: 'Inter', sans-serif;
-      }
-    </style>
-  </head>
-  <body class="bg-gradient-to-br from-yellow-50 to-green-50 min-h-screen py-10 px-4">
-    <div class="max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow-xl">
-      <div class="text-center mb-6">
-        <img class="w-14 h-14 mx-auto mb-2" src="https://cdn-icons-png.flaticon.com/512/415/415682.png" alt="Salada de frutas" />
-        <h1 class="text-3xl font-bold text-green-700">Questionário Nutricional</h1>
-        <p class="text-gray-500">Nos ajude a entender seus hábitos para criar um plano alimentar ideal pra você 🍎</p>
-      </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Questionário Nutricional - NutriChoice</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
 
-      <form method="post" class="space-y-6">
-        {% csrf_token %}
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
 
+    body {
+      font-family: 'Poppins', sans-serif;
+      cursor: url('https://cdn-icons-png.flaticon.com/512/1642/1642495.png'), auto;
+    }
+
+    .bg-image {
+      background: url('https://images.unsplash.com/photo-1617957743097-0d20aa2ea762?q=80&w=1932&auto=format&fit=crop') no-repeat center center fixed;
+      background-size: cover;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -2;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    .bg-overlay {
+      background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.1));
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+    }
+
+    .form-box {
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 1.75rem;
+      padding: 3rem;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(16px);
+      transition: transform 0.3s ease;
+    }
+
+    .form-box:hover {
+      transform: scale(1.02);
+    }
+
+    .input-field:focus {
+      transform: scale(1.02);
+      box-shadow: 0 0 0 3px rgba(163, 230, 53, 0.6);
+    }
+
+    .animated-icon {
+      animation: float 3s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="flex items-center justify-center min-h-screen overflow-hidden px-4">
+
+  <div class="bg-image"></div>
+  <div class="bg-overlay"></div>
+
+  <div class="w-full max-w-5xl mx-auto p-10 relative form-box">
+    <div class="text-center mb-8">
+      <h1 class="text-white text-4xl font-bold flex justify-center items-center gap-3">
+        <img src="https://cdn-icons-png.flaticon.com/512/415/415682.png" alt="Ícone Nutrição" class="w-10 h-10 animated-icon" />
+        Questionário Nutricional
+      </h1>
+      <p class="text-white text-lg mt-2">Nos ajude a entender seus hábitos para criar um plano alimentar ideal pra você 🍎</p>
+    </div>
+
+    <form method="post" class="space-y-6">
+      {% csrf_token %}
+
+      <div class="grid md:grid-cols-2 gap-6">
         <!-- Objetivo -->
         <div>
-          <label class="block text-sm font-semibold text-gray-700">Qual seu objetivo principal?</label>
-          <select name="objetivo" required class="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400">
+          <label class="block text-white font-semibold mb-1">Qual seu objetivo principal?</label>
+          <select name="objetivo" required class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black focus:outline-none">
             <option value="">Selecione...</option>
             <option value="perder">Perder peso</option>
             <option value="ganhar">Ganhar massa muscular</option>
@@ -38,50 +96,38 @@
 
         <!-- Restrições -->
         <div>
-          <label class="block text-sm font-semibold text-gray-700">Você possui alguma restrição alimentar?</label>
-          <input type="text" name="restricoes" placeholder="Ex: lactose, glúten, frutos do mar" class="w-full mt-1 rounded-lg border px-4 py-2 border-gray-300 focus:ring-2 focus:ring-green-400" />
+          <label class="block text-white font-semibold mb-1">Você possui alguma restrição alimentar?</label>
+          <input type="text" name="restricoes" required placeholder="Ex: lactose, glúten" class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black placeholder-gray-600 focus:outline-none">
         </div>
 
         <!-- Preferências -->
+        <div class="md:col-span-2">
+          <label class="block text-white font-semibold mb-1">Alimentos que gosta ou evita:</label>
+          <textarea name="preferencia" rows="3" required placeholder="Ex: gosto de frango, evito atum e batata doce" class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black placeholder-gray-600 focus:outline-none"></textarea>
+        </div>
+
+        <!-- Refeições por dia -->
         <div>
-          <label class="block text-sm font-semibold text-gray-700">Quais alimentos você gosta ou prefere evitar?</label>
-          <textarea name="preferencia" rows="3" placeholder="Ex: gosto de frango, evito atum e batata doce" class="w-full mt-1 rounded-lg border px-4 py-2 border-gray-300 focus:ring-2 focus:ring-green-400"></textarea>
+          <label class="block text-white font-semibold mb-1">Quantas refeições por dia?</label>
+          <input type="number" name="refeicoes_por_dia" min="1" max="10" required placeholder="Ex: 4" class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black focus:outline-none">
         </div>
 
-        <!-- Frequência de refeições -->
+        <!-- Água -->
         <div>
-          <label class="block text-sm font-semibold text-gray-700">Quantas refeições você costuma fazer por dia?</label>
-          <input type="number" name="refeicoes_por_dia" min="1" max="10" required placeholder="Ex: 4" class="w-full mt-1 rounded-lg border px-4 py-2 border-gray-300 focus:ring-2 focus:ring-green-400">
-        </div>
-
-        <!-- Consome carne -->
-        <div class="flex items-center space-x-2">
-          <input type="checkbox" name="come_carne" class="form-checkbox h-5 w-5 text-green-600">
-          <label class="text-sm font-semibold text-gray-700">Você consome carne?</label>
-        </div>
-
-        <!-- Gosta de legumes -->
-        <div class="flex items-center space-x-2">
-          <input type="checkbox" name="gosta_de_legumes" class="form-checkbox h-5 w-5 text-green-600">
-          <label class="text-sm font-semibold text-gray-700">Você gosta de legumes?</label>
-        </div>
-
-        <!-- Ingestão de água -->
-        <div>
-          <label class="block text-sm font-semibold text-gray-700">Quantos copos de água você bebe por dia?</label>
-          <input type="number" name="agua" min="0" max="20" placeholder="Ex: 8" class="w-full mt-1 rounded-lg border px-4 py-2 border-gray-300 focus:ring-2 focus:ring-green-400" />
+          <label class="block text-white font-semibold mb-1">Copos de água por dia:</label>
+          <input type="number" name="agua" min="0" max="20" required placeholder="Ex: 8" class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black focus:outline-none" />
         </div>
 
         <!-- Sono -->
         <div>
-          <label class="block text-sm font-semibold text-gray-700">Quantas horas você costuma dormir por noite?</label>
-          <input type="number" name="sono" min="0" max="24" placeholder="Ex: 7" class="w-full mt-1 rounded-lg border px-4 py-2 border-gray-300 focus:ring-2 focus:ring-green-400" />
+          <label class="block text-white font-semibold mb-1">Horas de sono por noite:</label>
+          <input type="number" name="sono" min="0" max="24" required placeholder="Ex: 7" class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black focus:outline-none" />
         </div>
 
         <!-- Frequência de atividade física -->
         <div>
-          <label class="block text-sm font-semibold text-gray-700">Com que frequência você pratica atividades físicas?</label>
-          <select name="atividade_fisica" required class="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400">
+          <label class="block text-white font-semibold mb-1">Frequência de atividade física:</label>
+          <select name="atividade_fisica" required class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black focus:outline-none">
             <option value="">Selecione...</option>
             <option value="nunca">Nunca</option>
             <option value="1-2x">1-2 vezes por semana</option>
@@ -90,29 +136,51 @@
           </select>
         </div>
 
-        <!-- Suplementação -->
-        <div class="flex items-center space-x-2">
-          <input type="checkbox" name="usa_suplementos" class="form-checkbox h-5 w-5 text-green-600">
-          <label class="text-sm font-semibold text-gray-700">Você faz uso de suplementos alimentares?</label>
+        <!-- Blocos agrupados (carne, legumes, suplementos) -->
+        <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div>
+            <label class="block text-white font-semibold mb-1">Você consome carne?</label>
+            <div class="flex gap-4">
+              <label class="text-white"><input type="radio" name="come_carne" value="sim" required class="mr-2">Sim</label>
+              <label class="text-white"><input type="radio" name="come_carne" value="nao" class="mr-2">Não</label>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-white font-semibold mb-1">Você gosta de legumes?</label>
+            <div class="flex gap-4">
+              <label class="text-white"><input type="radio" name="gosta_de_legumes" value="sim" required class="mr-2">Sim</label>
+              <label class="text-white"><input type="radio" name="gosta_de_legumes" value="nao" class="mr-2">Não</label>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-white font-semibold mb-1">Você usa suplementos?</label>
+            <div class="flex gap-4">
+              <label class="text-white"><input type="radio" name="usa_suplementos" value="sim" required class="mr-2">Sim</label>
+              <label class="text-white"><input type="radio" name="usa_suplementos" value="nao" class="mr-2">Não</label>
+            </div>
+          </div>
         </div>
 
-        <!-- Nível de estresse -->
-        <div>
-          <label class="block text-sm font-semibold text-gray-700">Como você avaliaria seu nível de estresse atualmente?</label>
-          <select name="estresse" required class="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400">
+        <!-- Estresse -->
+        <div class="md:col-span-2">
+          <label class="block text-white font-semibold mb-1">Nível de estresse atual:</label>
+          <select name="estresse" required class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black focus:outline-none">
             <option value="">Selecione...</option>
             <option value="baixo">Baixo</option>
             <option value="moderado">Moderado</option>
             <option value="alto">Alto</option>
           </select>
         </div>
+      </div>
 
-        <!-- Botão -->
-        <button type="submit"
-          class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-lg transition duration-200 text-lg">
+      <div class="flex justify-center mt-8">
+        <button type="submit" class="bg-lime-500 hover:bg-lime-600 text-white px-8 py-3 rounded-full font-semibold shadow-lg transition-transform transform hover:scale-105">
           Enviar Respostas
         </button>
-      </form>
-    </div>
-  </body>
+      </div>
+    </form>
+  </div>
+</body>
 </html>
