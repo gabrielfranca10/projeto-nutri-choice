@@ -3,64 +3,143 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Perfil Nutricional</title>
+  <title>Meu Perfil - NutriChoice</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .bg-image {
+      background: url('https://images.unsplash.com/photo-1543353071-873f17a7a088?q=80&w=1932&auto=format&fit=crop') no-repeat center center fixed;
+      background-size: cover;
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: -2;
+    }
+
+    .bg-overlay {
+      background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3));
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    .profile-box {
+      background-color: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(16px);
+      border-radius: 2rem;
+      padding: 3rem;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+      max-width: 900px;
+      margin: auto;
+      transition: transform 0.3s ease-in-out;
+      animation: fade-in 0.8s ease-out;
+    }
+
+    .profile-box:hover {
+      transform: scale(1.01);
+    }
+
+    .user-info {
+      margin-bottom: 1.5rem;
+    }
+
+    .cardapio-section {
+      display: flex;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .menu-card, .metas-card {
+      width: 48%;
+    }
+
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    svg text {
+      font-family: 'Poppins', sans-serif;
+      font-weight: bold;
     }
   </style>
 </head>
-<body class="bg-gradient-to-br from-yellow-50 to-green-50 min-h-screen py-10 px-4">
-  <div class="max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow-xl">
+<body class="min-h-screen flex items-center justify-center text-white relative">
+
+  <div class="bg-image"></div>
+  <div class="bg-overlay"></div>
+
+  <!-- Botões no topo -->
+  <a href="{% url 'logout' %}" class="absolute top-6 right-6 bg-red-500 hover:bg-red-600 px-6 py-2 rounded-full font-semibold transition duration-300">Sair</a>
+
+  <div class="profile-box text-white">
+
     <div class="text-center mb-6">
-      <img class="w-14 h-14 mx-auto mb-2" src="https://cdn-icons-png.flaticon.com/512/415/415682.png" alt="Logo Frutas" />
-      <h1 class="text-3xl font-bold text-green-700">Perfil Nutricional</h1>
-      <p class="text-gray-500">Veja abaixo o resumo das suas respostas 🍽️</p>
+      <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Ícone Perfil" class="w-20 h-20 mx-auto mb-3">
+      <h1 class="text-3xl font-bold">Meu Perfil</h1>
+      <p class="text-gray-200">Aqui estão seus dados e seu cardápio diário</p>
     </div>
 
-    {% if dados %}
-    <ul class="space-y-2 text-gray-700 text-base">
-      <li><strong>Nome:</strong> {{ dados.nome }}</li>
-      <li><strong>Idade:</strong> {{ dados.idade }}</li>
-      <li><strong>Gênero:</strong> {{ dados.genero }}</li>
-      <li><strong>Objetivo:</strong> {{ dados.objetivo }}</li>
-      <li><strong>Refeições por dia:</strong> {{ dados.refeicoes_por_dia }}</li>
-      <li><strong>Consome carne:</strong> {{ dados.come_carne|yesno:"Sim,Não" }}</li>
-      <li><strong>Gosta de legumes:</strong> {{ dados.gosta_de_legumes|yesno:"Sim,Não" }}</li>
-      <li><strong>Água por dia:</strong> {{ dados.agua }} copos</li>
-      <li><strong>Horas de sono:</strong> {{ dados.sono }}</li>
-      <li><strong>Atividade física:</strong> {{ dados.atividade_fisica }}</li>
-      <li><strong>Usa suplementos:</strong> {{ dados.usa_suplementos|yesno:"Sim,Não" }}</li>
-      <li><strong>Nível de estresse:</strong> {{ dados.estresse }}</li>
-      <li><strong>Restrições alimentares:</strong> {{ dados.restricoes }}</li>
-      <li><strong>Preferências:</strong> {{ dados.preferencia }}</li>
-    </ul>
-
-    <div class="mt-8">
-      <h2 class="text-xl font-semibold text-green-700 mb-3">Cardápio sugerido 🌿</h2>
-      <ul class="list-disc pl-5 text-gray-800">
-        {% for refeicao, comidas in cardapio.items %}
-          <li>
-            <strong>{{ refeicao|capfirst }}:</strong>
-            {{ comidas|join:", " }}
-          </li>
-        {% endfor %}
-      </ul>
+    <!-- Dados do usuário -->
+    <div class="user-info">
+      <h2 class="text-xl font-semibold mb-2">Meus Dados</h2>
+      <p><strong>Nome de usuário:</strong> {{ user.username }}</p>
+      <p><strong>Email:</strong> {{ user.email }}</p>
+      <p><strong>Idade:</strong> {{ dados.idade }} anos</p>
+      <p><strong>Peso:</strong> {{ dados.peso }} kg</p>
+      <p><strong>Altura:</strong> {{ dados.altura }} cm</p>
     </div>
-    {% else %}
-    <p class="text-red-600">Nenhum dado encontrado. Faça o questionário primeiro.</p>
-    {% endif %}
 
-    <div class="mt-10 flex justify-between">
-      <a href="{% url 'questionario' %}" class="bg-yellow-400 hover:bg-yellow-500 text-white font-semibold px-6 py-2 rounded-lg shadow transition">
-        Refazer Questionário
-      </a>
-      <a href="{% url 'perfil_nutricional' %}" class="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-lg shadow transition">
-        Ver Perfil Nutricional
-      </a>
+    <!-- Cardápio e Metas lado a lado -->
+    <div class="cardapio-section">
+      <div class="menu-card">
+        <h2 class="text-xl font-semibold mb-4">Cardápio Diário</h2>
+        <ul>
+          {% for refeicao, descricao in cardapio.items %}
+            <li class="mb-2">
+              <strong>{{ refeicao }}</strong>: {{ descricao }}
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="metas-card">
+        <h2 class="text-xl font-semibold mb-4">Adicionar e Acompanhar Metas</h2>
+        <ul>
+          <li><input type="checkbox" id="ganho_kg" {% if dados.objetivo == "ganhar" %}checked{% endif %}> Ganho de peso (kg)</li>
+          <li><input type="checkbox" id="perda_kg" {% if dados.objetivo == "perder" %}checked{% endif %}> Perda de peso (kg)</li>
+          <li><input type="checkbox" id="manutencao" {% if dados.objetivo == "saúde" %}checked{% endif %}> Manutenção</li>
+        </ul>
+      </div>
     </div>
+
+    <!-- Lembrete de Água com gráfico SVG -->
+    <div class="mt-8 text-center">
+      <h2 class="text-xl font-semibold mb-4">Lembrete de Água</h2>
+
+      <svg viewBox="0 0 36 36" class="w-36 h-36 mx-auto mb-2">
+        <path class="text-gray-300" stroke-width="3" stroke="currentColor" fill="none"
+              d="M18 2.0845a 15.9155 15.9155 0 0 1 0 31.831
+                 a 15.9155 15.9155 0 0 1 0 -31.831" />
+        <path class="text-green-400" stroke-width="3" stroke-dasharray="{{ porcentagem_agua }}, 100" stroke="currentColor" fill="none"
+              d="M18 2.0845a 15.9155 15.9155 0 0 1 0 31.831
+                 a 15.9155 15.9155 0 0 1 0 -31.831" />
+        <text x="18" y="20.35" fill="white" font-size="5" text-anchor="middle">{{ porcentagem_agua|floatformat:0 }}%</text>
+      </svg>
+
+      <p class="text-gray-200">Faltam {{ agua_faltante }} ml para atingir sua meta de água hoje!</p>
+    </div>
+
   </div>
+
 </body>
 </html>

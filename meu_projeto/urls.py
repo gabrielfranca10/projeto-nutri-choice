@@ -9,4 +9,5 @@ urlpatterns = [
     path('cadastro/', views.cadastro_view, name='cadastro'),
     path('questionario/', views.questionario_view, name='questionario'),
     path('perfil/', views.perfil_nutricional_view, name='perfil_nutricional'),
+    path('logout/', views.logout_view, name='logout'),  # Adicionando a URL para o logout
 ]
