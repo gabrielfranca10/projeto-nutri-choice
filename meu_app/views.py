@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Questionario
+from .models import Alimento, Substituicao, Questionario
 
 # === TELA DE LOGIN ===
 def login_view(request):
@@ -147,14 +148,20 @@ def perfil_nutricional_view(request):
         agua_faltante = max(meta_agua - agua_bebida, 0)
         porcentagem_agua = min((agua_bebida / meta_agua) * 100, 100)
 
+        # Gerar o cardápio com base no questionário
+        from .utils import gerar_cardapio  # ou onde estiver essa função
+        cardapio = gerar_cardapio(ultimo)
+
         return render(request, 'meu_app/perfil.html', {
-            'dados': ultimo,
+            'questionario': ultimo,
             'agua_faltante': agua_faltante,
             'porcentagem_agua': round(porcentagem_agua, 2),
+            'cardapio': cardapio,
         })
     else:
         messages.error(request, 'Complete o questionário para ver seu perfil nutricional!')
         return render(request, 'meu_app/perfil.html')
+
 
 # === CARDÁPIO PERSONALIZADO ===
 @login_required
@@ -228,4 +235,43 @@ def excluir_perfil(request):
         return redirect('login')  # Redireciona para a página inicial ou outra página
 
     return render(request, 'meu_app/excluir_conta.html')
+
+
+@login_required
+def substituicoes_view(request):
+    termo = request.GET.get('busca')
+    substituicoes = []
+    erro = ''
+
+    if termo:
+        try:
+            alimento = Alimento.objects.get(nome__icontains=termo)
+
+            # Pega preferências do usuário (se tiver questionário preenchido)
+            questionario = Questionario.objects.filter(usuario=request.user).last()
+            preferencias = {
+                'vegetariano': not questionario.come_carne if questionario else False,
+                'sem_lactose': 'lactose' in (questionario.restricoes.lower() if questionario else ''),
+                'sem_gluten': 'gluten' in (questionario.restricoes.lower() if questionario else ''),
+            }
+
+            # Filtra substituições compatíveis
+            substituicoes = Substituicao.objects.filter(alimento_original=alimento)
+            substituicoes = [
+                s for s in substituicoes
+                if (not preferencias['vegetariano'] or s.alternativa.vegetariano)
+                and (not preferencias['sem_lactose'] or s.alternativa.sem_lactose)
+                and (not preferencias['sem_gluten'] or s.alternativa.sem_gluten)
+            ]
+
+        except Alimento.DoesNotExist:
+            erro = "Alimento não encontrado. Tente outro nome ou veja sugestões abaixo."
+            sugestoes = Alimento.objects.filter(nome__icontains=termo[:3])
+            return render(request, 'meu_app/substituicoes.html', {'erro': erro, 'sugestoes': sugestoes})
+
+    return render(request, 'meu_app/substituicoes.html', {
+        'substituicoes': substituicoes,
+        'termo': termo
+    })
+
 

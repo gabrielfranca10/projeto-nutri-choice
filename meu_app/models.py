@@ -25,3 +25,32 @@ class Questionario(models.Model):
     def __str__(self):
         # Retorna o nome ou "Questionário Anônimo" se o nome estiver em branco
         return self.nome if self.nome else "Questionário Anônimo"
+
+class Alimento(models.Model):
+    nome = models.CharField(max_length=100, unique=True)
+    categoria = models.CharField(max_length=100)  # ex: proteína, carboidrato, etc
+    valor_nutricional = models.TextField(blank=True)  # opcional: pode ser um resumo
+    vegetariano = models.BooleanField(default=False)
+    sem_lactose = models.BooleanField(default=False)
+    sem_gluten = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.nome
+
+class Substituicao(models.Model):
+    alimento_original = models.ForeignKey(Alimento, on_delete=models.CASCADE, related_name='alternativas_para')
+    alternativa = models.ForeignKey(Alimento, on_delete=models.CASCADE, related_name='substitui')
+    justificativa = models.TextField(blank=True)
+
+    def __str__(self):
+        return f"{self.alternativa.nome} como substituto de {self.alimento_original.nome}"
+    
+class Cardapio(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    data_criacao = models.DateTimeField(auto_now_add=True)
+    itens = models.TextField()  # Pode armazenar como JSON string ou texto simples
+
+    def __str__(self):
+        return f"Cardápio de {self.usuario.username} em {self.data_criacao.strftime('%d/%m/%Y')}"
+
+

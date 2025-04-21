@@ -1,148 +1,158 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Meu Perfil - NutriChoice</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfil - NutriChoice</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
     body {
-      font-family: 'Poppins', sans-serif;
+      cursor: url('https://cdn-icons-png.flaticon.com/512/1642/1642495.png'), auto;
     }
 
     .bg-image {
-      background: url('https://images.unsplash.com/photo-1543353071-873f17a7a088?q=80&w=1932&auto=format&fit=crop') no-repeat center center fixed;
+      background: url('https://images.unsplash.com/photo-1617957743097-0d20aa2ea762?q=80&w=1932&auto=format&fit=crop') no-repeat center center fixed;
       background-size: cover;
       position: fixed;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       z-index: -2;
+      animation: fadeIn 2s ease-in-out;
     }
 
     .bg-overlay {
-      background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3));
+      background: linear-gradient(to right, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.2));
       position: fixed;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       z-index: -1;
     }
 
-    .profile-box {
-      background-color: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(16px);
+    .glass-box {
+      background-color: rgba(255, 255, 255, 0.2);
       border-radius: 2rem;
-      padding: 3rem;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-      max-width: 900px;
-      margin: auto;
-      transition: transform 0.3s ease-in-out;
-      animation: fade-in 0.8s ease-out;
+      padding: 2.5rem;
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      width: 100%;
+      transition: transform 0.3s ease;
     }
 
-    .profile-box:hover {
-      transform: scale(1.01);
+    .glass-box:hover {
+      transform: scale(1.02);
     }
 
-    .user-info {
-      margin-bottom: 1.5rem;
-    }
-
-    .cardapio-section {
-      display: flex;
-      justify-content: space-between;
-      gap: 2rem;
-    }
-
-    .menu-card, .metas-card {
-      width: 48%;
-    }
-
-    @keyframes fade-in {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    svg text {
-      font-family: 'Poppins', sans-serif;
+    .btn-primary {
+      padding: 10px 20px;
+      border-radius: 12px;
+      text-align: center;
+      color: white;
       font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.3s ease, background-color 0.3s ease;
     }
+
+    .btn-primary:hover {
+      transform: scale(1.05);
+    }
+
+    .btn-editar {
+      background-color: #4A90E2; /* Azul */
+    }
+
+    .btn-editar:hover {
+      background-color: #357ABD;
+    }
+
+    .btn-excluir {
+      background-color: #E74C3C; /* Vermelho */
+    }
+
+    .btn-excluir:hover {
+      background-color: #C0392B;
+    }
+
+    .btn-substituicoes {
+      background-color: #F1C40F; /* Amarelo */
+      color: white;
+      margin-top: 30px; /* Ajustado para um pouco mais para baixo */
+    }
+
+    .btn-substituicoes:hover {
+      background-color: #F39C12;
+      transform: scale(1.05);
+    }
+
+    .animate-cardapio {
+      animation: fadeIn 2s ease-out;
+    }
+
+    @media (max-width: 1024px) {
+      .flex-col-responsive {
+        flex-direction: column;
+      }
+    }
+
   </style>
 </head>
-<body class="min-h-screen flex items-center justify-center text-white relative">
+<body class="font-sans text-white flex items-center justify-center min-h-screen overflow-hidden">
 
   <div class="bg-image"></div>
   <div class="bg-overlay"></div>
 
-  <!-- Botões no topo -->
-  <a href="{% url 'logout' %}" class="absolute top-6 right-6 bg-red-500 hover:bg-red-600 px-6 py-2 rounded-full font-semibold transition duration-300">Sair</a>
+  <div class="flex flex-col-responsive lg:flex-row gap-10 w-full max-w-7xl mx-4 p-10">
 
-  <div class="profile-box text-white">
+    <!-- Caixa do Perfil -->
+    <div class="glass-box flex-1 animate-cardapio">
+      <h2 class="text-3xl font-bold text-lime-400 mb-6 text-center">Meu Perfil</h2>
+      <ul class="space-y-3 text-white text-lg">
+        <li><strong>Nome:</strong> {{ questionario.nome }}</li>
+        <li><strong>Idade:</strong> {{ questionario.idade }}</li>
+        <li><strong>Altura:</strong> {{ questionario.altura }} cm</li>
+        <li><strong>Peso:</strong> {{ questionario.peso }} kg</li>
+        <li><strong>Objetivo:</strong> {{ questionario.objetivo }}</li>
+        <li><strong>Preferências:</strong> {{ questionario.preferencia }}</li>
+        <li><strong>Restrições:</strong> {{ questionario.restricoes }}</li>
+      </ul>
 
-    <div class="text-center mb-6">
-      <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Ícone Perfil" class="w-20 h-20 mx-auto mb-3">
-      <h1 class="text-3xl font-bold">Meu Perfil</h1>
-      <p class="text-gray-200">Aqui estão seus dados e seu cardápio diário</p>
-    </div>
-
-    <!-- Botões Editar e Excluir -->
-    <div class="flex justify-center gap-6 mb-6">
-      <a href="{% url 'editar_perfil' %}" class="px-6 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition duration-300">Editar Perfil</a>
-      <a href="{% url 'excluir_perfil' %}" class="px-6 py-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition duration-300">Excluir Perfil</a>
-    </div>
-
-    <!-- Dados do usuário -->
-    <div class="user-info">
-      <h2 class="text-xl font-semibold mb-2">Meus Dados</h2>
-      <p><strong>Nome de usuário:</strong> {{ user.username }}</p>
-      <p><strong>Email:</strong> {{ user.email }}</p>
-      <p><strong>Idade:</strong> {{ dados.idade }} anos</p>
-      <p><strong>Peso:</strong> {{ dados.peso }} kg</p>
-      <p><strong>Altura:</strong> {{ dados.altura }} cm</p>
-    </div>
-
-    <!-- Cardápio e Metas lado a lado -->
-    <div class="cardapio-section">
-      <div class="menu-card">
-        <h2 class="text-xl font-semibold mb-4">Cardápio Diário</h2>
-        <ul>
-          {% for refeicao, descricao in cardapio.items %}
-            <li class="mb-2">
-              <strong>{{ refeicao }}</strong>: {{ descricao }}
-            </li>
-          {% endfor %}
-        </ul>
-      </div>
-
-      <div class="metas-card">
-        <h2 class="text-xl font-semibold mb-4">Adicionar e Acompanhar Metas</h2>
-        <ul>
-          <li><input type="checkbox" id="ganho_kg" {% if dados.objetivo == "ganhar" %}checked{% endif %}> Ganho de peso (kg)</li>
-          <li><input type="checkbox" id="perda_kg" {% if dados.objetivo == "perder" %}checked{% endif %}> Perda de peso (kg)</li>
-          <li><input type="checkbox" id="manutencao" {% if dados.objetivo == "saúde" %}checked{% endif %}> Manutenção</li>
-        </ul>
+      <div class="mt-8 flex gap-4 justify-center">
+        <a href="{% url 'editar_perfil' %}" class="btn-primary btn-editar w-full text-center">
+          Editar Dados
+        </a>
+        <a href="{% url 'excluir_perfil' %}" class="btn-primary btn-excluir w-full text-center">
+          Excluir Conta
+        </a>
       </div>
     </div>
 
-    <!-- Lembrete de Água com gráfico SVG -->
-    <div class="mt-8 text-center">
-      <h2 class="text-xl font-semibold mb-4">Lembrete de Água</h2>
-
-      <svg viewBox="0 0 36 36" class="w-36 h-36 mx-auto mb-2">
-        <path class="text-gray-300" stroke-width="3" stroke="currentColor" fill="none"
-              d="M18 2.0845a 15.9155 15.9155 0 0 1 0 31.831
-                 a 15.9155 15.9155 0 0 1 0 -31.831" />
-        <path class="text-green-400" stroke-width="3" stroke-dasharray="{{ porcentagem_agua }}, 100" stroke="currentColor" fill="none"
-              d="M18 2.0845a 15.9155 15.9155 0 0 1 0 31.831
-                 a 15.9155 15.9155 0 0 1 0 -31.831" />
-        <text x="18" y="20.35" fill="white" font-size="5" text-anchor="middle">{{ porcentagem_agua|floatformat:0 }}%</text>
-      </svg>
-
-      <p class="text-gray-200">Faltam {{ agua_faltante }} ml para atingir sua meta de água hoje!</p>
+    <!-- Caixa do Cardápio -->
+    <div class="glass-box flex-1 animate-cardapio">
+      <h2 class="text-3xl font-bold text-lime-400 mb-6 text-center">Seu Cardápio</h2>
+      {% if cardapio %}
+        <div class="space-y-4">
+          <ul class="list-none space-y-4">
+            {% for item in cardapio %}
+              <li class="flex items-center justify-between p-4 bg-white/30 rounded-lg shadow-lg backdrop-blur-lg hover:scale-105 transform transition duration-300 ease-in-out">
+                <span class="text-white text-lg">{{ item }}</span>
+                <span class="text-lime-400 font-semibold">✔️</span>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% else %}
+        <p class="text-white text-lg text-center font-semibold">Nenhum cardápio gerado ainda. Complete o questionário para receber o seu!</p>
+      {% endif %}
+      <div class="mt-6 text-center">
+        <a href="{% url 'substituicoes' %}" class="btn-primary btn-substituicoes w-full text-center px-4 py-2 rounded-lg transition transform hover:scale-105">
+          Ver Substituições
+        </a>
+      </div>
     </div>
 
   </div>
