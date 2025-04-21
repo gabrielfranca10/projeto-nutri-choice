@@ -2,8 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Questionario(models.Model):
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
-    nome = models.CharField(max_length=100, blank=True)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)  # Relacionamento com o User
+    nome = models.CharField(max_length=100, blank=True, null=True)  # Permitindo nome em branco ou nulo
     idade = models.IntegerField(null=True, blank=True)
     peso = models.FloatField(null=True, blank=True)   
     altura = models.FloatField(null=True, blank=True)
@@ -23,4 +23,5 @@ class Questionario(models.Model):
     estresse = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
-        return self.nome or "Questionário Anônimo"
+        # Retorna o nome ou "Questionário Anônimo" se o nome estiver em branco
+        return self.nome if self.nome else "Questionário Anônimo"

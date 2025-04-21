@@ -3,10 +3,10 @@ from . import views
 
 urlpatterns = [
     path('login/', views.login_view, name='login'),
-    path('cadastro/', views.cadastro_view, name='cadastro'),  # Tela de cadastro
-    path('questionario/', views.questionario_view, name='questionario'),  # Tela do questionário
-    path('perfil/', views.perfil_nutricional_view, name='perfil_nutricional'),  # Tela de perfil
-    path('cardapio/', views.cardapio_view, name='cardapio'),  # Tela de cardápio
-    path('redirecionar-login/', views.redirecionar_para_login, name='redirecionar_login'),  # Página de login
-    path('logout/', views.logout_view, name='logout'),  # Usando uma view personalizada para logout
+    path('cadastro/', views.cadastro_view, name='cadastro'),
+    path('questionario/', views.questionario_view, name='questionario'),
+    path('perfil/', views.perfil_nutricional_view, name='perfil_nutricional'),
+    path('editar-perfil/', views.editar_perfil, name='editar_perfil'),
+    path('excluir-perfil/', views.excluir_perfil, name='excluir_perfil'),
+    path('logout/', views.logout_view, name='logout'),
 ]

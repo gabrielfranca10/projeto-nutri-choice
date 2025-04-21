@@ -175,3 +175,57 @@ def logout_view(request):
 # REDIRECIONAMENTO PARA LOGIN
 def redirecionar_para_login(request):
     return redirect('login')
+
+from django.shortcuts import render, redirect
+from .models import Questionario
+
+def editar_perfil(request):
+    # Obtém o questionário relacionado ao usuário
+    questionario = Questionario.objects.get(usuario=request.user)
+
+    if request.method == 'POST':
+        # Atualiza os dados do questionário com os dados enviados pelo POST
+        questionario.nome = request.POST.get('nome', questionario.nome)
+        questionario.idade = request.POST.get('idade', questionario.idade)
+        questionario.peso = request.POST.get('peso', questionario.peso)
+        questionario.altura = request.POST.get('altura', questionario.altura)
+        questionario.genero = request.POST.get('genero', questionario.genero)
+        questionario.objetivo = request.POST.get('objetivo', questionario.objetivo)
+        questionario.restricoes = request.POST.get('restricoes', questionario.restricoes)
+        questionario.preferencia = request.POST.get('preferencia', questionario.preferencia)
+        questionario.fome = request.POST.get('fome', questionario.fome)
+        questionario.refeicoes_por_dia = request.POST.get('refeicoes_por_dia', questionario.refeicoes_por_dia)
+        questionario.come_carne = request.POST.get('come_carne') == 'on'
+        questionario.gosta_de_legumes = request.POST.get('gosta_de_legumes') == 'on'
+        questionario.agua = request.POST.get('agua', questionario.agua)
+        questionario.agua_bebida = request.POST.get('agua_bebida', questionario.agua_bebida)
+        questionario.sono = request.POST.get('sono', questionario.sono)
+        questionario.atividade_fisica = request.POST.get('atividade_fisica', questionario.atividade_fisica)
+        questionario.usa_suplementos = request.POST.get('usa_suplementos') == 'on'
+        questionario.estresse = request.POST.get('estresse', questionario.estresse)
+
+        questionario.save()
+
+        # Redireciona para a página do perfil
+        return redirect('perfil_nutricional')
+
+    return render(request, 'meu_app/editar_perfil.html', {'questionario': questionario})
+
+@login_required
+def excluir_perfil(request):
+    if request.method == 'POST':
+        # Exclui o questionário do usuário antes de excluir o usuário
+        try:
+            questionario = Questionario.objects.get(usuario=request.user)
+            questionario.delete()  # Exclui os dados do questionário
+        except Questionario.DoesNotExist:
+            pass  # Caso o questionário não exista, nada será feito
+
+        # Exclui o usuário
+        user = request.user
+        user.delete()
+        messages.success(request, 'Sua conta foi excluída com sucesso.')
+        return redirect('login')  # Redireciona para a página inicial ou outra página
+
+    return render(request, 'meu_app/excluir_conta.html')
+

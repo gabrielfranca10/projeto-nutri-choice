@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Editar Perfil - NutriChoice</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .bg-image {
+      background: url('https://images.unsplash.com/photo-1543353071-873f17a7a088?q=80&w=1932&auto=format&fit=crop') no-repeat center center fixed;
+      background-size: cover;
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+    }
+
+    .bg-overlay {
+      background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4));
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    .form-box {
+      background-color: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(18px);
+      border-radius: 2rem;
+      padding: 3rem;
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+      animation: fade-in 0.7s ease-out;
+    }
+
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    input {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center text-white relative">
+
+  <div class="bg-image"></div>
+  <div class="bg-overlay"></div>
+
+  <div class="form-box">
+    <h1 class="text-3xl font-bold text-center mb-6">Editar Perfil</h1>
+
+    <form action="" method="POST" class="space-y-4">
+      {% csrf_token %}
+      <input type="text" name="nome" placeholder="Nome" class="w-full p-3 rounded-lg text-black" value="{{ dados.nome }}">
+      <input type="number" name="idade" placeholder="Idade" class="w-full p-3 rounded-lg text-black" value="{{ dados.idade }}">
+      <input type="number" name="peso" placeholder="Peso" class="w-full p-3 rounded-lg text-black" value="{{ dados.peso }}">
+      <input type="number" name="altura" placeholder="Altura" class="w-full p-3 rounded-lg text-black" value="{{ dados.altura }}">
+
+      <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-lg text-white font-semibold transition">Salvar Alterações</button>
+      <a href="{% url 'perfil_nutricional' %}" class="block text-center text-sm text-gray-200 mt-3 underline">Voltar ao Perfil</a>
+    </form>
+  </div>
+
+</body>
+</html>
