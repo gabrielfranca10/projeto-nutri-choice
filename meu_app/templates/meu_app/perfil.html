@@ -1,66 +1,161 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Perfil Nutricional</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfil - NutriChoice</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
-    body {
-      font-family: 'Inter', sans-serif;
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
     }
+
+    body {
+      cursor: url('https://cdn-icons-png.flaticon.com/512/1642/1642495.png'), auto;
+    }
+
+    .bg-image {
+      background: url('https://images.unsplash.com/photo-1617957743097-0d20aa2ea762?q=80&w=1932&auto=format&fit=crop') no-repeat center center fixed;
+      background-size: cover;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -2;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    .bg-overlay {
+      background: linear-gradient(to right, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.2));
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+    }
+
+    .glass-box {
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 2rem;
+      padding: 2.5rem;
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      width: 100%;
+      transition: transform 0.3s ease;
+    }
+
+    .glass-box:hover {
+      transform: scale(1.02);
+    }
+
+    .btn-primary {
+      padding: 10px 20px;
+      border-radius: 12px;
+      text-align: center;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      transform: scale(1.05);
+    }
+
+    .btn-editar {
+      background-color: #4A90E2; /* Azul */
+    }
+
+    .btn-editar:hover {
+      background-color: #357ABD;
+    }
+
+    .btn-excluir {
+      background-color: #E74C3C; /* Vermelho */
+    }
+
+    .btn-excluir:hover {
+      background-color: #C0392B;
+    }
+
+    .btn-substituicoes {
+      background-color: #F1C40F; /* Amarelo */
+      color: white;
+      margin-top: 30px; /* Ajustado para um pouco mais para baixo */
+    }
+
+    .btn-substituicoes:hover {
+      background-color: #F39C12;
+      transform: scale(1.05);
+    }
+
+    .animate-cardapio {
+      animation: fadeIn 2s ease-out;
+    }
+
+    @media (max-width: 1024px) {
+      .flex-col-responsive {
+        flex-direction: column;
+      }
+    }
+
   </style>
 </head>
-<body class="bg-gradient-to-br from-yellow-50 to-green-50 min-h-screen py-10 px-4">
-  <div class="max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow-xl">
-    <div class="text-center mb-6">
-      <img class="w-14 h-14 mx-auto mb-2" src="https://cdn-icons-png.flaticon.com/512/415/415682.png" alt="Logo Frutas" />
-      <h1 class="text-3xl font-bold text-green-700">Perfil Nutricional</h1>
-      <p class="text-gray-500">Veja abaixo o resumo das suas respostas 🍽️</p>
-    </div>
+<body class="font-sans text-white flex items-center justify-center min-h-screen overflow-hidden">
 
-    {% if dados %}
-    <ul class="space-y-2 text-gray-700 text-base">
-      <li><strong>Nome:</strong> {{ dados.nome }}</li>
-      <li><strong>Idade:</strong> {{ dados.idade }}</li>
-      <li><strong>Gênero:</strong> {{ dados.genero }}</li>
-      <li><strong>Objetivo:</strong> {{ dados.objetivo }}</li>
-      <li><strong>Refeições por dia:</strong> {{ dados.refeicoes_por_dia }}</li>
-      <li><strong>Consome carne:</strong> {{ dados.come_carne|yesno:"Sim,Não" }}</li>
-      <li><strong>Gosta de legumes:</strong> {{ dados.gosta_de_legumes|yesno:"Sim,Não" }}</li>
-      <li><strong>Água por dia:</strong> {{ dados.agua }} copos</li>
-      <li><strong>Horas de sono:</strong> {{ dados.sono }}</li>
-      <li><strong>Atividade física:</strong> {{ dados.atividade_fisica }}</li>
-      <li><strong>Usa suplementos:</strong> {{ dados.usa_suplementos|yesno:"Sim,Não" }}</li>
-      <li><strong>Nível de estresse:</strong> {{ dados.estresse }}</li>
-      <li><strong>Restrições alimentares:</strong> {{ dados.restricoes }}</li>
-      <li><strong>Preferências:</strong> {{ dados.preferencia }}</li>
-    </ul>
+  <div class="bg-image"></div>
+  <div class="bg-overlay"></div>
 
-    <div class="mt-8">
-      <h2 class="text-xl font-semibold text-green-700 mb-3">Cardápio sugerido 🌿</h2>
-      <ul class="list-disc pl-5 text-gray-800">
-        {% for refeicao, comidas in cardapio.items %}
-          <li>
-            <strong>{{ refeicao|capfirst }}:</strong>
-            {{ comidas|join:", " }}
-          </li>
-        {% endfor %}
+  <div class="flex flex-col-responsive lg:flex-row gap-10 w-full max-w-7xl mx-4 p-10">
+
+    <!-- Caixa do Perfil -->
+    <div class="glass-box flex-1 animate-cardapio">
+      <h2 class="text-3xl font-bold text-lime-400 mb-6 text-center">Meu Perfil</h2>
+      <ul class="space-y-3 text-white text-lg">
+        <li><strong>Nome:</strong> {{ questionario.nome }}</li>
+        <li><strong>Idade:</strong> {{ questionario.idade }}</li>
+        <li><strong>Altura:</strong> {{ questionario.altura }} cm</li>
+        <li><strong>Peso:</strong> {{ questionario.peso }} kg</li>
+        <li><strong>Objetivo:</strong> {{ questionario.objetivo }}</li>
+        <li><strong>Preferências:</strong> {{ questionario.preferencia }}</li>
+        <li><strong>Restrições:</strong> {{ questionario.restricoes }}</li>
       </ul>
-    </div>
-    {% else %}
-    <p class="text-red-600">Nenhum dado encontrado. Faça o questionário primeiro.</p>
-    {% endif %}
 
-    <div class="mt-10 flex justify-between">
-      <a href="{% url 'questionario' %}" class="bg-yellow-400 hover:bg-yellow-500 text-white font-semibold px-6 py-2 rounded-lg shadow transition">
-        Refazer Questionário
-      </a>
-      <a href="{% url 'perfil_nutricional' %}" class="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-lg shadow transition">
-        Ver Perfil Nutricional
-      </a>
+      <div class="mt-8 flex gap-4 justify-center">
+        <a href="{% url 'editar_perfil' %}" class="btn-primary btn-editar w-full text-center">
+          Editar Dados
+        </a>
+        <a href="{% url 'excluir_perfil' %}" class="btn-primary btn-excluir w-full text-center">
+          Excluir Conta
+        </a>
+      </div>
     </div>
+
+    <!-- Caixa do Cardápio -->
+    <div class="glass-box flex-1 animate-cardapio">
+      <h2 class="text-3xl font-bold text-lime-400 mb-6 text-center">Seu Cardápio</h2>
+      {% if cardapio %}
+        <div class="space-y-4">
+          <ul class="list-none space-y-4">
+            {% for item in cardapio %}
+              <li class="flex items-center justify-between p-4 bg-white/30 rounded-lg shadow-lg backdrop-blur-lg hover:scale-105 transform transition duration-300 ease-in-out">
+                <span class="text-white text-lg">{{ item }}</span>
+                <span class="text-lime-400 font-semibold">✔️</span>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% else %}
+        <p class="text-white text-lg text-center font-semibold">Nenhum cardápio gerado ainda. Complete o questionário para receber o seu!</p>
+      {% endif %}
+      <div class="mt-6 text-center">
+        <a href="{% url 'substituicoes' %}" class="btn-primary btn-substituicoes w-full text-center px-4 py-2 rounded-lg transition transform hover:scale-105">
+          Ver Substituições
+        </a>
+      </div>
+    </div>
+
   </div>
+
 </body>
 </html>

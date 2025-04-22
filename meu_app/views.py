@@ -1,9 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages  # Para mensagens de sucesso/erro
-from .models import Questionario
+from django.contrib import messages
+from .models import Questionario, Alimento, Substituicao, Cardapio
+from django.db.models import Q
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+import json
 
 # === TELA DE LOGIN ===
 def login_view(request):
@@ -19,16 +23,14 @@ def login_view(request):
 
         if user:
             login(request, user)
-            return redirect('perfil_nutricional')
+            return redirect('perfil_nutricional')  # Redireciona para o perfil nutricional
         else:
             messages.error(request, 'Credenciais inválidas')
             return render(request, 'meu_app/login.html')
 
     return render(request, 'meu_app/login.html')
 
-
 # === TELA DE CADASTRO ===
-# Função de cadastro
 def cadastro_view(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -36,7 +38,6 @@ def cadastro_view(request):
         password = request.POST.get('senha')
         password2 = request.POST.get('confirmar_senha')
 
-        # Verificando se todos os campos estão preenchidos
         if not all([username, email, password, password2]):
             messages.error(request, 'Preencha todos os campos')
             return render(request, 'meu_app/cadastro.html')
@@ -49,35 +50,34 @@ def cadastro_view(request):
             messages.error(request, 'Nome de usuário já existe')
             return render(request, 'meu_app/cadastro.html')
 
-        # Criação do usuário
         user = User.objects.create_user(username=username, email=email, password=password)
         user.save()
-
-        # Faz login automaticamente após o cadastro
         login(request, user)
-
-        # Mensagem de sucesso
         messages.success(request, 'Cadastro realizado com sucesso!')
-
-        # Redireciona para a página do questionário após o cadastro
-        return redirect('questionario')  # Redireciona para a página do questionário
+        return redirect('questionario')  # Redireciona para o questionário
 
     return render(request, 'meu_app/cadastro.html')
-
 
 # === QUESTIONÁRIO NUTRICIONAL ===
 @login_required
 def questionario_view(request):
     if request.method == 'POST':
         dados = {
+            'nome': request.POST.get('nome') or '',
+            'idade': request.POST.get('idade') or None,
+            'peso': request.POST.get('peso') or None,
+            'altura': request.POST.get('altura') or None,
+            'genero': request.POST.get('genero') or '',
             'objetivo': request.POST.get('objetivo'),
             'restricoes': request.POST.get('restricoes') or '',
             'preferencia': request.POST.get('preferencia') or '',
+            'fome': request.POST.get('fome') or '',
             'refeicoes_por_dia': request.POST.get('refeicoes_por_dia'),
             'come_carne': request.POST.get('come_carne') == 'sim',
             'gosta_de_legumes': request.POST.get('gosta_de_legumes') == 'sim',
-            'agua': request.POST.get('agua') or '0',
-            'sono': request.POST.get('sono') or '0',
+            'agua': request.POST.get('agua') or '',
+            'agua_bebida': request.POST.get('agua_bebida') or 0,
+            'sono': request.POST.get('sono') or '',
             'atividade_fisica': request.POST.get('atividade_fisica'),
             'usa_suplementos': request.POST.get('usa_suplementos') == 'sim',
             'estresse': request.POST.get('estresse'),
@@ -89,18 +89,15 @@ def questionario_view(request):
                 messages.error(request, 'Preencha todos os campos obrigatórios')
                 return render(request, 'meu_app/questionario.html')
 
-        # Cria ou atualiza os dados do questionário para o usuário
         Questionario.objects.update_or_create(
             usuario=request.user,
             defaults=dados
         )
 
-        # Gerar o cardápio personalizado com base nos dados preenchidos
         cardapio = gerar_cardapio_personalizado(dados)
         return render(request, 'meu_app/cardapio.html', {'cardapio': cardapio, 'dados': dados})
 
     return render(request, 'meu_app/questionario.html')
-
 
 # === GERADOR DE CARDÁPIO ===
 def gerar_cardapio_personalizado(dados):
@@ -111,17 +108,19 @@ def gerar_cardapio_personalizado(dados):
         'Jantar': [],
     }
 
-    if dados['objetivo'].lower() == 'ganhar':
+    objetivo = dados['objetivo'].lower()
+
+    if 'ganhar' in objetivo:
         cardapio['Café da Manhã'].append("Ovos mexidos + pão integral + vitamina de banana com aveia")
         cardapio['Almoço'].append("Arroz integral + frango grelhado + legumes no vapor")
         cardapio['Lanche da Tarde'].append("Iogurte natural com granola")
         cardapio['Jantar'].append("Omelete com batata doce e salada")
-    elif dados['objetivo'].lower() == 'perder':
+    elif 'perder' in objetivo:
         cardapio['Café da Manhã'].append("Iogurte desnatado + frutas vermelhas")
         cardapio['Almoço'].append("Peito de frango + salada verde com azeite e quinoa")
         cardapio['Lanche da Tarde'].append("Castanhas e uma fruta")
         cardapio['Jantar'].append("Sopa de legumes com frango desfiado")
-    elif dados['objetivo'].lower() == 'saude':
+    elif 'saúde' in objetivo or 'saude' in objetivo:
         cardapio['Café da Manhã'].append("Pão integral com queijo branco + café sem açúcar")
         cardapio['Almoço'].append("Arroz + feijão + carne magra + salada")
         cardapio['Lanche da Tarde'].append("Fruta + iogurte")
@@ -135,19 +134,32 @@ def gerar_cardapio_personalizado(dados):
         for key in cardapio:
             cardapio[key] = [item.replace('frango', 'grão-de-bico') for item in cardapio[key]]
 
-    if 'glúten' in dados['restricoes'].lower():
+    if 'glúten' in dados['restricoes'].lower() or 'gluten' in dados['restricoes'].lower():
         for key in cardapio:
             cardapio[key] = [item.replace('pão', 'pão sem glúten') for item in cardapio[key]]
 
     return cardapio
 
-
 # === PERFIL NUTRICIONAL FINAL ===
 @login_required
 def perfil_nutricional_view(request):
     ultimo = Questionario.objects.filter(usuario=request.user).last()
+
     if ultimo:
-        return render(request, 'meu_app/perfil.html', {'dados': ultimo})
+        agua_bebida = ultimo.agua_bebida or 0
+        meta_agua = 2000
+        agua_faltante = max(meta_agua - agua_bebida, 0)
+        porcentagem_agua = min((agua_bebida / meta_agua) * 100, 100)
+
+        # Gerar o cardápio com base no questionário
+        cardapio = gerar_cardapio_personalizado(vars(ultimo))
+
+        return render(request, 'meu_app/perfil.html', {
+            'questionario': ultimo,
+            'agua_faltante': agua_faltante,
+            'porcentagem_agua': round(porcentagem_agua, 2),
+            'cardapio': cardapio,
+        })
     else:
         messages.error(request, 'Complete o questionário para ver seu perfil nutricional!')
         return render(request, 'meu_app/perfil.html')
@@ -158,13 +170,96 @@ def perfil_nutricional_view(request):
 def cardapio_view(request):
     ultimo = Questionario.objects.filter(usuario=request.user).last()
     if ultimo:
-        cardapio = gerar_cardapio_personalizado(vars(ultimo))
-        return render(request, 'meu_app/cardapio.html', {'cardapio': cardapio, 'dados': ultimo})
+        dados = vars(ultimo)  # Converte o objeto em um dicionário
+        cardapio = gerar_cardapio_personalizado(dados)
+        return render(request, 'meu_app/cardapio.html', {'cardapio': cardapio, 'dados': dados})
     else:
         messages.error(request, 'Complete o questionário para ver seu cardápio personalizado!')
         return render(request, 'meu_app/cardapio.html')
 
+# === LOGOUT ===
+def logout_view(request):
+    logout(request)  # Realiza o logout do usuário
+    return redirect('login')  # Redireciona para a página de login
 
-# Função para redirecionar para a página de login
+# REDIRECIONAMENTO PARA LOGIN
 def redirecionar_para_login(request):
-    return redirect('login')  # 'login' é o nome da URL de login
+    return redirect('login')
+
+# === EDIÇÃO DE PERFIL ===
+@login_required
+def editar_perfil(request):
+    questionario = Questionario.objects.get(usuario=request.user)
+
+    if request.method == 'POST':
+        questionario.nome = request.POST.get('nome', questionario.nome)
+        questionario.idade = request.POST.get('idade', questionario.idade)
+        questionario.peso = request.POST.get('peso', questionario.peso)
+        questionario.altura = request.POST.get('altura', questionario.altura)
+        questionario.genero = request.POST.get('genero', questionario.genero)
+        questionario.objetivo = request.POST.get('objetivo', questionario.objetivo)
+        questionario.restricoes = request.POST.get('restricoes', questionario.restricoes)
+        questionario.preferencia = request.POST.get('preferencia', questionario.preferencia)
+        questionario.fome = request.POST.get('fome', questionario.fome)
+        questionario.refeicoes_por_dia = request.POST.get('refeicoes_por_dia', questionario.refeicoes_por_dia)
+        questionario.come_carne = request.POST.get('come_carne') == 'on'
+        questionario.gosta_de_legumes = request.POST.get('gosta_de_legumes') == 'on'
+        questionario.agua = request.POST.get('agua', questionario.agua)
+        questionario.agua_bebida = request.POST.get('agua_bebida', questionario.agua_bebida)
+        questionario.sono = request.POST.get('sono', questionario.sono)
+        questionario.atividade_fisica = request.POST.get('atividade_fisica', questionario.atividade_fisica)
+        questionario.usa_suplementos = request.POST.get('usa_suplementos') == 'on'
+        questionario.estresse = request.POST.get('estresse', questionario.estresse)
+
+        questionario.save()
+
+        return redirect('perfil_nutricional')
+
+    return render(request, 'meu_app/editar_perfil.html', {'questionario': questionario})
+
+# === EXCLUSÃO DE CONTA ===
+@login_required
+def excluir_perfil(request):
+    if request.method == 'POST':
+        try:
+            questionario = Questionario.objects.get(usuario=request.user)
+            questionario.delete()  # Exclui os dados do questionário
+        except Questionario.DoesNotExist:
+            pass  # Caso o questionário não exista, nada será feito
+
+        user = request.user
+        user.delete()
+        messages.success(request, 'Sua conta foi excluída com sucesso.')
+        return redirect('login')
+
+    return render(request, 'meu_app/excluir_conta.html')
+
+# === SUBSTITUIÇÕES ALIMENTARES ===
+def substituicoes_view(request):
+    alimento = request.GET.get('alimento', '')
+    substituicoes = []
+
+    if alimento:
+        # Ajuste: Agora filtra pelo campo correto (alimento_original)
+        substituicoes = Substituicao.objects.filter(alimento_original__nome__icontains=alimento)
+
+        # Caso não haja resultados
+        if not substituicoes:
+            erro = "Nenhuma substituição encontrada para esse alimento."
+            return render(request, 'meu_app/substituicoes.html', {'erro': erro})
+
+    return render(request, 'meu_app/substituicoes.html', {'substituicoes': substituicoes})
+
+# === ADICIONAR AO CARDÁPIO ===
+@csrf_exempt
+def adicionar_cardapio(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        alimento_id = data.get('alimento_id')
+        try:
+            alimento = Alimento.objects.get(id=alimento_id)
+            Cardapio.objects.create(usuario=request.user, alimento=alimento)
+            return JsonResponse({'mensagem': 'Adicionado com sucesso!'})
+        except Alimento.DoesNotExist:
+            return JsonResponse({'erro': 'Alimento não encontrado.'}, status=404)
+    return JsonResponse({'erro': 'Método inválido.'}, status=400)
