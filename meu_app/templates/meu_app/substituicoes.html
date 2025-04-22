@@ -16,7 +16,7 @@
     }
 
     .bg-image {
-      background: url('https://images.unsplash.com/photo-1543353071-873f17a7a088?q=80&w=1932&auto=format&fit=crop') no-repeat center center fixed;
+      background: url('https://images.unsplash.com/photo-1506806732259-39c2d0268443?q=80&w=1932&auto=format&fit=crop') no-repeat center center fixed;
       background-size: cover;
       position: fixed;
       top: 0; left: 0;
@@ -35,11 +35,6 @@
   </style>
 </head>
 <body class="font-sans text-white min-h-screen flex items-center justify-center p-4">
-
-  <!-- Toast Notification -->
-  <div id="toast" class="fixed top-6 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg opacity-0 transition-opacity duration-500 z-50">
-    Alimento adicionado ao cardápio!
-  </div>
 
   <div class="bg-image"></div>
   <div class="bg-overlay"></div>
@@ -67,59 +62,16 @@
     {% elif substituicoes %}
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {% for item in substituicoes %}
-          <div class="bg-white bg-opacity-80 text-black rounded-xl p-4 shadow-md transition hover:shadow-xl space-y-2">
+          <div class="bg-white bg-opacity-80 text-black rounded-xl p-4 shadow-md transition hover:shadow-xl">
             <h3 class="text-lg font-bold text-lime-700">{{ item.alternativa.nome }}</h3>
             <p class="text-sm text-gray-700">Categoria: {{ item.alternativa.categoria }}</p>
             <p class="text-sm text-gray-700">Justificativa: {{ item.justificativa }}</p>
-            <button data-id="{{ item.alternativa.id }}" class="usar-alimento bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-lg transition">
-              Usar este
-            </button>
           </div>
         {% endfor %}
       </div>
     {% endif %}
 
   </div>
-
-  <!-- Script AJAX -->
-  <script>
-    document.querySelectorAll('.usar-alimento').forEach(button => {
-      button.addEventListener('click', async () => {
-        const alimentoId = button.getAttribute('data-id');
-
-        try {
-          const response = await fetch('/adicionar_cardapio/', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'X-CSRFToken': '{{ csrf_token }}'
-            },
-            body: JSON.stringify({ alimento_id: alimentoId })
-          });
-
-          if (response.ok) {
-            showToast("Alimento adicionado ao cardápio!");
-          } else {
-            showToast("Erro ao adicionar. Tente novamente.", true);
-          }
-        } catch (error) {
-          showToast("Erro de conexão.", true);
-        }
-      });
-    });
-
-    function showToast(message, isError = false) {
-      const toast = document.getElementById('toast');
-      toast.textContent = message;
-      toast.classList.remove('opacity-0');
-      toast.classList.remove('bg-green-500', 'bg-red-500');
-      toast.classList.add(isError ? 'bg-red-500' : 'bg-green-500');
-
-      setTimeout(() => {
-        toast.classList.add('opacity-0');
-      }, 3000);
-    }
-  </script>
 
 </body>
 </html>

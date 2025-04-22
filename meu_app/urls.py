@@ -11,7 +11,6 @@ urlpatterns = [
     path('editar-perfil/', views.editar_perfil, name='editar_perfil'),
     path('excluir-perfil/', views.excluir_perfil, name='excluir_perfil'),
     path('logout/', views.logout_view, name='logout'),
-    path('substituicoes/', views.substituicoes_view, name='substituicoes'),
-    path('adicionar_cardapio/', views.adicionar_cardapio, name='adicionar_cardapio'),
+    path('substituicoes/', views.substituicoes_view, name='substituicoes')
 
 ]
