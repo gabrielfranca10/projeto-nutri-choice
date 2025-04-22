@@ -3,8 +3,11 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Questionario
-from .models import Alimento, Substituicao, Questionario
+from .models import Questionario, Alimento, Substituicao, Cardapio
+from django.db.models import Q
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+import json
 
 # === TELA DE LOGIN ===
 def login_view(request):
@@ -149,8 +152,7 @@ def perfil_nutricional_view(request):
         porcentagem_agua = min((agua_bebida / meta_agua) * 100, 100)
 
         # Gerar o cardápio com base no questionário
-        from .utils import gerar_cardapio  # ou onde estiver essa função
-        cardapio = gerar_cardapio(ultimo)
+        cardapio = gerar_cardapio_personalizado(vars(ultimo))
 
         return render(request, 'meu_app/perfil.html', {
             'questionario': ultimo,
@@ -168,8 +170,9 @@ def perfil_nutricional_view(request):
 def cardapio_view(request):
     ultimo = Questionario.objects.filter(usuario=request.user).last()
     if ultimo:
-        cardapio = gerar_cardapio_personalizado(vars(ultimo))
-        return render(request, 'meu_app/cardapio.html', {'cardapio': cardapio, 'dados': ultimo})
+        dados = vars(ultimo)  # Converte o objeto em um dicionário
+        cardapio = gerar_cardapio_personalizado(dados)
+        return render(request, 'meu_app/cardapio.html', {'cardapio': cardapio, 'dados': dados})
     else:
         messages.error(request, 'Complete o questionário para ver seu cardápio personalizado!')
         return render(request, 'meu_app/cardapio.html')
@@ -183,15 +186,12 @@ def logout_view(request):
 def redirecionar_para_login(request):
     return redirect('login')
 
-from django.shortcuts import render, redirect
-from .models import Questionario
-
+# === EDIÇÃO DE PERFIL ===
+@login_required
 def editar_perfil(request):
-    # Obtém o questionário relacionado ao usuário
     questionario = Questionario.objects.get(usuario=request.user)
 
     if request.method == 'POST':
-        # Atualiza os dados do questionário com os dados enviados pelo POST
         questionario.nome = request.POST.get('nome', questionario.nome)
         questionario.idade = request.POST.get('idade', questionario.idade)
         questionario.peso = request.POST.get('peso', questionario.peso)
@@ -213,65 +213,53 @@ def editar_perfil(request):
 
         questionario.save()
 
-        # Redireciona para a página do perfil
         return redirect('perfil_nutricional')
 
     return render(request, 'meu_app/editar_perfil.html', {'questionario': questionario})
 
+# === EXCLUSÃO DE CONTA ===
 @login_required
 def excluir_perfil(request):
     if request.method == 'POST':
-        # Exclui o questionário do usuário antes de excluir o usuário
         try:
             questionario = Questionario.objects.get(usuario=request.user)
             questionario.delete()  # Exclui os dados do questionário
         except Questionario.DoesNotExist:
             pass  # Caso o questionário não exista, nada será feito
 
-        # Exclui o usuário
         user = request.user
         user.delete()
         messages.success(request, 'Sua conta foi excluída com sucesso.')
-        return redirect('login')  # Redireciona para a página inicial ou outra página
+        return redirect('login')
 
     return render(request, 'meu_app/excluir_conta.html')
 
-
-@login_required
+# === SUBSTITUIÇÕES ALIMENTARES ===
 def substituicoes_view(request):
-    termo = request.GET.get('busca')
+    alimento = request.GET.get('alimento', '')
     substituicoes = []
-    erro = ''
 
-    if termo:
+    if alimento:
+        # Ajuste: Agora filtra pelo campo correto (alimento_original)
+        substituicoes = Substituicao.objects.filter(alimento_original__nome__icontains=alimento)
+
+        # Caso não haja resultados
+        if not substituicoes:
+            erro = "Nenhuma substituição encontrada para esse alimento."
+            return render(request, 'meu_app/substituicoes.html', {'erro': erro})
+
+    return render(request, 'meu_app/substituicoes.html', {'substituicoes': substituicoes})
+
+# === ADICIONAR AO CARDÁPIO ===
+@csrf_exempt
+def adicionar_cardapio(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        alimento_id = data.get('alimento_id')
         try:
-            alimento = Alimento.objects.get(nome__icontains=termo)
-
-            # Pega preferências do usuário (se tiver questionário preenchido)
-            questionario = Questionario.objects.filter(usuario=request.user).last()
-            preferencias = {
-                'vegetariano': not questionario.come_carne if questionario else False,
-                'sem_lactose': 'lactose' in (questionario.restricoes.lower() if questionario else ''),
-                'sem_gluten': 'gluten' in (questionario.restricoes.lower() if questionario else ''),
-            }
-
-            # Filtra substituições compatíveis
-            substituicoes = Substituicao.objects.filter(alimento_original=alimento)
-            substituicoes = [
-                s for s in substituicoes
-                if (not preferencias['vegetariano'] or s.alternativa.vegetariano)
-                and (not preferencias['sem_lactose'] or s.alternativa.sem_lactose)
-                and (not preferencias['sem_gluten'] or s.alternativa.sem_gluten)
-            ]
-
+            alimento = Alimento.objects.get(id=alimento_id)
+            Cardapio.objects.create(usuario=request.user, alimento=alimento)
+            return JsonResponse({'mensagem': 'Adicionado com sucesso!'})
         except Alimento.DoesNotExist:
-            erro = "Alimento não encontrado. Tente outro nome ou veja sugestões abaixo."
-            sugestoes = Alimento.objects.filter(nome__icontains=termo[:3])
-            return render(request, 'meu_app/substituicoes.html', {'erro': erro, 'sugestoes': sugestoes})
-
-    return render(request, 'meu_app/substituicoes.html', {
-        'substituicoes': substituicoes,
-        'termo': termo
-    })
-
-
+            return JsonResponse({'erro': 'Alimento não encontrado.'}, status=404)
+    return JsonResponse({'erro': 'Método inválido.'}, status=400)

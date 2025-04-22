@@ -27,12 +27,17 @@ class Questionario(models.Model):
         return self.nome if self.nome else "Questionário Anônimo"
 
 class Alimento(models.Model):
-    nome = models.CharField(max_length=100, unique=True)
-    categoria = models.CharField(max_length=100)  # ex: proteína, carboidrato, etc
-    valor_nutricional = models.TextField(blank=True)  # opcional: pode ser um resumo
+    nome = models.CharField(max_length=100)
+    categoria = models.CharField(max_length=50)  # exemplo: "proteína", "cereal", etc.
+    calorias = models.FloatField()
+    proteinas = models.FloatField()
+    carboidratos = models.FloatField()
+    gorduras = models.FloatField()
     vegetariano = models.BooleanField(default=False)
     sem_lactose = models.BooleanField(default=False)
     sem_gluten = models.BooleanField(default=False)
+    # Valor nutricional (opcional, você pode usar para análise mais detalhada de substituições)
+    valor_nutricional = models.JSONField(default=dict, blank=True, null=True)  # Usando JSON para armazenar valores diversos
 
     def __str__(self):
         return self.nome
@@ -52,5 +57,3 @@ class Cardapio(models.Model):
 
     def __str__(self):
         return f"Cardápio de {self.usuario.username} em {self.data_criacao.strftime('%d/%m/%Y')}"
-
-
