@@ -5,6 +5,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Questionario
 from .models import Alimento, Substituicao, Questionario
+from django.http import HttpResponse
+
+def debug_host(request):
+    return HttpResponse(f"Host recebido: {request.get_host()}")
+
 
 # === TELA DE LOGIN ===
 def login_view(request):
