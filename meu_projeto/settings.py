@@ -19,7 +19,7 @@ if NOT_PROD:
     ALLOWED_HOSTS = [
         'localhost',
         '127.0.0.1',
-        'projetodjango-e7fvgbbchbapdvgn.brazilsouth-01.azurewebsites.net'
+        'projetodjango-e7fvgbbchbapdvgn.brazilsouth-01.azurewebsites.net',
     ]
     DATABASES = {
         'default': {
@@ -32,8 +32,19 @@ if NOT_PROD:
 else:
     DEBUG = os.getenv('DEBUG', '0').lower() in ['true', 't', '1']
     SECRET_KEY = os.getenv('SECRET_KEY')
-    ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'projetodjango-e7fvgbbchbapdvgn.brazilsouth-01.azurewebsites.net').split(' ')
-    CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', '').split(' ')
+
+    # Garante que o domínio funcione mesmo se ALLOWED_HOSTS não estiver no .env
+    ALLOWED_HOSTS = os.getenv(
+        'ALLOWED_HOSTS',
+        'projetodjango-e7fvgbbchbapdvgn.brazilsouth-01.azurewebsites.net'
+    ).split(' ')
+
+    # Para CSRF funcionar com domínios externos
+    CSRF_TRUSTED_ORIGINS = os.getenv(
+        'CSRF_TRUSTED_ORIGINS',
+        'https://projetodjango-e7fvgbbchbapdvgn.brazilsouth-01.azurewebsites.net'
+    ).split(' ')
+
     SECURE_SSL_REDIRECT = os.getenv('SECURE_SSL_REDIRECT', '0').lower() in ['true', 't', '1']
 
     if SECURE_SSL_REDIRECT:
@@ -50,7 +61,7 @@ else:
         }
     }
 
-# Apps do projeto
+# Aplicações instaladas
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -59,13 +70,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'meu_app',
-    'whitenoise.runserver_nostatic',  # Whitenoise para servir arquivos estáticos
+    'whitenoise.runserver_nostatic',
 ]
 
 # Middlewares
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # Deve vir após SecurityMiddleware
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -74,7 +85,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# URLs
+# Configurações de URL
 ROOT_URLCONF = 'meu_projeto.urls'
 
 # Templates
@@ -93,7 +104,6 @@ TEMPLATES = [
         },
     },
 ]
-
 
 # WSGI
 WSGI_APPLICATION = 'meu_projeto.wsgi.application'
