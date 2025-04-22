@@ -14,7 +14,7 @@ NOT_PROD = not TARGET_ENV.lower().startswith('prod')
 
 # Configurações específicas para ambiente de desenvolvimento
 if NOT_PROD:
-    DEBUG = True
+    DEBUG = False
     SECRET_KEY = '<django-insecure-fi9t30&0w42w#l*+7#_fy+b6z5y9sl**1&1$2t7flifi8(pwaq>'
     ALLOWED_HOSTS = [
         'localhost',
@@ -36,7 +36,8 @@ else:
     # Garante que o domínio funcione mesmo se ALLOWED_HOSTS não estiver no .env
     ALLOWED_HOSTS = os.getenv(
         'ALLOWED_HOSTS',
-        'projetodjango-e7fvgbbchbapdvgn.brazilsouth-01.azurewebsites.net'
+        'projetodjango-e7fvgbbchbapdvgn.brazilsouth-01.azurewebsites.net',
+        'www.projetodjango-e7fvgbbchbapdvgn.brazilsouth-01.azurewebsites.net',
     ).split(' ')
 
     # Para CSRF funcionar com domínios externos
