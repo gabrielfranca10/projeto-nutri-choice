@@ -32,7 +32,7 @@ if NOT_PROD:
 # Configurações específicas para produção
 else:
     DEBUG = os.getenv('DEBUG', '0').lower() in ['true', 't', '1']
-    SECRET_KEY = os.getenv('SECRET_KEY')
+    SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-fi9t30&0w42w#l*+7#_fy+b6z5y9sl**1&1$2t7flifi8(pwaq')
 
     ALLOWED_HOSTS = os.getenv(
         'ALLOWED_HOSTS',
@@ -50,15 +50,16 @@ else:
         SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.getenv('DBNAME'),
-            'HOST': os.getenv('DBHOST'),
-            'USER': os.getenv('DBUSER'),
-            'PASSWORD': os.getenv('DBPASS'),
-            'OPTIONS': {'sslmode': 'require'},
-        }
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DBNAME'),
+        'HOST': os.getenv('DBHOST'),
+        'USER': os.getenv('DBUSER'),
+        'PASSWORD': os.getenv('DBPASS'),
+        'OPTIONS': {'sslmode': 'require'},
     }
+}
+
 
 # Aplicações instaladas
 INSTALLED_APPS = [
