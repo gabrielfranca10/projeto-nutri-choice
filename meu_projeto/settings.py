@@ -14,12 +14,13 @@ NOT_PROD = not TARGET_ENV.lower().startswith('prod')
 
 # Configurações específicas para ambiente de desenvolvimento
 if NOT_PROD:
-    DEBUG = True
+    DEBUG = False
     SECRET_KEY = '<django-insecure-fi9t30&0w42w#l*+7#_fy+b6z5y9sl**1&1$2t7flifi8(pwaq>'
     ALLOWED_HOSTS = [
         'localhost',
         '127.0.0.1',
         'projetodjango-e7fvgbbchbapdvgn.brazilsouth-01.azurewebsites.net',
+        'www.projetodjango-e7fvgbbchbapdvgn.brazilsouth-01.azurewebsites.net',
     ]
     DATABASES = {
         'default': {
@@ -33,17 +34,14 @@ else:
     DEBUG = os.getenv('DEBUG', '0').lower() in ['true', 't', '1']
     SECRET_KEY = os.getenv('SECRET_KEY')
 
-    # Garante que o domínio funcione mesmo se ALLOWED_HOSTS não estiver no .env
     ALLOWED_HOSTS = os.getenv(
         'ALLOWED_HOSTS',
-        'projetodjango-e7fvgbbchbapdvgn.brazilsouth-01.azurewebsites.net',
-        'www.projetodjango-e7fvgbbchbapdvgn.brazilsouth-01.azurewebsites.net',
+        'projetodjango-e7fvgbbchbapdvgn.brazilsouth-01.azurewebsites.net www.projetodjango-e7fvgbbchbapdvgn.brazilsouth-01.azurewebsites.net'
     ).split(' ')
 
-    # Para CSRF funcionar com domínios externos
     CSRF_TRUSTED_ORIGINS = os.getenv(
         'CSRF_TRUSTED_ORIGINS',
-        'https://projetodjango-e7fvgbbchbapdvgn.brazilsouth-01.azurewebsites.net'
+        'https://projetodjango-e7fvgbbchbapdvgn.brazilsouth-01.azurewebsites.net https://www.projetodjango-e7fvgbbchbapdvgn.brazilsouth-01.azurewebsites.net'
     ).split(' ')
 
     SECURE_SSL_REDIRECT = os.getenv('SECURE_SSL_REDIRECT', '0').lower() in ['true', 't', '1']
