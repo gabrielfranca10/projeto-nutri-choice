@@ -1,4 +1,3 @@
-import logging
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -7,11 +6,9 @@ from django.contrib import messages
 from .models import Alimento, Substituicao, Questionario
 from django.http import HttpResponse
 
-# Configuração do logger
-logger = logging.getLogger(__name__)
-
 def debug_host(request):
     return HttpResponse(f"Host recebido: {request.get_host()}")
+
 
 # === TELA DE LOGIN ===
 def login_view(request):
@@ -54,21 +51,12 @@ def cadastro_view(request):
             messages.error(request, 'Nome de usuário já existe')
             return render(request, 'meu_app/cadastro.html')
 
-        # Debug de verificação antes da criação
-        logger.debug(f"Cadastro de usuário: {username}, {email}")
-
         # Criação do usuário
-        try:
-            user = User.objects.create_user(username=username, email=email, password=password)
-            user.save()
-            login(request, user)  # Realiza o login automaticamente após o cadastro
-            messages.success(request, 'Cadastro realizado com sucesso!')
-            return redirect('questionario')  # Redireciona para o questionário
-        except Exception as e:
-            # Log do erro
-            logger.error(f"Erro ao criar o usuário: {str(e)}")
-            messages.error(request, 'Erro interno ao cadastrar usuário.')
-            return render(request, 'meu_app/cadastro.html')
+        user = User.objects.create_user(username=username, email=email, password=password)
+        user.save()
+        login(request, user)  # Realiza o login automaticamente após o cadastro
+        messages.success(request, 'Cadastro realizado com sucesso!')
+        return redirect('questionario')  # Redireciona para o questionário
 
     return render(request, 'meu_app/cadastro.html')
 
@@ -180,6 +168,17 @@ def perfil_nutricional_view(request):
         return render(request, 'meu_app/perfil.html')
 
 
+# === CARDÁPIO PERSONALIZADO ===
+@login_required
+def cardapio_view(request):
+    ultimo = Questionario.objects.filter(usuario=request.user).last()
+    if ultimo:
+        cardapio = gerar_cardapio_personalizado(vars(ultimo))
+        return render(request, 'meu_app/cardapio.html', {'cardapio': cardapio, 'dados': ultimo})
+    else:
+        messages.error(request, 'Complete o questionário para ver seu cardápio personalizado!')
+        return render(request, 'meu_app/cardapio.html')
+
 # === LOGOUT ===
 def logout_view(request):
     logout(request)  # Realiza o logout do usuário
@@ -189,7 +188,41 @@ def logout_view(request):
 def redirecionar_para_login(request):
     return redirect('login')
 
-# EXCLUSÃO DE CONTA
+from django.shortcuts import render, redirect
+from .models import Questionario
+
+def editar_perfil(request):
+    # Obtém o questionário relacionado ao usuário
+    questionario = Questionario.objects.get(usuario=request.user)
+
+    if request.method == 'POST':
+        # Atualiza os dados do questionário com os dados enviados pelo POST
+        questionario.nome = request.POST.get('nome', questionario.nome)
+        questionario.idade = request.POST.get('idade', questionario.idade)
+        questionario.peso = request.POST.get('peso', questionario.peso)
+        questionario.altura = request.POST.get('altura', questionario.altura)
+        questionario.genero = request.POST.get('genero', questionario.genero)
+        questionario.objetivo = request.POST.get('objetivo', questionario.objetivo)
+        questionario.restricoes = request.POST.get('restricoes', questionario.restricoes)
+        questionario.preferencia = request.POST.get('preferencia', questionario.preferencia)
+        questionario.fome = request.POST.get('fome', questionario.fome)
+        questionario.refeicoes_por_dia = request.POST.get('refeicoes_por_dia', questionario.refeicoes_por_dia)
+        questionario.come_carne = request.POST.get('come_carne') == 'on'
+        questionario.gosta_de_legumes = request.POST.get('gosta_de_legumes') == 'on'
+        questionario.agua = request.POST.get('agua', questionario.agua)
+        questionario.agua_bebida = request.POST.get('agua_bebida', questionario.agua_bebida)
+        questionario.sono = request.POST.get('sono', questionario.sono)
+        questionario.atividade_fisica = request.POST.get('atividade_fisica', questionario.atividade_fisica)
+        questionario.usa_suplementos = request.POST.get('usa_suplementos') == 'on'
+        questionario.estresse = request.POST.get('estresse', questionario.estresse)
+
+        questionario.save()
+
+        # Redireciona para a página do perfil
+        return redirect('perfil_nutricional')
+
+    return render(request, 'meu_app/editar_perfil.html', {'questionario': questionario})
+
 @login_required
 def excluir_perfil(request):
     if request.method == 'POST':
@@ -207,3 +240,41 @@ def excluir_perfil(request):
         return redirect('login')  # Redireciona para a página inicial ou outra página
 
     return render(request, 'meu_app/excluir_conta.html')
+
+
+@login_required
+def substituicoes_view(request):
+    termo = request.GET.get('busca')
+    substituicoes = []
+    erro = ''
+
+    if termo:
+        try:
+            alimento = Alimento.objects.get(nome__icontains=termo)
+
+            # Pega preferências do usuário (se tiver questionário preenchido)
+            questionario = Questionario.objects.filter(usuario=request.user).last()
+            preferencias = {
+                'vegetariano': not questionario.come_carne if questionario else False,
+                'sem_lactose': 'lactose' in (questionario.restricoes.lower() if questionario else ''),
+                'sem_gluten': 'gluten' in (questionario.restricoes.lower() if questionario else ''),
+            }
+
+            # Filtra substituições compatíveis
+            substituicoes = Substituicao.objects.filter(alimento_original=alimento)
+            substituicoes = [
+                s for s in substituicoes
+                if (not preferencias['vegetariano'] or s.alternativa.vegetariano)
+                and (not preferencias['sem_lactose'] or s.alternativa.sem_lactose)
+                and (not preferencias['sem_gluten'] or s.alternativa.sem_gluten)
+            ]
+
+        except Alimento.DoesNotExist:
+            erro = "Alimento não encontrado. Tente outro nome ou veja sugestões abaixo."
+            sugestoes = Alimento.objects.filter(nome__icontains=termo[:3])
+            return render(request, 'meu_app/substituicoes.html', {'erro': erro, 'sugestoes': sugestoes})
+
+    return render(request, 'meu_app/substituicoes.html', {
+        'substituicoes': substituicoes,
+        'termo': termo
+    })
