@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Questionario
 from .models import Alimento, Substituicao, Questionario
 from django.http import HttpResponse
 
