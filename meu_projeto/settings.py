@@ -9,7 +9,7 @@ TARGET_ENV = os.getenv('TARGET_ENV', 'dev')
 NOT_PROD = not TARGET_ENV.lower().startswith('prod')
 
 if NOT_PROD:
-    DEBUG = True
+    DEBUG = False
     SECRET_KEY = '<django-insecure-fi9t30&0w42w#l*+7#_fy+b6z5y9sl**1&1$2t7flifi8(pwaq>'
     ALLOWED_HOSTS = [
         'localhost',
