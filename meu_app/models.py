@@ -17,6 +17,7 @@ class Questionario(models.Model):
     come_carne = models.BooleanField(default=True)
     gosta_de_legumes = models.BooleanField(default=True)
     agua_bebida = models.FloatField(default=0, null=True)  # ml de água por dia
+    agua = models.CharField(max_length=50, blank=True)
     sono = models.CharField(max_length=10, blank=True)
     atividade_fisica = models.CharField(max_length=100, blank=True)
     usa_suplementos = models.BooleanField(default=False)
