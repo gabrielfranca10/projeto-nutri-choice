@@ -203,33 +203,48 @@ def redirecionar_para_login(request):
 # === EDITAR PERFIL ===
 @login_required
 def editar_perfil(request):
+    # Obtém o questionário do usuário logado
     questionario = Questionario.objects.get(usuario=request.user)
 
     if request.method == 'POST':
+        # Converte os valores do POST para os tipos apropriados
         questionario.nome = request.POST.get('nome', questionario.nome)
-        questionario.idade = request.POST.get('idade', questionario.idade)
-        questionario.peso = request.POST.get('peso', questionario.peso)
-        questionario.altura = request.POST.get('altura', questionario.altura)
+        questionario.idade = int(request.POST.get('idade', questionario.idade) or questionario.idade)
+        questionario.peso = float(request.POST.get('peso', questionario.peso) or questionario.peso)
+        questionario.altura = float(request.POST.get('altura', questionario.altura) or questionario.altura)
         questionario.genero = request.POST.get('genero', questionario.genero)
         questionario.objetivo = request.POST.get('objetivo', questionario.objetivo)
         questionario.restricoes = request.POST.get('restricoes', questionario.restricoes)
         questionario.preferencia = request.POST.get('preferencia', questionario.preferencia)
         questionario.fome = request.POST.get('fome', questionario.fome)
-        questionario.refeicoes_por_dia = request.POST.get('refeicoes_por_dia', questionario.refeicoes_por_dia)
+        questionario.refeicoes_por_dia = int(request.POST.get('refeicoes_por_dia', questionario.refeicoes_por_dia) or questionario.refeicoes_por_dia)
+        
+        # Conversão para booleano
         questionario.come_carne = request.POST.get('come_carne') == 'on'
         questionario.gosta_de_legumes = request.POST.get('gosta_de_legumes') == 'on'
+        
+        # Convertendo o valor de 'agua_bebida' para float
+        questionario.agua_bebida = float(request.POST.get('agua_bebida', questionario.agua_bebida) or questionario.agua_bebida)
+        
+        # Mantém os valores default caso não seja passado
         questionario.agua = request.POST.get('agua', questionario.agua)
-        questionario.agua_bebida = request.POST.get('agua_bebida', questionario.agua_bebida)
         questionario.sono = request.POST.get('sono', questionario.sono)
         questionario.atividade_fisica = request.POST.get('atividade_fisica', questionario.atividade_fisica)
+        
+        # Conversão para booleano
         questionario.usa_suplementos = request.POST.get('usa_suplementos') == 'on'
         questionario.estresse = request.POST.get('estresse', questionario.estresse)
+
+        # Salva as alterações no questionário
         questionario.save()
 
+        # Mensagem de sucesso
         messages.success(request, 'Perfil atualizado com sucesso!')
         return redirect('perfil_nutricional')
 
+    # Caso o método seja GET, renderiza a página de edição com os dados do questionário
     return render(request, 'meu_app/editar_perfil.html', {'questionario': questionario})
+
 
 # === EXCLUIR PERFIL ===
 @login_required
