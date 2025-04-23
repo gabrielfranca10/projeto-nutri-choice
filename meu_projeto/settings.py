@@ -8,8 +8,19 @@ load_dotenv(BASE_DIR / '.env')
 TARGET_ENV = os.getenv('TARGET_ENV', 'dev')
 NOT_PROD = not TARGET_ENV.lower().startswith('prod')
 
+# CSRF confiáveis — funcionam em dev e prod com HTTPS
+CSRF_TRUSTED_ORIGINS = [
+    'https://projetodjango-e7fvgbbchbapdvgn.brazilsouth-01.azurewebsites.net',
+    'https://www.projetodjango-e7fvgbbchbapdvgn.brazilsouth-01.azurewebsites.net',
+]
+
+# Cookies CSRF
+CSRF_COOKIE_HTTPONLY = False
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
 if NOT_PROD:
-    DEBUG = False
+    DEBUG = True
     SECRET_KEY = '<django-insecure-fi9t30&0w42w#l*+7#_fy+b6z5y9sl**1&1$2t7flifi8(pwaq>'
     ALLOWED_HOSTS = [
         'localhost',
@@ -32,18 +43,9 @@ else:
         'projetodjango-e7fvgbbchbapdvgn.brazilsouth-01.azurewebsites.net www.projetodjango-e7fvgbbchbapdvgn.brazilsouth-01.azurewebsites.net'
     ).split(' ')
 
-    CSRF_TRUSTED_ORIGINS = os.getenv(
-        'CSRF_TRUSTED_ORIGINS',
-        'https://projetodjango-e7fvgbbchbapdvgn.brazilsouth-01.azurewebsites.net https://www.projetodjango-e7fvgbbchbapdvgn.brazilsouth-01.azurewebsites.net'
-    ).split(' ')
-
     SECURE_SSL_REDIRECT = os.getenv('SECURE_SSL_REDIRECT', '0').lower() in ['true', 't', '1']
-
     if SECURE_SSL_REDIRECT:
         SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-    CSRF_COOKIE_SECURE = True
-    SESSION_COOKIE_SECURE = True
 
     DATABASES = {
         'default': {
