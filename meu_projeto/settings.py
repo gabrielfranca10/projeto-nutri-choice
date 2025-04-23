@@ -2,20 +2,15 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 
-# Caminho base do projeto
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-# Carrega variáveis do arquivo .env
 load_dotenv(BASE_DIR / '.env')
 
-# Detecta se estamos em ambiente de produção ou não
 TARGET_ENV = os.getenv('TARGET_ENV', 'dev')
 NOT_PROD = not TARGET_ENV.lower().startswith('prod')
 
-# Configurações específicas para ambiente de desenvolvimento
 if NOT_PROD:
     DEBUG = True
-    SECRET_KEY = os.getenv('SECRET_KEY', '<django-insecure-fi9t30&0w42w#l*+7#_fy+b6z5y9sl**1&1$2t7flifi8(pwaq>')
+    SECRET_KEY = '<django-insecure-fi9t30&0w42w#l*+7#_fy+b6z5y9sl**1&1$2t7flifi8(pwaq>'
     ALLOWED_HOSTS = [
         'localhost',
         '127.0.0.1',
@@ -28,11 +23,9 @@ if NOT_PROD:
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
-
-# Configurações específicas para produção
 else:
     DEBUG = os.getenv('DEBUG', '0').lower() in ['true', 't', '1']
-    SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-fi9t30&0w42w#l*+7#_fy+b6z5y9sl**1&1$2t7flifi8(pwaq')
+    SECRET_KEY = os.getenv('SECRET_KEY')
 
     ALLOWED_HOSTS = os.getenv(
         'ALLOWED_HOSTS',
@@ -49,6 +42,9 @@ else:
     if SECURE_SSL_REDIRECT:
         SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
@@ -60,7 +56,6 @@ else:
         }
     }
 
-# Aplicações instaladas
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -72,7 +67,6 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
 ]
 
-# Middlewares
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -84,10 +78,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# Configurações de URL
 ROOT_URLCONF = 'meu_projeto.urls'
 
-# Templates
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -104,10 +96,8 @@ TEMPLATES = [
     },
 ]
 
-# WSGI
 WSGI_APPLICATION = 'meu_projeto.wsgi.application'
 
-# Validação de senha
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -115,24 +105,13 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# Internacionalização
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# Arquivos estáticos
 STATIC_URL = os.environ.get('DJANGO_STATIC_URL', '/static/')
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Configurações de cookies e segurança
-CSRF_COOKIE_SECURE = not NOT_PROD  # Habilitar em produção
-SESSION_COOKIE_SECURE = not NOT_PROD  # Habilitar em produção
-SECURE_BROWSER_XSS_FILTER = True  # Habilitar filtro XSS no navegador
-X_FRAME_OPTIONS = 'DENY'  # Prevenir clickjacking
-
-# Chave primária padrão
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# Trigger redeploy no Azure (se aplicável)
