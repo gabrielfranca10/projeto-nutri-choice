@@ -15,7 +15,7 @@ NOT_PROD = not TARGET_ENV.lower().startswith('prod')
 # Configurações específicas para ambiente de desenvolvimento
 if NOT_PROD:
     DEBUG = True
-    SECRET_KEY = '<django-insecure-fi9t30&0w42w#l*+7#_fy+b6z5y9sl**1&1$2t7flifi8(pwaq>'
+    SECRET_KEY = os.getenv('SECRET_KEY', '<django-insecure-fi9t30&0w42w#l*+7#_fy+b6z5y9sl**1&1$2t7flifi8(pwaq>')
     ALLOWED_HOSTS = [
         'localhost',
         '127.0.0.1',
@@ -50,16 +50,15 @@ else:
         SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
     DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DBNAME'),
-        'HOST': os.getenv('DBHOST'),
-        'USER': os.getenv('DBUSER'),
-        'PASSWORD': os.getenv('DBPASS'),
-        'OPTIONS': {'sslmode': 'require'},
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.getenv('DBNAME'),
+            'HOST': os.getenv('DBHOST'),
+            'USER': os.getenv('DBUSER'),
+            'PASSWORD': os.getenv('DBPASS'),
+            'OPTIONS': {'sslmode': 'require'},
+        }
     }
-}
-
 
 # Aplicações instaladas
 INSTALLED_APPS = [
@@ -127,7 +126,13 @@ STATIC_URL = os.environ.get('DJANGO_STATIC_URL', '/static/')
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+# Configurações de cookies e segurança
+CSRF_COOKIE_SECURE = not NOT_PROD  # Habilitar em produção
+SESSION_COOKIE_SECURE = not NOT_PROD  # Habilitar em produção
+SECURE_BROWSER_XSS_FILTER = True  # Habilitar filtro XSS no navegador
+X_FRAME_OPTIONS = 'DENY'  # Prevenir clickjacking
+
 # Chave primária padrão
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# trigger redeploy no Azure
+# Trigger redeploy no Azure (se aplicável)
