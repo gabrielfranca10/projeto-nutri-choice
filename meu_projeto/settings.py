@@ -21,7 +21,7 @@ SESSION_COOKIE_SECURE = True
 
 if NOT_PROD:
     DEBUG = True
-    SECRET_KEY = '<django-insecure-fi9t30&0w42w#l*+7#_fy+b6z5y9sl**1&1$2t7flifi8(pwaq>'
+    SECRET_KEY = 'rjwwi4$5v$#ldyic$dz21gbh35&xasntq4j1vr_18p4#3f-7xp'
     ALLOWED_HOSTS = [
         'localhost',
         '127.0.0.1',
