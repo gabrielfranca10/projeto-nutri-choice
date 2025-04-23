@@ -105,17 +105,29 @@
       <p>Comece sua jornada de saúde com a gente 💪</p>
     </div>
 
-    <form method="post">
+    <form method="POST" action="{% url 'cadastro' %}">
       {% csrf_token %}
       <div class="registration-box">
         <!-- Parte 1 -->
         <div class="flex-1">
           <h2 class="text-white text-xl font-semibold text-center mb-6">Informações Pessoais</h2>
           <div class="space-y-4">
-            <input type="text" name="username" placeholder="Usuário" required class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black placeholder-gray-600 focus:outline-none">
-            <input type="email" name="email" placeholder="Email" required class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black placeholder-gray-600 focus:outline-none">
-            <input type="password" name="senha" placeholder="Senha" required class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black placeholder-gray-600 focus:outline-none">
-            <input type="password" name="confirmar_senha" placeholder="Confirmar Senha" required class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black placeholder-gray-600 focus:outline-none">
+            <div class="flex flex-col">
+              <label for="username" class="text-white">Usuário</label>
+              <input id="username" type="text" name="username" placeholder="Usuário" required class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black placeholder-gray-600 focus:outline-none">
+            </div>
+            <div class="flex flex-col">
+              <label for="email" class="text-white">Email</label>
+              <input id="email" type="email" name="email" placeholder="Email" required class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black placeholder-gray-600 focus:outline-none">
+            </div>
+            <div class="flex flex-col">
+              <label for="senha" class="text-white">Senha</label>
+              <input id="senha" type="password" name="senha" placeholder="Senha" required class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black placeholder-gray-600 focus:outline-none">
+            </div>
+            <div class="flex flex-col">
+              <label for="confirmar_senha" class="text-white">Confirmar Senha</label>
+              <input id="confirmar_senha" type="password" name="confirmar_senha" placeholder="Confirmar Senha" required class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black placeholder-gray-600 focus:outline-none">
+            </div>
           </div>
         </div>
 
@@ -125,15 +137,27 @@
         <div class="flex-1">
           <h2 class="text-white text-xl font-semibold text-center mb-6">Informações Nutricionais</h2>
           <div class="space-y-4">
-            <input type="number" name="idade" placeholder="Idade" required class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black placeholder-gray-600 focus:outline-none">
-            <input type="number" name="altura" placeholder="Altura (cm)" required class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black placeholder-gray-600 focus:outline-none">
-            <input type="number" name="peso" placeholder="Peso (kg)" required class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black placeholder-gray-600 focus:outline-none">
-            <select name="objetivo" required class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black focus:outline-none">
-              <option value="">Objetivo</option>
-              <option value="emagrecimento">Emagrecimento</option>
-              <option value="massa">Ganho de massa</option>
-              <option value="saude">Saúde e bem-estar</option>
-            </select>
+            <div class="flex flex-col">
+              <label for="idade" class="text-white">Idade</label>
+              <input id="idade" type="number" name="idade" placeholder="Idade" required class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black placeholder-gray-600 focus:outline-none">
+            </div>
+            <div class="flex flex-col">
+              <label for="altura" class="text-white">Altura (cm)</label>
+              <input id="altura" type="number" name="altura" placeholder="Altura (cm)" required class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black placeholder-gray-600 focus:outline-none">
+            </div>
+            <div class="flex flex-col">
+              <label for="peso" class="text-white">Peso (kg)</label>
+              <input id="peso" type="number" name="peso" placeholder="Peso (kg)" required class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black placeholder-gray-600 focus:outline-none">
+            </div>
+            <div class="flex flex-col">
+              <label for="objetivo" class="text-white">Objetivo</label>
+              <select id="objetivo" name="objetivo" required class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black focus:outline-none">
+                <option value="">Selecione seu objetivo</option>
+                <option value="emagrecimento">Emagrecimento</option>
+                <option value="massa">Ganho de massa</option>
+                <option value="saude">Saúde e bem-estar</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>

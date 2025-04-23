@@ -9,7 +9,6 @@ from django.http import HttpResponse
 def debug_host(request):
     return HttpResponse(f"Host recebido: {request.get_host()}")
 
-
 # === TELA DE LOGIN ===
 def login_view(request):
     if request.method == 'POST':
@@ -63,30 +62,42 @@ def cadastro_view(request):
 @login_required
 def questionario_view(request):
     if request.method == 'POST':
+        def parse_float(valor):
+            try:
+                return float(valor)
+            except (TypeError, ValueError):
+                return None
+
+        def parse_int(valor):
+            try:
+                return int(valor)
+            except (TypeError, ValueError):
+                return None
+
         dados = {
             'nome': request.POST.get('nome') or '',
-            'idade': request.POST.get('idade') or None,
-            'peso': request.POST.get('peso') or None,
-            'altura': request.POST.get('altura') or None,
+            'idade': parse_int(request.POST.get('idade')),
+            'peso': parse_float(request.POST.get('peso')),
+            'altura': parse_float(request.POST.get('altura')),
             'genero': request.POST.get('genero') or '',
             'objetivo': request.POST.get('objetivo'),
             'restricoes': request.POST.get('restricoes') or '',
             'preferencia': request.POST.get('preferencia') or '',
             'fome': request.POST.get('fome') or '',
             'refeicoes_por_dia': request.POST.get('refeicoes_por_dia'),
-            'come_carne': request.POST.get('come_carne') == 'sim',
-            'gosta_de_legumes': request.POST.get('gosta_de_legumes') == 'sim',
+            'come_carne': request.POST.get('come_carne') == 'on',
+            'gosta_de_legumes': request.POST.get('gosta_de_legumes') == 'on',
             'agua': request.POST.get('agua') or '',
-            'agua_bebida': request.POST.get('agua_bebida') or 0,
+            'agua_bebida': parse_float(request.POST.get('agua_bebida')),
             'sono': request.POST.get('sono') or '',
             'atividade_fisica': request.POST.get('atividade_fisica'),
-            'usa_suplementos': request.POST.get('usa_suplementos') == 'sim',
+            'usa_suplementos': request.POST.get('usa_suplementos') == 'on',
             'estresse': request.POST.get('estresse'),
         }
 
         campos_obrigatorios = ['objetivo', 'refeicoes_por_dia', 'atividade_fisica', 'estresse']
         for campo in campos_obrigatorios:
-            if not dados[campo]:
+            if not dados.get(campo):
                 messages.error(request, 'Preencha todos os campos obrigatórios')
                 return render(request, 'meu_app/questionario.html')
 
@@ -109,7 +120,7 @@ def gerar_cardapio_personalizado(dados):
         'Jantar': [],
     }
 
-    objetivo = dados['objetivo'].lower()
+    objetivo = dados.get('objetivo', '').lower()
 
     if 'ganhar' in objetivo:
         cardapio['Café da Manhã'].append("Ovos mexidos + pão integral + vitamina de banana com aveia")
@@ -127,15 +138,15 @@ def gerar_cardapio_personalizado(dados):
         cardapio['Lanche da Tarde'].append("Fruta + iogurte")
         cardapio['Jantar'].append("Sanduíche natural + suco de frutas")
 
-    if 'atum' in dados['preferencia'].lower():
+    if 'atum' in dados.get('preferencia', '').lower():
         for key in cardapio:
             cardapio[key] = [item.replace('atum', 'frango') for item in cardapio[key]]
 
-    if not dados['come_carne']:
+    if not dados.get('come_carne', False):
         for key in cardapio:
             cardapio[key] = [item.replace('frango', 'grão-de-bico') for item in cardapio[key]]
 
-    if 'glúten' in dados['restricoes'].lower() or 'gluten' in dados['restricoes'].lower():
+    if 'glúten' in dados.get('restricoes', '').lower() or 'gluten' in dados.get('restricoes', '').lower():
         for key in cardapio:
             cardapio[key] = [item.replace('pão', 'pão sem glúten') for item in cardapio[key]]
 
@@ -152,20 +163,22 @@ def perfil_nutricional_view(request):
         agua_faltante = max(meta_agua - agua_bebida, 0)
         porcentagem_agua = min((agua_bebida / meta_agua) * 100, 100)
 
-        # Gerar o cardápio com base no questionário
-        from .utils import gerar_cardapio  # ou onde estiver essa função
-        cardapio = gerar_cardapio(ultimo)
+        cardapio = gerar_cardapio_personalizado(vars(ultimo))
 
         return render(request, 'meu_app/perfil.html', {
             'questionario': ultimo,
             'agua_faltante': agua_faltante,
             'porcentagem_agua': round(porcentagem_agua, 2),
             'cardapio': cardapio,
+            'usuario': request.user,
+            'idade': ultimo.idade,
+            'peso': ultimo.peso,
+            'altura': ultimo.altura,
+            'nome': ultimo.nome,
         })
     else:
         messages.error(request, 'Complete o questionário para ver seu perfil nutricional!')
         return render(request, 'meu_app/perfil.html')
-
 
 # === CARDÁPIO PERSONALIZADO ===
 @login_required
@@ -180,22 +193,19 @@ def cardapio_view(request):
 
 # === LOGOUT ===
 def logout_view(request):
-    logout(request)  # Realiza o logout do usuário
-    return redirect('login')  # Redireciona para a página de login
+    logout(request)
+    return redirect('login')
 
 # REDIRECIONAMENTO PARA LOGIN
 def redirecionar_para_login(request):
     return redirect('login')
 
-from django.shortcuts import render, redirect
-from .models import Questionario
-
+# === EDITAR PERFIL ===
+@login_required
 def editar_perfil(request):
-    # Obtém o questionário relacionado ao usuário
     questionario = Questionario.objects.get(usuario=request.user)
 
     if request.method == 'POST':
-        # Atualiza os dados do questionário com os dados enviados pelo POST
         questionario.nome = request.POST.get('nome', questionario.nome)
         questionario.idade = request.POST.get('idade', questionario.idade)
         questionario.peso = request.POST.get('peso', questionario.peso)
@@ -214,14 +224,14 @@ def editar_perfil(request):
         questionario.atividade_fisica = request.POST.get('atividade_fisica', questionario.atividade_fisica)
         questionario.usa_suplementos = request.POST.get('usa_suplementos') == 'on'
         questionario.estresse = request.POST.get('estresse', questionario.estresse)
-
         questionario.save()
 
-        # Redireciona para a página do perfil
+        messages.success(request, 'Perfil atualizado com sucesso!')
         return redirect('perfil_nutricional')
 
     return render(request, 'meu_app/editar_perfil.html', {'questionario': questionario})
 
+# === EXCLUIR PERFIL ===
 @login_required
 def excluir_perfil(request):
     if request.method == 'POST':
@@ -240,7 +250,7 @@ def excluir_perfil(request):
 
     return render(request, 'meu_app/excluir_conta.html')
 
-
+# === SUBSTITUIÇÕES ALIMENTARES ===
 @login_required
 def substituicoes_view(request):
     termo = request.GET.get('busca')
@@ -249,6 +259,7 @@ def substituicoes_view(request):
 
     if termo:
         try:
+            # Tenta encontrar o alimento
             alimento = Alimento.objects.get(nome__icontains=termo)
 
             # Pega preferências do usuário (se tiver questionário preenchido)
