@@ -51,10 +51,9 @@ def cadastro_view(request):
             messages.error(request, 'Nome de usuário já existe')
             return render(request, 'meu_app/cadastro.html')
 
-        # Criação do usuário
         user = User.objects.create_user(username=username, email=email, password=password)
         user.save()
-        login(request, user)  # Realiza o login automaticamente após o cadastro
+        login(request, user)
         messages.success(request, 'Cadastro realizado com sucesso!')
         return redirect('questionario')  # Redireciona para o questionário
 
