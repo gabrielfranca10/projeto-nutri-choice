@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Receitas - NutriChoice</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(-10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    body {
+      cursor: url('https://cdn-icons-png.flaticon.com/512/1642/1642495.png'), auto;
+    }
+
+    .bg-image {
+      background: url('https://images.unsplash.com/photo-1617957743097-0d20aa2ea762?q=80&w=1932&auto=format&fit=crop') no-repeat center center fixed;
+      background-size: cover;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -2;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    .bg-overlay {
+      background: linear-gradient(to right, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.2));
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+    }
+
+    .glass-box {
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 2rem;
+      padding: 2.5rem;
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      width: 100%;
+      transition: transform 0.3s ease;
+    }
+
+    .glass-box:hover {
+      transform: scale(1.02);
+    }
+
+    .btn-primary {
+      padding: 10px 20px;
+      border-radius: 12px;
+      text-align: center;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      transform: scale(1.05);
+    }
+
+    .btn-receita {
+      background-color: #4A90E2;
+    }
+
+    .btn-receita:hover {
+      background-color: #357ABD;
+    }
+
+    .animate-cardapio {
+      animation: fadeIn 2s ease-out;
+    }
+
+    @media (max-width: 1024px) {
+      .flex-col-responsive {
+        flex-direction: column;
+      }
+    }
+
+    /* Ajustes para responsividade */
+    @media (max-width: 768px) {
+      .glass-box {
+        padding: 1.5rem;
+      }
+
+      .text-3xl {
+        font-size: 1.875rem;
+      }
+    }
+
+    .logo-nutri {
+      max-width: 200px;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+  </style>
+</head>
+<body class="font-sans text-white flex flex-col items-center justify-start min-h-screen overflow-x-hidden pt-8">
+
+  <div class="bg-image"></div>
+  <div class="bg-overlay"></div>
+
+  <!-- Logo da NutriChoice -->
+  <div class="z-10 mb-10 text-center">
+    <img src="https://i.imgur.com/G5CqUzB.png" alt="Logo NutriChoice" class="logo-nutri mx-auto">
+  </div>
+
+  <div class="flex flex-col-responsive lg:flex-row gap-10 w-full max-w-7xl mx-4 p-10">
+
+    <!-- Caixa de Receitas -->
+    <div class="glass-box flex-1 animate-cardapio">
+      <h2 class="text-3xl font-bold text-lime-400 mb-6 text-center">Receitas Culinárias</h2>
+      <p class="text-white text-lg text-center">Escolha uma receita para ver os detalhes</p>
+      <div class="space-y-4 mt-6">
+
+        <!-- Receita 1 -->
+        <div class="bg-white/30 p-4 rounded-lg shadow-lg backdrop-blur-lg hover:scale-105 transform transition duration-300 ease-in-out">
+          <button onclick="showRecipeDetails('recipe1')">
+            <h3 class="text-xl font-semibold text-white">1. Salada de Quinoa</h3>
+          </button>
+          <div id="recipe1" class="recipe-details">
+            <ul class="text-white text-lg">
+              <li><strong>Ingredientes:</strong> Quinoa, tomate, pepino, abacate, azeite de oliva, limão</li>
+              <li><strong>Modo de preparo:</strong> Cozinhe a quinoa, corte os vegetais e misture tudo. Regue com azeite e limão.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Receita 2 -->
+        <div class="bg-white/30 p-4 rounded-lg shadow-lg backdrop-blur-lg hover:scale-105 transform transition duration-300 ease-in-out">
+          <button onclick="showRecipeDetails('recipe2')">
+            <h3 class="text-xl font-semibold text-white">2. Frango Grelhado com Legumes</h3>
+          </button>
+          <div id="recipe2" class="recipe-details">
+            <ul class="text-white text-lg">
+              <li><strong>Ingredientes:</strong> Peito de frango, abobrinha, cenoura, alho, azeite</li>
+              <li><strong>Modo de preparo:</strong> Tempere o frango e os legumes com azeite e alho, e grelhe até dourar.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Receita 3 -->
+        <div class="bg-white/30 p-4 rounded-lg shadow-lg backdrop-blur-lg hover:scale-105 transform transition duration-300 ease-in-out">
+          <button onclick="showRecipeDetails('recipe3')">
+            <h3 class="text-xl font-semibold text-white">3. Omelete de Espinafre</h3>
+          </button>
+          <div id="recipe3" class="recipe-details">
+            <ul class="text-white text-lg">
+              <li><strong>Ingredientes:</strong> Ovos, espinafre, queijo, azeite</li>
+              <li><strong>Modo de preparo:</strong> Bata os ovos, adicione espinafre picado e queijo, cozinhe em uma frigideira.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

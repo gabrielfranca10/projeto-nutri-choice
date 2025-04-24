@@ -39,12 +39,7 @@ def cadastro_view(request):
         password = request.POST.get('senha')
         password2 = request.POST.get('confirmar_senha')
 
-        idade = request.POST.get('idade')
-        altura = request.POST.get('altura')
-        peso = request.POST.get('peso')
-        objetivo = request.POST.get('objetivo')
-
-        if not all([username, email, password, password2, idade, altura, peso, objetivo]):
+        if not all([username, email, password, password2]):
             messages.error(request, 'Preencha todos os campos')
             return render(request, 'meu_app/cadastro.html')
 
@@ -56,32 +51,18 @@ def cadastro_view(request):
             messages.error(request, 'Nome de usuário já existe')
             return render(request, 'meu_app/cadastro.html')
 
+        if User.objects.filter(email=email).exists():
+            messages.error(request, 'Email já cadastrado')
+            return render(request, 'meu_app/cadastro.html')
+
         user = User.objects.create_user(username=username, email=email, password=password)
         user.save()
 
-        # Cria o perfil
-        Perfil.objects.create(
-            user=user,
-            nome=username,  # ou peça um nome separado no formulário
-            idade=int(idade),
-            peso=float(peso),
-            altura=float(altura),
-            objetivo=objetivo
-        )
-
-        # Cria o questionário com os mesmos dados básicos
-        Questionario.objects.create(
-            usuario=user,
-            nome=username,
-            idade=int(idade),
-            peso=float(peso),
-            altura=float(altura),
-            objetivo=objetivo
-        )
-
+        # Login automático (opcional: remova se quiser que o usuário vá para login primeiro)
         login(request, user)
-        messages.success(request, 'Cadastro realizado com sucesso!')
-        return redirect('perfil_nutricional')  # ou a tela inicial
+
+        messages.success(request, 'Cadastro concluído! Faça login para começar.')
+        return redirect('login')
 
     return render(request, 'meu_app/cadastro.html')
 
@@ -211,13 +192,9 @@ def perfil_nutricional_view(request):
 # === CARDÁPIO PERSONALIZADO ===
 @login_required
 def cardapio_view(request):
-    ultimo = Questionario.objects.filter(usuario=request.user).last()
-    if ultimo:
-        cardapio = gerar_cardapio_personalizado(vars(ultimo))
-        return render(request, 'meu_app/cardapio.html', {'cardapio': cardapio, 'dados': ultimo})
-    else:
-        messages.error(request, 'Complete o questionário para ver seu cardápio personalizado!')
-        return render(request, 'meu_app/cardapio.html')
+    # Exemplo simples de exibição de cardápio
+    cardapio = ...  # Lógica para buscar o cardápio do usuário
+    return render(request, 'meu_app/cardapio.html', {'cardapio': cardapio})
 
 # === LOGOUT ===
 def logout_view(request):
@@ -338,3 +315,11 @@ def substituicoes_view(request):
         'substituicoes': substituicoes,
         'termo': termo
     })
+
+def receitas_view(request):
+
+
+    return render(request, 'meu_app/receitas.html')
+# views.py
+def agua_view(request):
+    return render(request, 'meu_app/agua.html')  # Ajuste conforme necessário

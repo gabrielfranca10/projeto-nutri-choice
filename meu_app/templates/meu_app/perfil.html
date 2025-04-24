@@ -1,238 +1,141 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Perfil - NutriChoice</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard - NutriChoice</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    @keyframes fadeIn {
-      0% { opacity: 0; transform: translateY(-10px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-
     body {
-      cursor: url('https://cdn-icons-png.flaticon.com/512/1642/1642495.png'), auto;
-    }
-
-    .bg-image {
-      background: url('https://images.unsplash.com/photo-1617957743097-0d20aa2ea762?q=80&w=1932&auto=format&fit=crop') no-repeat center center fixed;
+      background-image: url('https://images.unsplash.com/photo-1617957743097-0d20aa2ea762?q=80&w=1932&auto=format&fit=crop');
       background-size: cover;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: -2;
-      animation: fadeIn 2s ease-in-out;
+      background-position: center;
+      background-attachment: fixed;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
     }
 
-    .bg-overlay {
-      background: linear-gradient(to right, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.2));
+    .overlay {
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.65);
       z-index: -1;
     }
 
-    .glass-box {
-      background-color: rgba(255, 255, 255, 0.2);
-      border-radius: 2rem;
-      padding: 2.5rem;
-      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+    .glass {
+      background: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      width: 100%;
+      border-radius: 1.5rem;
       transition: transform 0.3s ease;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
     }
 
-    .glass-box:hover {
-      transform: scale(1.02);
+    .glass:hover {
+      transform: translateY(-5px);
     }
 
-    .btn-primary {
-      padding: 10px 20px;
-      border-radius: 12px;
-      text-align: center;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      transition: transform 0.3s ease, background-color 0.3s ease;
+    .icon-box {
+      font-size: 2.5rem;
     }
 
-    .btn-primary:hover {
-      transform: scale(1.05);
+    .menu-link {
+      transition: all 0.3s ease;
     }
 
-    .btn-editar {
-      background-color: #4A90E2;
-    }
-
-    .btn-editar:hover {
-      background-color: #357ABD;
-    }
-
-    .btn-excluir {
-      background-color: #E74C3C;
-    }
-
-    .btn-excluir:hover {
-      background-color: #C0392B;
-    }
-
-    .btn-substituicoes {
-      background-color: #F1C40F;
-      color: white;
-      margin-top: 30px;
-    }
-
-    .btn-substituicoes:hover {
-      background-color: #F39C12;
-      transform: scale(1.05);
-    }
-
-    .animate-cardapio {
-      animation: fadeIn 2s ease-out;
-    }
-
-    @media (max-width: 1024px) {
-      .flex-col-responsive {
-        flex-direction: column;
-      }
-    }
-
-    .recipe-details {
-      display: none;
-    }
-
-    /* Ajustes para responsividade */
-    @media (max-width: 768px) {
-      .glass-box {
-        padding: 1.5rem;
-      }
-
-      .text-3xl {
-        font-size: 1.875rem;
-      }
-    }
-
-    .logo-nutri {
-      max-width: 200px;
-      animation: fadeIn 1.5s ease-in-out;
+    .menu-link:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+      border-radius: 0.5rem;
     }
   </style>
-  <script>
-    function showRecipeDetails(recipeId) {
-      const allRecipes = document.querySelectorAll('.recipe-details');
-      allRecipes.forEach(recipe => recipe.style.display = 'none');
-      const selectedRecipe = document.getElementById(recipeId);
-      selectedRecipe.style.display = 'block';
-    }
-  </script>
 </head>
-<body class="font-sans text-white flex flex-col items-center justify-start min-h-screen overflow-x-hidden pt-8">
+<body class="min-h-screen overflow-x-hidden">
 
-  <div class="bg-image"></div>
-  <div class="bg-overlay"></div>
+  <div class="overlay"></div>
 
-  <!-- Logo da NutriChoice -->
-  <div class="z-10 mb-10 text-center">
-    <img src="https://i.imgur.com/G5CqUzB.png" alt="Logo NutriChoice" class="logo-nutri mx-auto">
-  </div>
+  <div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <aside class="w-64 p-6 flex flex-col items-start bg-black bg-opacity-30 backdrop-blur-md border-r border-white border-opacity-20">
+      <img src="https://i.imgur.com/G5CqUzB.png" alt="Logo NutriChoice" class="mb-8 w-32" />
+      <h2 class="text-xl font-bold mb-6">Menu</h2>
+      <nav class="space-y-4 w-full">
+        <a href="{% url 'perfil_nutricional' %}" class="menu-link px-4 py-2 block">🏠 Dashboard</a>
+        <a href="{% url 'editar_perfil' %}" class="menu-link px-4 py-2 block">✏️ Editar Perfil</a>
+        <a href="{% url 'excluir_perfil' %}" class="menu-link px-4 py-2 block text-red-500 hover:text-red-400 hover:bg-opacity-20 transition">🗑️ Excluir Conta</a>
+        <a href="{% url 'logout' %}" class="menu-link px-4 py-2 block text-red-300">🚪 Sair</a>
+      </nav>
+    </aside>
 
-  <div class="flex flex-col-responsive lg:flex-row gap-10 w-full max-w-7xl mx-4 p-10">
+    <!-- Conteúdo principal -->
+    <main class="flex-1 p-10 overflow-auto">
+      <h1 class="text-3xl font-bold mb-6">Bem-vindo(a), {{ user.username }} 👋</h1>
 
-    <!-- Caixa do Perfil -->
-    <div class="glass-box flex-1 animate-cardapio">
-      <h2 class="text-3xl font-bold text-lime-400 mb-6 text-center">Meu Perfil</h2>
-      <div class="space-y-4">
-        <h3 class="text-xl font-semibold text-white">Informações do Cadastro</h3>
-        <ul class="space-y-3 text-white text-lg">
-          <li><strong>Nome de Usuário:</strong> {{ usuario.username }}</li>
-          <li><strong>Email:</strong> {{ usuario.email }}</li>
-        </ul>
-      </div>
-      <div class="space-y-4 mt-8">
-        <h3 class="text-xl font-semibold text-white">Informações Nutricionais</h3>
-        <ul class="space-y-3 text-white text-lg">
-          <li><strong>Nome Completo:</strong> {{ questionario.nome|default:"Não preenchido" }}</li>
-          <li><strong>Idade:</strong> {{ questionario.idade|default:"Não preenchido" }} {% if questionario.idade %}anos{% endif %}</li>
-          <li><strong>Altura:</strong> {{ questionario.altura|default:"Não preenchido" }} {% if questionario.altura %}cm{% endif %}</li>
-          <li><strong>Peso:</strong> {{ questionario.peso|default:"Não preenchido" }} {% if questionario.peso %}kg{% endif %}</li>
-          <li><strong>Objetivo:</strong> {{ questionario.objetivo|default:"Não especificado" }}</li>
-          <li><strong>Preferências:</strong> {{ questionario.preferencia|default:"Não especificado" }}</li>
-          <li><strong>Restrições:</strong> {{ questionario.restricoes|default:"Não especificado" }}</li>
-        </ul>
-      </div>
-      <div class="mt-8 flex gap-4 justify-center">
-        <a href="{% url 'editar_perfil' %}" class="btn-primary btn-editar w-full text-center">Editar Dados</a>
-        <a href="{% url 'excluir_perfil' %}" class="btn-primary btn-excluir w-full text-center">Excluir Conta</a>
-      </div>
-    </div>
+      <!-- Grid de funcionalidades principais -->
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        <a href="{% url 'questionario' %}" class="glass p-6 flex flex-col items-center text-center">
+          <div class="icon-box">📋</div>
+          <h3 class="text-xl font-semibold mt-4">Questionário</h3>
+          <p class="text-sm mt-2">Atualize seus dados e preferências.</p>
+        </a>
+        <a href="{% url 'receitas' %}" class="glass p-6 flex flex-col items-center text-center">
+          <div class="icon-box">🍽️</div>
+          <h3 class="text-xl font-semibold mt-4">Receitas</h3>
+          <p class="text-sm mt-2">Veja sugestões nutritivas personalizadas.</p>
+        </a>
+        <a href="{% url 'agua' %}" class="glass p-6 flex flex-col items-center text-center">
+          <div class="icon-box">💧</div>
+          <h3 class="text-xl font-semibold mt-4">Ingestão de Água</h3>
+          <p class="text-sm mt-2">Controle sua hidratação.</p>
+        </a>
+        <a href="{% url 'cardapio' %}" class="glass p-6 flex flex-col items-center text-center">
+          <div class="icon-box">🥗</div>
+          <h3 class="text-xl font-semibold mt-4">Dieta / Cardápio</h3>
+          <p class="text-sm mt-2">Acesse seu plano alimentar.</p>
+        </a>
 
-    <!-- Caixa do Cardápio -->
-    <div class="glass-box flex-1 animate-cardapio">
-      <h2 class="text-3xl font-bold text-lime-400 mb-6 text-center">Seu Cardápio</h2>
-      {% if cardapio %}
-        <div class="space-y-4">
-          <ul class="list-none space-y-4">
-            {% for item in cardapio %}
-              <li class="flex items-center justify-between p-4 bg-white/30 rounded-lg shadow-lg backdrop-blur-lg hover:scale-105 transform transition duration-300 ease-in-out">
-                <span class="text-white text-lg">{{ item }}</span>
-                <span class="text-lime-400 font-semibold">✔️</span>
-              </li>
-            {% endfor %}
+        <!-- Cartões extras -->
+        <div class="glass p-6">
+          <h3 class="text-lg font-bold mb-2">Progresso Diário</h3>
+          <div class="w-full bg-gray-200 rounded-full h-4">
+            <div class="bg-green-500 h-4 rounded-full" style="width: 65%"></div>
+          </div>
+          <p class="text-sm mt-2">65% da meta calórica atingida</p>
+        </div>
+
+        <div class="glass p-6 text-center">
+          <h3 class="text-lg font-semibold">💡 Dica Nutricional</h3>
+          <p class="text-sm mt-2 italic">Coma frutas com casca para obter mais fibras.</p>
+        </div>
+
+        <div class="glass p-6">
+          <h3 class="text-lg font-semibold mb-4">Macronutrientes</h3>
+          <div class="grid grid-cols-3 gap-2 text-center">
+            <div>
+              <p class="text-sm">Proteínas</p>
+              <p class="text-lg font-bold">87g</p>
+            </div>
+            <div>
+              <p class="text-sm">Carboidratos</p>
+              <p class="text-lg font-bold">132g</p>
+            </div>
+            <div>
+              <p class="text-sm">Gorduras</p>
+              <p class="text-lg font-bold">46g</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass p-6">
+          <h3 class="text-lg font-semibold">🏆 Conquistas</h3>
+          <ul class="text-sm mt-2 list-disc list-inside">
+            <li>5 dias seguidos com meta de água atingida</li>
+            <li>Completou 10 receitas saudáveis</li>
           </ul>
         </div>
-      {% else %}
-        <p class="text-white text-lg text-center font-semibold">Nenhum cardápio gerado ainda. Complete o questionário para receber o seu!</p>
-      {% endif %}
-      <div class="mt-6 text-center">
-        <a href="{% url 'substituicoes' %}" class="btn-primary btn-substituicoes w-full text-center px-4 py-2 rounded-lg transition transform hover:scale-105">Ver Substituições</a>
       </div>
-    </div>
-
-    <!-- Caixa de Receitas -->
-    <div class="glass-box flex-1 animate-cardapio">
-      <h2 class="text-3xl font-bold text-lime-400 mb-6 text-center">Receitas Culinárias</h2>
-      <p class="text-white text-lg text-center">Escolha sua receita para visualizar</p>
-      <div class="space-y-4 mt-6">
-        <div class="bg-white/30 p-4 rounded-lg shadow-lg backdrop-blur-lg hover:scale-105 transform transition duration-300 ease-in-out">
-          <button onclick="showRecipeDetails('recipe1')">
-            <h3 class="text-xl font-semibold text-white">1. Salada de Quinoa</h3>
-          </button>
-          <div id="recipe1" class="recipe-details">
-            <ul class="text-white text-lg">
-              <li><strong>Ingredientes:</strong> Quinoa, tomate, pepino, abacate, azeite de oliva, limão</li>
-              <li><strong>Modo de preparo:</strong> Cozinhe a quinoa, corte os vegetais e misture tudo. Regue com azeite e limão.</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="bg-white/30 p-4 rounded-lg shadow-lg backdrop-blur-lg hover:scale-105 transform transition duration-300 ease-in-out">
-          <button onclick="showRecipeDetails('recipe2')">
-            <h3 class="text-xl font-semibold text-white">2. Frango Grelhado com Legumes</h3>
-          </button>
-          <div id="recipe2" class="recipe-details">
-            <ul class="text-white text-lg">
-              <li><strong>Ingredientes:</strong> Peito de frango, abobrinha, cenoura, alho, azeite</li>
-              <li><strong>Modo de preparo:</strong> Tempere o frango e os legumes com azeite e alho, e grelhe até dourar.</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="bg-white/30 p-4 rounded-lg shadow-lg backdrop-blur-lg hover:scale-105 transform transition duration-300 ease-in-out">
-          <button onclick="showRecipeDetails('recipe3')">
-            <h3 class="text-xl font-semibold text-white">3. Omelete de Espinafre</h3>
-          </button>
-          <div id="recipe3" class="recipe-details">
-            <ul class="text-white text-lg">
-              <li><strong>Ingredientes:</strong> Ovos, espinafre, queijo, azeite</li>
-              <li><strong>Modo de preparo:</strong> Bata os ovos, adicione espinafre picado e queijo, cozinhe em uma frigideira.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-
+    </main>
   </div>
+
 </body>
 </html>
