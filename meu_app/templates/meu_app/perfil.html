@@ -7,8 +7,8 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @keyframes fadeIn {
-      0% { opacity: 0; }
-      100% { opacity: 1; }
+      0% { opacity: 0; transform: translateY(-10px); }
+      100% { opacity: 1; transform: translateY(0); }
     }
 
     body {
@@ -110,104 +110,61 @@
       }
 
       .text-3xl {
-        font-size: 1.875rem; /* Ajuste para cabeçalhos em telas menores */
+        font-size: 1.875rem;
       }
+    }
+
+    .logo-nutri {
+      max-width: 200px;
+      animation: fadeIn 1.5s ease-in-out;
     }
   </style>
   <script>
     function showRecipeDetails(recipeId) {
       const allRecipes = document.querySelectorAll('.recipe-details');
       allRecipes.forEach(recipe => recipe.style.display = 'none');
-
       const selectedRecipe = document.getElementById(recipeId);
       selectedRecipe.style.display = 'block';
     }
   </script>
 </head>
-<body class="font-sans text-white flex items-center justify-center min-h-screen overflow-hidden">
+<body class="font-sans text-white flex flex-col items-center justify-start min-h-screen overflow-x-hidden pt-8">
 
   <div class="bg-image"></div>
   <div class="bg-overlay"></div>
+
+  <!-- Logo da NutriChoice -->
+  <div class="z-10 mb-10 text-center">
+    <img src="https://i.imgur.com/G5CqUzB.png" alt="Logo NutriChoice" class="logo-nutri mx-auto">
+  </div>
 
   <div class="flex flex-col-responsive lg:flex-row gap-10 w-full max-w-7xl mx-4 p-10">
 
     <!-- Caixa do Perfil -->
     <div class="glass-box flex-1 animate-cardapio">
       <h2 class="text-3xl font-bold text-lime-400 mb-6 text-center">Meu Perfil</h2>
-      
-      <!-- Dados do Usuário (Cadastro) -->
       <div class="space-y-4">
         <h3 class="text-xl font-semibold text-white">Informações do Cadastro</h3>
         <ul class="space-y-3 text-white text-lg">
           <li><strong>Nome de Usuário:</strong> {{ usuario.username }}</li>
           <li><strong>Email:</strong> {{ usuario.email }}</li>
-          <!-- Adicionar mais campos do modelo User, se necessário -->
         </ul>
       </div>
-
-      <!-- Dados do Questionário -->
       <div class="space-y-4 mt-8">
         <h3 class="text-xl font-semibold text-white">Informações Nutricionais</h3>
         <ul class="space-y-3 text-white text-lg">
-          <li><strong>Nome Completo:</strong>
-            {% if questionario.nome %}
-              {{ questionario.nome }}
-            {% else %}
-              Não preenchido
-            {% endif %}
-          </li>
-          <li><strong>Idade:</strong>
-            {% if questionario.idade %}
-              {{ questionario.idade }} anos
-            {% else %}
-              Não preenchido
-            {% endif %}
-          </li>
-          <li><strong>Altura:</strong>
-            {% if questionario.altura %}
-              {{ questionario.altura }} cm
-            {% else %}
-              Não preenchido
-            {% endif %}
-          </li>
-          <li><strong>Peso:</strong>
-            {% if questionario.peso %}
-              {{ questionario.peso }} kg
-            {% else %}
-              Não preenchido
-            {% endif %}
-          </li>
-          <li><strong>Objetivo:</strong>
-            {% if questionario.objetivo %}
-              {{ questionario.objetivo }}
-            {% else %}
-              Não especificado
-            {% endif %}
-          </li>
-          <li><strong>Preferências:</strong>
-            {% if questionario.preferencia %}
-              {{ questionario.preferencia }}
-            {% else %}
-              Não especificado
-            {% endif %}
-          </li>
-          <li><strong>Restrições:</strong>
-            {% if questionario.restricoes %}
-              {{ questionario.restricoes }}
-            {% else %}
-              Não especificado
-            {% endif %}
-          </li>
+          <li><strong>Nome Completo:</strong> {{ questionario.nome|default:"Não preenchido" }}</li>
+          <li><strong>Idade:</strong> {{ questionario.idade|default:"Não preenchido" }} {% if questionario.idade %}anos{% endif %}</li>
+          <li><strong>Altura:</strong> {{ questionario.altura|default:"Não preenchido" }} {% if questionario.altura %}cm{% endif %}</li>
+          <li><strong>Peso:</strong> {{ questionario.peso|default:"Não preenchido" }} {% if questionario.peso %}kg{% endif %}</li>
+          <li><strong>Objetivo:</strong> {{ questionario.objetivo|default:"Não especificado" }}</li>
+          <li><strong>Preferências:</strong> {{ questionario.preferencia|default:"Não especificado" }}</li>
+          <li><strong>Restrições:</strong> {{ questionario.restricoes|default:"Não especificado" }}</li>
         </ul>
       </div>
-
       <div class="mt-8 flex gap-4 justify-center">
-        <a href="{% url 'editar_perfil' %}" class="btn-primary btn-editar w-full text-center">
-          Editar Dados
-        </a>
-        <a href="{% url 'excluir_perfil' %}" class="btn-primary btn-excluir w-full text-center">
-          Excluir Conta
-        </a>
+        <a href="{% url 'editar_perfil' %}" class="btn-primary btn-editar w-full text-center">Editar Dados</a>
+        <a href="{% url 'excluir_perfil' %}" class="btn-primary btn-excluir w-full text-center">Excluir Conta</a>
       </div>
     </div>
 
@@ -229,18 +186,15 @@
         <p class="text-white text-lg text-center font-semibold">Nenhum cardápio gerado ainda. Complete o questionário para receber o seu!</p>
       {% endif %}
       <div class="mt-6 text-center">
-        <a href="{% url 'substituicoes' %}" class="btn-primary btn-substituicoes w-full text-center px-4 py-2 rounded-lg transition transform hover:scale-105">
-          Ver Substituições
-        </a>
+        <a href="{% url 'substituicoes' %}" class="btn-primary btn-substituicoes w-full text-center px-4 py-2 rounded-lg transition transform hover:scale-105">Ver Substituições</a>
       </div>
     </div>
 
-    <!-- Caixa de Receitas Culinárias -->
+    <!-- Caixa de Receitas -->
     <div class="glass-box flex-1 animate-cardapio">
       <h2 class="text-3xl font-bold text-lime-400 mb-6 text-center">Receitas Culinárias</h2>
       <p class="text-white text-lg text-center">Escolha sua receita para visualizar</p>
       <div class="space-y-4 mt-6">
-
         <div class="bg-white/30 p-4 rounded-lg shadow-lg backdrop-blur-lg hover:scale-105 transform transition duration-300 ease-in-out">
           <button onclick="showRecipeDetails('recipe1')">
             <h3 class="text-xl font-semibold text-white">1. Salada de Quinoa</h3>
@@ -276,7 +230,6 @@
             </ul>
           </div>
         </div>
-
       </div>
     </div>
 

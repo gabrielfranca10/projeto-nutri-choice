@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Alimento, Substituicao, Questionario
 from django.http import HttpResponse
+from .models import Perfil, Questionario
 
 def debug_host(request):
     return HttpResponse(f"Host recebido: {request.get_host()}")
@@ -38,7 +39,12 @@ def cadastro_view(request):
         password = request.POST.get('senha')
         password2 = request.POST.get('confirmar_senha')
 
-        if not all([username, email, password, password2]):
+        idade = request.POST.get('idade')
+        altura = request.POST.get('altura')
+        peso = request.POST.get('peso')
+        objetivo = request.POST.get('objetivo')
+
+        if not all([username, email, password, password2, idade, altura, peso, objetivo]):
             messages.error(request, 'Preencha todos os campos')
             return render(request, 'meu_app/cadastro.html')
 
@@ -52,11 +58,33 @@ def cadastro_view(request):
 
         user = User.objects.create_user(username=username, email=email, password=password)
         user.save()
+
+        # Cria o perfil
+        Perfil.objects.create(
+            user=user,
+            nome=username,  # ou peça um nome separado no formulário
+            idade=int(idade),
+            peso=float(peso),
+            altura=float(altura),
+            objetivo=objetivo
+        )
+
+        # Cria o questionário com os mesmos dados básicos
+        Questionario.objects.create(
+            usuario=user,
+            nome=username,
+            idade=int(idade),
+            peso=float(peso),
+            altura=float(altura),
+            objetivo=objetivo
+        )
+
         login(request, user)
         messages.success(request, 'Cadastro realizado com sucesso!')
-        return redirect('questionario')  # Redireciona para o questionário
+        return redirect('perfil_nutricional')  # ou a tela inicial
 
     return render(request, 'meu_app/cadastro.html')
+
 
 # === QUESTIONÁRIO NUTRICIONAL ===
 @login_required
