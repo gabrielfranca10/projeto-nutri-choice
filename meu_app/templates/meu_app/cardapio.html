@@ -68,6 +68,11 @@
     <img src="https://cdn-icons-png.flaticon.com/512/992/992680.png" class="w-5 h-5" alt="logout"> Voltar para o login
   </a>
 
+  <!-- Botão de Voltar para o Perfil -->
+  <a href="{% url 'perfil_nutricional' %}" class="absolute top-5 left-5 flex items-center gap-2 bg-gray-500 hover:bg-gray-600 text-white font-semibold px-4 py-2 rounded-full shadow-md transition duration-300 z-10">
+    <img src="https://cdn-icons-png.flaticon.com/512/60/60716.png" class="w-5 h-5" alt="back"> Voltar para o Perfil
+  </a>
+
   <div class="w-full max-w-4xl mx-4 main-box">
     <div class="text-center mb-10">
       <h1 class="text-3xl md:text-4xl font-bold flex items-center justify-center gap-3">
@@ -77,16 +82,21 @@
       <p class="text-white text-opacity-80 mt-2">Montado com base nas suas respostas</p>
     </div>
 
-    {% for refeicao, itens in cardapio.items %}
-      <div class="mb-6">
-        <h2 class="text-xl font-semibold text-lime-300 mb-2">{{ refeicao }}</h2>
-        <ul class="list-disc list-inside text-white text-opacity-90 space-y-1">
-          {% for item in itens %}
-            <li>{{ item }}</li>
-          {% endfor %}
-        </ul>
-      </div>
-    {% endfor %}
+    <!-- Exibindo o Cardápio -->
+    {% if cardapio %}
+      {% for refeicao, itens in cardapio.items %}
+        <div class="mb-6">
+          <h2 class="text-xl font-semibold text-lime-300 mb-2">{{ refeicao }}</h2>
+          <ul class="list-disc list-inside text-white text-opacity-90 space-y-1">
+            {% for item in itens %}
+              <li>{{ item }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p class="text-white text-opacity-80">Ainda não há cardápio gerado. Complete o questionário para obter seu cardápio personalizado.</p>
+    {% endif %}
 
     <div class="flex justify-center gap-4 mt-10 flex-wrap">
       <a href="{% url 'questionario' %}" class="bg-lime-500 hover:bg-lime-600 text-white font-semibold py-2 px-6 rounded-full shadow-lg transition-transform transform hover:scale-105">

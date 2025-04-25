@@ -55,14 +55,41 @@
   <div class="bg-overlay"></div>
 
   <div class="form-box">
+
     <h1 class="text-3xl font-bold text-center mb-6">Editar Perfil</h1>
 
+    <!-- BLOCO DE VISUALIZAÇÃO DOS DADOS -->
+    <div class="bg-white/10 rounded-xl p-4 mb-6 text-white shadow-md">
+      <h2 class="text-xl font-semibold mb-2">Seus dados atuais</h2>
+      <ul class="space-y-1 text-sm">
+        <li><strong>Nome:</strong> {{ questionario.nome }}</li>
+        <li><strong>Idade:</strong> {{ questionario.idade }}</li>
+        <li><strong>Peso:</strong> {{ questionario.peso }} kg</li>
+        <li><strong>Altura:</strong> {{ questionario.altura }} cm</li>
+        <li><strong>Gênero:</strong> {{ questionario.genero }}</li>
+        <li><strong>Objetivo:</strong> {{ questionario.objetivo }}</li>
+        <li><strong>Restrições:</strong> {{ questionario.restricoes }}</li>
+        <li><strong>Preferência alimentar:</strong> {{ questionario.preferencia }}</li>
+        <li><strong>Fome frequente:</strong> {{ questionario.fome }}</li>
+        <li><strong>Refeições por dia:</strong> {{ questionario.refeicoes_por_dia }}</li>
+        <li><strong>Come carne?</strong> {{ questionario.come_carne|yesno:"Sim,Não" }}</li>
+        <li><strong>Gosta de legumes?</strong> {{ questionario.gosta_de_legumes|yesno:"Sim,Não" }}</li>
+        <li><strong>Água ingerida:</strong> {{ questionario.agua_bebida }} L/dia</li>
+        <li><strong>Qualidade da água:</strong> {{ questionario.agua }}</li>
+        <li><strong>Sono:</strong> {{ questionario.sono }}</li>
+        <li><strong>Atividade física:</strong> {{ questionario.atividade_fisica }}</li>
+        <li><strong>Usa suplementos?</strong> {{ questionario.usa_suplementos|yesno:"Sim,Não" }}</li>
+        <li><strong>Estresse:</strong> {{ questionario.estresse }}</li>
+      </ul>
+    </div>
+
+    <!-- FORMULÁRIO DE EDIÇÃO -->
     <form action="" method="POST" class="space-y-4">
       {% csrf_token %}
-      <input type="text" name="nome" placeholder="Nome" class="w-full p-3 rounded-lg text-black" value="{{ dados.nome }}">
-      <input type="number" name="idade" placeholder="Idade" class="w-full p-3 rounded-lg text-black" value="{{ dados.idade }}">
-      <input type="number" name="peso" placeholder="Peso" class="w-full p-3 rounded-lg text-black" value="{{ dados.peso }}">
-      <input type="number" name="altura" placeholder="Altura" class="w-full p-3 rounded-lg text-black" value="{{ dados.altura }}">
+      <input type="text" name="nome" placeholder="Nome" class="w-full p-3 rounded-lg text-black" value="{{ questionario.nome }}">
+      <input type="number" name="idade" placeholder="Idade" class="w-full p-3 rounded-lg text-black" value="{{ questionario.idade }}">
+      <input type="number" name="peso" placeholder="Peso" class="w-full p-3 rounded-lg text-black" value="{{ questionario.peso }}">
+      <input type="number" name="altura" placeholder="Altura" class="w-full p-3 rounded-lg text-black" value="{{ questionario.altura }}">
 
       <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-lg text-white font-semibold transition">Salvar Alterações</button>
       <a href="{% url 'perfil_nutricional' %}" class="block text-center text-sm text-gray-200 mt-3 underline">Voltar ao Perfil</a>

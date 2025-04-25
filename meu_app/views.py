@@ -71,6 +71,7 @@ def cadastro_view(request):
 @login_required
 def questionario_view(request):
     if request.method == 'POST':
+
         def parse_float(valor):
             try:
                 return float(valor)
@@ -93,11 +94,11 @@ def questionario_view(request):
             'restricoes': request.POST.get('restricoes') or '',
             'preferencia': request.POST.get('preferencia') or '',
             'fome': request.POST.get('fome') or '',
-            'refeicoes_por_dia': request.POST.get('refeicoes_por_dia'),
+            'refeicoes_por_dia': parse_int(request.POST.get('refeicoes_por_dia')),
             'come_carne': request.POST.get('come_carne') == 'on',
             'gosta_de_legumes': request.POST.get('gosta_de_legumes') == 'on',
-            'agua': request.POST.get('agua') or '',
             'agua_bebida': parse_float(request.POST.get('agua_bebida')),
+            'agua': request.POST.get('agua') or '',
             'sono': request.POST.get('sono') or '',
             'atividade_fisica': request.POST.get('atividade_fisica'),
             'usa_suplementos': request.POST.get('usa_suplementos') == 'on',
@@ -120,7 +121,6 @@ def questionario_view(request):
 
     return render(request, 'meu_app/questionario.html')
 
-# === GERADOR DE CARDÁPIO ===
 def gerar_cardapio_personalizado(dados):
     cardapio = {
         'Café da Manhã': [],
@@ -130,32 +130,58 @@ def gerar_cardapio_personalizado(dados):
     }
 
     objetivo = dados.get('objetivo', '').lower()
+    preferencias = dados.get('preferencia', '').lower()
+    restricoes = dados.get('restricoes', '').lower()
 
+    gosta_de_carne = dados.get('gosta_de_carne', True)
+    gosta_de_legumes = dados.get('gosta_de_legumes', True)
+    come_carne = dados.get('come_carne', True)
+
+    def substituir_almoco_e_jantar(almoco_opcao, jantar_opcao):
+        if not gosta_de_carne or not come_carne:
+            almoco_opcao = almoco_opcao.replace('frango', 'grão-de-bico').replace('carne', 'soja texturizada').replace('peito de frango', 'lentilhas').replace('carne magra', 'tofu grelhado')
+            jantar_opcao = jantar_opcao.replace('frango', 'grão-de-bico').replace('carne', 'soja texturizada').replace('peito de frango', 'lentilhas').replace('carne magra', 'tofu grelhado')
+        if not gosta_de_legumes:
+            # Substituir legumes/salada por arroz, purê, ou outra alternativa viável
+            almoco_opcao = almoco_opcao.replace('legumes no vapor', 'purê de batata').replace('salada verde', 'arroz integral').replace('salada', 'arroz e feijão')
+            jantar_opcao = jantar_opcao.replace('salada', 'quinoa refogada').replace('sopa de legumes', 'creme de abóbora').replace('legumes', 'arroz com ovo')
+        return almoco_opcao, jantar_opcao
+
+    # CAFÉ DA MANHÃ E LANCHE
     if 'ganhar' in objetivo:
         cardapio['Café da Manhã'].append("Ovos mexidos + pão integral + vitamina de banana com aveia")
-        cardapio['Almoço'].append("Arroz integral + frango grelhado + legumes no vapor")
         cardapio['Lanche da Tarde'].append("Iogurte natural com granola")
-        cardapio['Jantar'].append("Omelete com batata doce e salada")
+        almoco, jantar = substituir_almoco_e_jantar(
+            "Arroz integral + frango grelhado + legumes no vapor",
+            "Omelete com batata doce e salada"
+        )
     elif 'perder' in objetivo:
         cardapio['Café da Manhã'].append("Iogurte desnatado + frutas vermelhas")
-        cardapio['Almoço'].append("Peito de frango + salada verde com azeite e quinoa")
         cardapio['Lanche da Tarde'].append("Castanhas e uma fruta")
-        cardapio['Jantar'].append("Sopa de legumes com frango desfiado")
+        almoco, jantar = substituir_almoco_e_jantar(
+            "Peito de frango + salada verde com azeite e quinoa",
+            "Sopa de legumes com frango desfiado"
+        )
     elif 'saúde' in objetivo or 'saude' in objetivo:
         cardapio['Café da Manhã'].append("Pão integral com queijo branco + café sem açúcar")
-        cardapio['Almoço'].append("Arroz + feijão + carne magra + salada")
         cardapio['Lanche da Tarde'].append("Fruta + iogurte")
-        cardapio['Jantar'].append("Sanduíche natural + suco de frutas")
+        almoco, jantar = substituir_almoco_e_jantar(
+            "Arroz + feijão + carne magra + salada",
+            "Sanduíche natural + suco de frutas"
+        )
+    else:
+        almoco, jantar = "Arroz + feijão + ovo cozido", "Sopa de abóbora com torradas"
 
-    if 'atum' in dados.get('preferencia', '').lower():
+    cardapio['Almoço'].append(almoco)
+    cardapio['Jantar'].append(jantar)
+
+    # Preferência por atum
+    if 'atum' in preferencias:
         for key in cardapio:
             cardapio[key] = [item.replace('atum', 'frango') for item in cardapio[key]]
 
-    if not dados.get('come_carne', False):
-        for key in cardapio:
-            cardapio[key] = [item.replace('frango', 'grão-de-bico') for item in cardapio[key]]
-
-    if 'glúten' in dados.get('restricoes', '').lower() or 'gluten' in dados.get('restricoes', '').lower():
+    # Restrições ao glúten
+    if 'glúten' in restricoes or 'gluten' in restricoes:
         for key in cardapio:
             cardapio[key] = [item.replace('pão', 'pão sem glúten') for item in cardapio[key]]
 

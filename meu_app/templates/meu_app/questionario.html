@@ -77,14 +77,14 @@
       <p class="text-white text-lg mt-2">Nos ajude a entender seus hábitos para criar um plano alimentar ideal pra você 🍎</p>
     </div>
 
-    <form method="post" class="space-y-6">
+    <form method="post" action="" autocomplete="on" class="space-y-6">
       {% csrf_token %}
 
       <div class="grid md:grid-cols-2 gap-6">
         <!-- Objetivo -->
         <div>
-          <label class="block text-white font-semibold mb-1">Qual seu objetivo principal?</label>
-          <select name="objetivo" required class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black focus:outline-none">
+          <label for="objetivo" class="block text-white font-semibold mb-1">Qual seu objetivo principal?</label>
+          <select name="objetivo" id="objetivo" required class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black focus:outline-none">
             <option value="">Selecione...</option>
             <option value="perder">Perder peso</option>
             <option value="ganhar">Ganhar massa muscular</option>
@@ -96,38 +96,38 @@
 
         <!-- Restrições -->
         <div>
-          <label class="block text-white font-semibold mb-1">Você possui alguma restrição alimentar?</label>
-          <input type="text" name="restricoes" required placeholder="Ex: lactose, glúten" class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black placeholder-gray-600 focus:outline-none">
+          <label for="restricoes" class="block text-white font-semibold mb-1">Você possui alguma restrição alimentar?</label>
+          <input type="text" name="restricoes" id="restricoes" required placeholder="Ex: lactose, glúten" class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black placeholder-gray-600 focus:outline-none">
         </div>
 
         <!-- Preferências -->
         <div class="md:col-span-2">
-          <label class="block text-white font-semibold mb-1">Alimentos que gosta ou evita:</label>
-          <textarea name="preferencia" rows="3" required placeholder="Ex: gosto de frango, evito atum e batata doce" class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black placeholder-gray-600 focus:outline-none"></textarea>
+          <label for="preferencia" class="block text-white font-semibold mb-1">Alimentos que gosta ou evita:</label>
+          <textarea name="preferencia" id="preferencia" rows="3" required placeholder="Ex: gosto de frango, evito atum e batata doce" class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black placeholder-gray-600 focus:outline-none"></textarea>
         </div>
 
         <!-- Refeições por dia -->
         <div>
-          <label class="block text-white font-semibold mb-1">Quantas refeições por dia?</label>
-          <input type="number" name="refeicoes_por_dia" min="1" max="10" required placeholder="Ex: 4" class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black focus:outline-none">
+          <label for="refeicoes_por_dia" class="block text-white font-semibold mb-1">Quantas refeições por dia?</label>
+          <input type="number" name="refeicoes_por_dia" id="refeicoes_por_dia" min="1" max="10" step="1" required placeholder="Ex: 4" class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black focus:outline-none">
         </div>
 
         <!-- Água -->
         <div>
-          <label class="block text-white font-semibold mb-1">Copos de água por dia:</label>
-          <input type="number" name="agua" min="0" max="20" required placeholder="Ex: 8" class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black focus:outline-none" />
+          <label for="agua" class="block text-white font-semibold mb-1">Copos de água por dia:</label>
+          <input type="number" name="agua" id="agua" min="0" max="20" step="1" required placeholder="Ex: 8" class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black focus:outline-none" />
         </div>
 
         <!-- Sono -->
         <div>
-          <label class="block text-white font-semibold mb-1">Horas de sono por noite:</label>
-          <input type="number" name="sono" min="0" max="24" required placeholder="Ex: 7" class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black focus:outline-none" />
+          <label for="sono" class="block text-white font-semibold mb-1">Horas de sono por noite:</label>
+          <input type="number" name="sono" id="sono" min="0" max="24" step="1" required placeholder="Ex: 7" class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black focus:outline-none" />
         </div>
 
         <!-- Frequência de atividade física -->
         <div>
-          <label class="block text-white font-semibold mb-1">Frequência de atividade física:</label>
-          <select name="atividade_fisica" required class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black focus:outline-none">
+          <label for="atividade_fisica" class="block text-white font-semibold mb-1">Frequência de atividade física:</label>
+          <select name="atividade_fisica" id="atividade_fisica" required class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black focus:outline-none">
             <option value="">Selecione...</option>
             <option value="nunca">Nunca</option>
             <option value="1-2x">1-2 vezes por semana</option>
@@ -136,37 +136,37 @@
           </select>
         </div>
 
-        <!-- Blocos agrupados (carne, legumes, suplementos) -->
+        <!-- Agrupados: carne, legumes, suplementos -->
         <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
-            <label class="block text-white font-semibold mb-1">Você consome carne?</label>
-            <div class="flex gap-4">
-              <label class="text-white"><input type="radio" name="come_carne" value="sim" required class="mr-2">Sim</label>
-              <label class="text-white"><input type="radio" name="come_carne" value="nao" class="mr-2">Não</label>
+            <label for="come_carne" class="block text-white font-semibold mb-1">Você consome carne?</label>
+            <div class="flex gap-4" id="come_carne">
+              <label class="text-white"><input type="radio" name="come_carne" value="on" required class="mr-2">Sim</label>
+              <label class="text-white"><input type="radio" name="come_carne" value="" class="mr-2">Não</label>
             </div>
           </div>
 
           <div>
-            <label class="block text-white font-semibold mb-1">Você gosta de legumes?</label>
-            <div class="flex gap-4">
-              <label class="text-white"><input type="radio" name="gosta_de_legumes" value="sim" required class="mr-2">Sim</label>
-              <label class="text-white"><input type="radio" name="gosta_de_legumes" value="nao" class="mr-2">Não</label>
+            <label for="gosta_de_legumes" class="block text-white font-semibold mb-1">Você gosta de legumes?</label>
+            <div class="flex gap-4" id="gosta_de_legumes">
+              <label class="text-white"><input type="radio" name="gosta_de_legumes" value="on" required class="mr-2">Sim</label>
+              <label class="text-white"><input type="radio" name="gosta_de_legumes" value="" class="mr-2">Não</label>
             </div>
           </div>
 
           <div>
-            <label class="block text-white font-semibold mb-1">Você usa suplementos?</label>
-            <div class="flex gap-4">
-              <label class="text-white"><input type="radio" name="usa_suplementos" value="sim" required class="mr-2">Sim</label>
-              <label class="text-white"><input type="radio" name="usa_suplementos" value="nao" class="mr-2">Não</label>
+            <label for="usa_suplementos" class="block text-white font-semibold mb-1">Você usa suplementos?</label>
+            <div class="flex gap-4" id="usa_suplementos">
+              <label class="text-white"><input type="radio" name="usa_suplementos" value="on" required class="mr-2">Sim</label>
+              <label class="text-white"><input type="radio" name="usa_suplementos" value="" class="mr-2">Não</label>
             </div>
           </div>
         </div>
 
         <!-- Estresse -->
         <div class="md:col-span-2">
-          <label class="block text-white font-semibold mb-1">Nível de estresse atual:</label>
-          <select name="estresse" required class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black focus:outline-none">
+          <label for="estresse" class="block text-white font-semibold mb-1">Nível de estresse atual:</label>
+          <select name="estresse" id="estresse" required class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black focus:outline-none">
             <option value="">Selecione...</option>
             <option value="baixo">Baixo</option>
             <option value="moderado">Moderado</option>

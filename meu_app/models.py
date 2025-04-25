@@ -30,9 +30,6 @@ class Questionario(models.Model):
         verbose_name = "Questionário"
         verbose_name_plural = "Questionários"
 
-    class Meta:
-        verbose_name = "Questionário"
-        verbose_name_plural = "Questionários"
 
 
 # Modelo Alimento
