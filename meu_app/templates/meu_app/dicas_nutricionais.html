@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dicas Nutricionais - NutriChoice</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(-10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    body {
+      cursor: url('https://cdn-icons-png.flaticon.com/512/1642/1642495.png'), auto;
+    }
+
+    .bg-image {
+      background: url('https://images.unsplash.com/photo-1617957743097-0d20aa2ea762?q=80&w=1932&auto=format&fit=crop') no-repeat center center fixed;
+      background-size: cover;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -2;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    .bg-overlay {
+      background: linear-gradient(to right, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.2));
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+    }
+
+    .glass-box {
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 2rem;
+      padding: 2.5rem;
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      width: 100%;
+      transition: transform 0.3s ease;
+    }
+
+    .glass-box:hover {
+      transform: scale(1.02);
+    }
+
+    .btn-primary {
+      padding: 10px 20px;
+      border-radius: 12px;
+      text-align: center;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      transform: scale(1.05);
+    }
+
+    .btn-receita {
+      background-color: #4A90E2;
+    }
+
+    .btn-receita:hover {
+      background-color: #357ABD;
+    }
+
+    .animate-cardapio {
+      animation: fadeIn 2s ease-out;
+    }
+
+    @media (max-width: 1024px) {
+      .flex-col-responsive {
+        flex-direction: column;
+      }
+    }
+
+    /* Ajustes para responsividade */
+    @media (max-width: 768px) {
+      .glass-box {
+        padding: 1.5rem;
+      }
+
+      .text-3xl {
+        font-size: 1.875rem;
+      }
+    }
+
+    .logo-nutri {
+      max-width: 200px;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+  </style>
+</head>
+<body class="font-sans text-white flex flex-col items-center justify-start min-h-screen overflow-x-hidden pt-8">
+
+  <div class="bg-image"></div>
+  <div class="bg-overlay"></div>
+
+  <div class="flex justify-center w-full mb-8">
+    <img src="https://cdn-icons-png.flaticon.com/512/415/415744.png" alt="Logo" class="w-14 h-14 transition-all hover:rotate-12 hover:scale-110">
+  </div>
+
+  <div class="z-10 mb-6 text-center">
+    <a href="{% url 'perfil_nutricional' %}" class="btn-primary btn-receita">🔙 Voltar para o Perfil</a>
+  </div>
+
+  <div class="flex flex-col-responsive lg:flex-row gap-10 w-full max-w-7xl mx-4 p-10">
+
+    <!-- Caixa de Dicas Nutricionais -->
+    <div class="glass-box flex-1 animate-cardapio">
+      <h2 class="text-3xl font-bold text-lime-400 mb-6 text-center">Dicas Nutricionais</h2>
+      <p class="text-white text-lg text-center">Toque em uma dica para ver mais detalhes</p>
+      
+      <!-- Lista de Dicas -->
+      <div class="space-y-4 mt-6">
+
+        <!-- Dica 1 -->
+        <div class="bg-white/30 p-4 rounded-lg shadow-lg backdrop-blur-lg hover:scale-105 transform transition duration-300 ease-in-out">
+          <button onclick="showTipDetails('tip1')">
+            <h3 class="text-xl font-semibold text-white">1. Inclua fibras na sua dieta</h3>
+          </button>
+          <div id="tip1" class="tip-details hidden">
+            <ul class="text-white text-lg">
+              <li><strong>Benefícios:</strong> Melhora a digestão, controla o colesterol e ajuda a manter a saciedade.</li>
+              <li><strong>Exemplos:</strong> Consuma frutas com casca, vegetais, leguminosas e grãos integrais.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Dica 2 -->
+        <div class="bg-white/30 p-4 rounded-lg shadow-lg backdrop-blur-lg hover:scale-105 transform transition duration-300 ease-in-out">
+          <button onclick="showTipDetails('tip2')">
+            <h3 class="text-xl font-semibold text-white">2. Evite pular refeições</h3>
+          </button>
+          <div id="tip2" class="tip-details hidden">
+            <ul class="text-white text-lg">
+              <li><strong>Benefícios:</strong> Ajuda a manter o metabolismo ativo e evita picos de fome.</li>
+              <li><strong>Recomendações:</strong> Faça 3 a 5 refeições equilibradas ao longo do dia.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Dica 3 -->
+        <div class="bg-white/30 p-4 rounded-lg shadow-lg backdrop-blur-lg hover:scale-105 transform transition duration-300 ease-in-out">
+          <button onclick="showTipDetails('tip3')">
+            <h3 class="text-xl font-semibold text-white">3. Beba 2 litros de água por dia</h3>
+          </button>
+          <div id="tip3" class="tip-details hidden">
+            <ul class="text-white text-lg">
+              <li><strong>Benefícios:</strong> A hidratação é essencial para a digestão, função renal e saúde da pele.</li>
+              <li><strong>Recomendações:</strong> Mantenha uma garrafinha de água sempre ao seu lado.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Dica 4 -->
+        <div class="bg-white/30 p-4 rounded-lg shadow-lg backdrop-blur-lg hover:scale-105 transform transition duration-300 ease-in-out">
+          <button onclick="showTipDetails('tip4')">
+            <h3 class="text-xl font-semibold text-white">4. Inclua proteínas magras nas refeições</h3>
+          </button>
+          <div id="tip4" class="tip-details hidden">
+            <ul class="text-white text-lg">
+              <li><strong>Benefícios:</strong> Essenciais para a recuperação muscular e manutenção da saúde da pele.</li>
+              <li><strong>Exemplos:</strong> Frango, peixe, ovos, legumes e tofu.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Dica 5 -->
+        <div class="bg-white/30 p-4 rounded-lg shadow-lg backdrop-blur-lg hover:scale-105 transform transition duration-300 ease-in-out">
+          <button onclick="showTipDetails('tip5')">
+            <h3 class="text-xl font-semibold text-white">5. Consuma antioxidantes</h3>
+          </button>
+          <div id="tip5" class="tip-details hidden">
+            <ul class="text-white text-lg">
+              <li><strong>Benefícios:</strong> Protege o corpo contra o envelhecimento precoce e os radicais livres.</li>
+              <li><strong>Exemplos:</strong> Frutas vermelhas, nozes, vegetais verdes e chá verde.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function showTipDetails(tipId) {
+      const tipDetails = document.getElementById(tipId);
+      const isVisible = tipDetails.classList.contains('hidden');
+      
+      // Ocultar todas as dicas antes de mostrar a selecionada
+      const allTips = document.querySelectorAll('.tip-details');
+      allTips.forEach(tip => tip.classList.add('hidden'));
+      
+      // Alterna a visibilidade da dica selecionada
+      if (isVisible) {
+        tipDetails.classList.remove('hidden');
+      } else {
+        tipDetails.classList.add('hidden');
+      }
+    }
+  </script>
+</body>
+</html>

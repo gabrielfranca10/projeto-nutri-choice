@@ -1,4 +1,3 @@
-<!-- cadastro.html (versão simplificada com apenas os campos de login) -->
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -92,6 +91,7 @@
       <div class="registration-box space-y-6">
         <h2 class="text-white text-xl font-semibold text-center">Informações da Conta</h2>
         <div class="flex flex-col space-y-4">
+          <!-- Campos de Usuário, Email e Senha -->
           <div class="flex flex-col">
             <label for="username" class="text-white">Usuário</label>
             <input id="username" type="text" name="username" placeholder="Usuário" required class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black placeholder-gray-600 focus:outline-none">
@@ -107,6 +107,26 @@
           <div class="flex flex-col">
             <label for="confirmar_senha" class="text-white">Confirmar Senha</label>
             <input id="confirmar_senha" type="password" name="confirmar_senha" placeholder="Confirmar Senha" required class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black placeholder-gray-600 focus:outline-none">
+          </div>
+
+          <!-- Novos campos: Data de Nascimento, Gênero, Endereço -->
+          <div class="flex flex-col">
+            <label for="data_nascimento" class="text-white">Data de Nascimento</label>
+            <input id="data_nascimento" type="date" name="data_nascimento" required class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black placeholder-gray-600 focus:outline-none">
+          </div>
+
+          <div class="flex flex-col">
+            <label for="genero" class="text-white">Gênero</label>
+            <select id="genero" name="genero" required class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black placeholder-gray-600 focus:outline-none">
+              <option value="masculino">Masculino</option>
+              <option value="feminino">Feminino</option>
+              <option value="outro">Outro</option>
+            </select>
+          </div>
+
+          <div class="flex flex-col">
+            <label for="endereco" class="text-white">Endereço</label>
+            <input id="endereco" type="text" name="endereco" placeholder="Endereço" required class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black placeholder-gray-600 focus:outline-none">
           </div>
         </div>
       </div>

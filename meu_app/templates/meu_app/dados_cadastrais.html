@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dashboard - NutriChoice</title>
+  <title>Dados Cadastrais - NutriChoice</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
@@ -82,7 +82,6 @@
       color: rgba(255, 255, 255, 0.8);
     }
 
-    /* Quando a sidebar for fechada, ocultar as informações de perfil */
     .sidebar-closed .profile-info {
       display: none;
     }
@@ -92,12 +91,10 @@
       padding-left: 0;
     }
 
-    /* Responsividade: ajusta o conteúdo da sidebar */
     .sidebar-closed .sidebar-header,
     .sidebar-closed #menuLinks {
       display: none;
     }
-
   </style>
 </head>
 <body class="min-h-screen overflow-x-hidden">
@@ -107,7 +104,6 @@
   <div class="flex min-h-screen">
     <!-- Sidebar -->
     <aside id="sidebar" class="w-64 p-6 flex flex-col items-start bg-black bg-opacity-30 backdrop-blur-md border-r border-white border-opacity-20 transition-all duration-300">
-      
       <button id="toggleSidebar" class="self-end mb-6 text-white text-2xl focus:outline-none">
         ☰
       </button>
@@ -148,40 +144,53 @@
 
     <!-- Conteúdo principal -->
     <main class="flex-1 p-10 overflow-auto transition-all duration-300">
-      <h1 class="text-3xl font-bold mb-6">Bem-vindo(a), {{ user.username }} 👋</h1>
+      <h1 class="text-3xl font-bold mb-6">Dados Cadastrais</h1>
 
-      <!-- Grid de funcionalidades principais -->
-      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-        <a href="{% url 'questionario' %}" class="glass p-6 flex flex-col items-center text-center">
-          <div class="icon-box">📋</div>
-          <h3 class="text-xl font-semibold mt-4">Questionário</h3>
-          <p class="text-sm mt-2">Atualize seus dados e preferências.</p>
-        </a>
-        <a href="{% url 'receitas' %}" class="glass p-6 flex flex-col items-center text-center">
-          <div class="icon-box">🍽️</div>
-          <h3 class="text-xl font-semibold mt-4">Receitas</h3>
-          <p class="text-sm mt-2">Veja sugestões nutritivas personalizadas.</p>
-        </a>
-        <a href="{% url 'agua' %}" class="glass p-6 flex flex-col items-center text-center">
-          <div class="icon-box">💧</div>
-          <h3 class="text-xl font-semibold mt-4">Ingestão de Água</h3>
-          <p class="text-sm mt-2">Controle sua hidratação.</p>
-        </a>
-        <a href="{% url 'cardapio' %}" class="glass p-6 flex flex-col items-center text-center">
-          <div class="icon-box">🥗</div>
-          <h3 class="text-xl font-semibold mt-4">Dieta / Cardápio</h3>
-          <p class="text-sm mt-2">Acesse seu plano alimentar.</p>
-        </a>
-        <a href="{% url 'dicas_nutricionais' %}" class="glass p-6 flex flex-col items-center text-center">
-          <div class="icon-box">💡</div>
-          <h3 class="text-xl font-semibold mt-4">Dicas Nutricionais</h3>
-          <p class="text-sm mt-2 italic">Acesse dicas para sua dieta.</p>
-        </a>
-        <a href="{% url 'dados' %}" class="glass p-6 flex flex-col items-center text-center">
-          <div class="icon-box">👤</div>
-          <h3 class="text-xl font-semibold mt-4">Dados Cadastrais</h3>
-          <p class="text-sm mt-2 italic">Acesse seus dados da conta.</p>
-        </a> 
+      <!-- Dados Cadastrais -->
+      <div class="glass p-6 mb-6">
+        <h3 class="text-xl font-semibold">Informações do Usuário</h3>
+        <div class="text-sm mt-4">
+          <p><strong>Nome:</strong> {{ user.username }}</p>
+          <p><strong>Email:</strong> {{ user.email }}</p>
+          <p><strong>Data de Nascimento:</strong> {{ user.data_nascimento }}</p>
+          <p><strong>Gênero:</strong> {{ user.genero }}</p>
+          <p><strong>Endereço:</strong> {{ user.endereco }}</p>
+        </div>
+      </div>
+
+      <!-- Dados do Questionário Nutricional -->
+      <div class="glass p-6 mb-6">
+        <h3 class="text-xl font-semibold">Dados Nutricionais</h3>
+        <div class="text-sm mt-4">
+          <p><strong>Objetivo:</strong> {{ questionario.objetivo }}</p>
+          <p><strong>Restrições Alimentares:</strong> {{ questionario.restricoes }}</p>
+          <p><strong>Preferências Alimentares:</strong> {{ questionario.preferencia }}</p>
+          <p><strong>Refeições por Dia:</strong> {{ questionario.refeicoes_por_dia }}</p>
+          <p><strong>Água (copos/dia):</strong> {{ questionario.agua_bebida }}</p>
+          <p><strong>Horas de Sono:</strong> {{ questionario.sono }}</p>
+          <p><strong>Frequência de Atividade Física:</strong> {{ questionario.atividade_fisica }}</p>
+          <p><strong>Consome Carne:</strong> {% if questionario.come_carne %} Sim {% else %} Não {% endif %}</p>
+          <p><strong>Gosta de Legumes:</strong> {% if questionario.gosta_de_legumes %} Sim {% else %} Não {% endif %}</p>
+          <p><strong>Usa Suplementos:</strong> {% if questionario.usa_suplementos %} Sim {% else %} Não {% endif %}</p>
+          <p><strong>Nível de Estresse:</strong> {{ questionario.estresse }}</p>
+        </div>
+      </div>
+
+      <!-- Dados do Cardápio -->
+<div class="glass p-6 mb-6">
+  <h3 class="text-xl font-semibold">Cardápio Personalizado</h3>
+  <div class="text-sm mt-4">
+    {% if cardapio %}
+      <ul>
+        {% for alimento in cardapio.itens.all %}
+          <li>{{ alimento.nome }} - {{ alimento.categoria }}</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>Nenhum cardápio gerado ainda.</p>
+    {% endif %}
+  </div>
+</div>
 
   <script>
     const toggleBtn = document.getElementById('toggleSidebar');

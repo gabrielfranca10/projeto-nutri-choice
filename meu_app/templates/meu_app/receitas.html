@@ -103,8 +103,8 @@
   <div class="bg-overlay"></div>
 
   <!-- Logo da NutriChoice -->
-  <div class="z-10 mb-10 text-center">
-    <img src="https://i.imgur.com/G5CqUzB.png" alt="Logo NutriChoice" class="logo-nutri mx-auto">
+  <div class="flex justify-center w-full mb-8">
+    <img src="https://cdn-icons-png.flaticon.com/512/415/415744.png" alt="Logo" class="w-14 h-14 transition-all hover:rotate-12 hover:scale-110">
   </div>
 
   <!-- Botão de Voltar para o Perfil -->
@@ -118,6 +118,8 @@
     <div class="glass-box flex-1 animate-cardapio">
       <h2 class="text-3xl font-bold text-lime-400 mb-6 text-center">Receitas Culinárias</h2>
       <p class="text-white text-lg text-center">Escolha uma receita para ver os detalhes</p>
+      
+      <!-- Lista de Receitas -->
       <div class="space-y-4 mt-6">
 
         <!-- Receita 1 -->
@@ -125,7 +127,7 @@
           <button onclick="showRecipeDetails('recipe1')">
             <h3 class="text-xl font-semibold text-white">1. Salada de Quinoa</h3>
           </button>
-          <div id="recipe1" class="recipe-details">
+          <div id="recipe1" class="recipe-details hidden">
             <ul class="text-white text-lg">
               <li><strong>Ingredientes:</strong> Quinoa, tomate, pepino, abacate, azeite de oliva, limão</li>
               <li><strong>Modo de preparo:</strong> Cozinhe a quinoa, corte os vegetais e misture tudo. Regue com azeite e limão.</li>
@@ -138,7 +140,7 @@
           <button onclick="showRecipeDetails('recipe2')">
             <h3 class="text-xl font-semibold text-white">2. Frango Grelhado com Legumes</h3>
           </button>
-          <div id="recipe2" class="recipe-details">
+          <div id="recipe2" class="recipe-details hidden">
             <ul class="text-white text-lg">
               <li><strong>Ingredientes:</strong> Peito de frango, abobrinha, cenoura, alho, azeite</li>
               <li><strong>Modo de preparo:</strong> Tempere o frango e os legumes com azeite e alho, e grelhe até dourar.</li>
@@ -151,10 +153,75 @@
           <button onclick="showRecipeDetails('recipe3')">
             <h3 class="text-xl font-semibold text-white">3. Omelete de Espinafre</h3>
           </button>
-          <div id="recipe3" class="recipe-details">
+          <div id="recipe3" class="recipe-details hidden">
             <ul class="text-white text-lg">
               <li><strong>Ingredientes:</strong> Ovos, espinafre, queijo, azeite</li>
               <li><strong>Modo de preparo:</strong> Bata os ovos, adicione espinafre picado e queijo, cozinhe em uma frigideira.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Receita 4 -->
+        <div class="bg-white/30 p-4 rounded-lg shadow-lg backdrop-blur-lg hover:scale-105 transform transition duration-300 ease-in-out">
+          <button onclick="showRecipeDetails('recipe4')">
+            <h3 class="text-xl font-semibold text-white">4. Sopa de Abóbora</h3>
+          </button>
+          <div id="recipe4" class="recipe-details hidden">
+            <ul class="text-white text-lg">
+              <li><strong>Ingredientes:</strong> Abóbora, cebola, alho, caldo de legumes</li>
+              <li><strong>Modo de preparo:</strong> Cozinhe a abóbora até ficar macia, depois bata no liquidificador com o caldo de legumes e tempere a gosto.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Receita 5 -->
+        <div class="bg-white/30 p-4 rounded-lg shadow-lg backdrop-blur-lg hover:scale-105 transform transition duration-300 ease-in-out">
+          <button onclick="showRecipeDetails('recipe5')">
+            <h3 class="text-xl font-semibold text-white">5. Panqueca Integral</h3>
+          </button>
+          <div id="recipe5" class="recipe-details hidden">
+            <ul class="text-white text-lg">
+              <li><strong>Ingredientes:</strong> Farinha integral, ovos, leite, mel, fermento</li>
+              <li><strong>Modo de preparo:</strong> Misture os ingredientes e cozinhe a massa em uma frigideira até dourar ambos os lados.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Receita 6 (nova) -->
+        <div class="bg-white/30 p-4 rounded-lg shadow-lg backdrop-blur-lg hover:scale-105 transform transition duration-300 ease-in-out">
+          <button onclick="showRecipeDetails('recipe6')">
+            <h3 class="text-xl font-semibold text-white">6. Smoothie de Banana e Aveia</h3>
+          </button>
+          <div id="recipe6" class="recipe-details hidden">
+            <ul class="text-white text-lg">
+              <li><strong>Ingredientes:</strong> Banana, aveia, leite de amêndoas, mel</li>
+              <li><strong>Modo de preparo:</strong> Bata todos os ingredientes no liquidificador até ficar homogêneo.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Receita 7 (nova) -->
+        <div class="bg-white/30 p-4 rounded-lg shadow-lg backdrop-blur-lg hover:scale-105 transform transition duration-300 ease-in-out">
+          <button onclick="showRecipeDetails('recipe7')">
+            <h3 class="text-xl font-semibold text-white">7. Salmão Grelhado com Abacate</h3>
+          </button>
+          <div id="recipe7" class="recipe-details hidden">
+            <ul class="text-white text-lg">
+              <li><strong>Ingredientes:</strong> Filé de salmão, abacate, azeite, limão</li>
+              <li><strong>Modo de preparo:</strong> Grelhe o salmão e sirva com fatias de abacate temperadas com azeite e limão.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Receita 8 (nova) -->
+        <div class="bg-white/30 p-4 rounded-lg shadow-lg backdrop-blur-lg hover:scale-105 transform transition duration-300 ease-in-out">
+          <button onclick="showRecipeDetails('recipe8')">
+            <h3 class="text-xl font-semibold text-white">8. Barrinha de Cereal Caseira</h3>
+          </button>
+          <div id="recipe8" class="recipe-details hidden">
+            <ul class="text-white text-lg">
+              <li><strong>Ingredientes:</strong> Aveia, mel, amêndoas, chocolate amargo</li>
+              <li><strong>Modo de preparo:</strong> Misture os ingredientes, pressione em uma forma e leve ao forno para assar.</li>
             </ul>
           </div>
         </div>
@@ -163,5 +230,23 @@
     </div>
 
   </div>
+
+  <script>
+    function showRecipeDetails(recipeId) {
+      const recipeDetails = document.getElementById(recipeId);
+      const isVisible = recipeDetails.classList.contains('hidden');
+      
+      // Ocultar todas as receitas antes de mostrar a selecionada
+      const allRecipes = document.querySelectorAll('.recipe-details');
+      allRecipes.forEach(recipe => recipe.classList.add('hidden'));
+      
+      // Alterna a visibilidade da receita selecionada
+      if (isVisible) {
+        recipeDetails.classList.remove('hidden');
+      } else {
+        recipeDetails.classList.add('hidden');
+      }
+    }
+  </script>
 </body>
 </html>

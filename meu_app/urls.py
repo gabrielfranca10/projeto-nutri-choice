@@ -15,5 +15,7 @@ urlpatterns = [
     path('receitas/', views.receitas_view, name='receitas'),
     path('agua/', views.agua_view, name='agua'),
     path('cardapio/', views.cardapio_view, name='cardapio'),
+    path('dicas-nutricionais/', views.dicas_nutricionais, name='dicas_nutricionais'),
+    path('dados/', views.dadoscadastrais, name='dados'),
 
 ]

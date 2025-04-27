@@ -69,6 +69,23 @@
   <div class="bg-overlay"></div>
 
   <div class="w-full max-w-5xl mx-auto p-10 relative form-box">
+
+    <!-- Botão de Voltar -->
+    <div class="flex justify-start mb-6">
+      <a href="{% url 'perfil_nutricional' %}" class="bg-white bg-opacity-30 text-white font-semibold py-2 px-6 rounded-full hover:bg-opacity-50 transition-all shadow-lg backdrop-blur-md">
+        ← Voltar ao Perfil
+      </a>
+    </div>
+
+    <!-- Mensagens de Sucesso ou Erro -->
+    {% if messages %}
+    <div class="bg-lime-500 text-white p-4 rounded-lg mb-6">
+      {% for message in messages %}
+      <p>{{ message }}</p>
+      {% endfor %}
+    </div>
+    {% endif %}
+
     <div class="text-center mb-8">
       <h1 class="text-white text-4xl font-bold flex justify-center items-center gap-3">
         <img src="https://cdn-icons-png.flaticon.com/512/415/415682.png" alt="Ícone Nutrição" class="w-10 h-10 animated-icon" />
@@ -136,7 +153,7 @@
           </select>
         </div>
 
-        <!-- Agrupados: carne, legumes, suplementos -->
+        <!-- Carne, legumes, suplementos -->
         <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
             <label for="come_carne" class="block text-white font-semibold mb-1">Você consome carne?</label>
@@ -182,5 +199,6 @@
       </div>
     </form>
   </div>
+
 </body>
 </html>
