@@ -154,7 +154,6 @@
           <p><strong>Email:</strong> {{ user.email }}</p>
           <p><strong>Data de Nascimento:</strong> {{ user.data_nascimento }}</p>
           <p><strong>Gênero:</strong> {{ user.genero }}</p>
-          <p><strong>Endereço:</strong> {{ user.endereco }}</p>
         </div>
       </div>
 
@@ -177,20 +176,22 @@
       </div>
 
       <!-- Dados do Cardápio -->
-<div class="glass p-6 mb-6">
-  <h3 class="text-xl font-semibold">Cardápio Personalizado</h3>
-  <div class="text-sm mt-4">
-    {% if cardapio %}
-      <ul>
-        {% for alimento in cardapio.itens.all %}
-          <li>{{ alimento.nome }} - {{ alimento.categoria }}</li>
-        {% endfor %}
-      </ul>
-    {% else %}
-      <p>Nenhum cardápio gerado ainda.</p>
-    {% endif %}
+      <div class="glass p-6 mb-6">
+        <h3 class="text-xl font-semibold">Cardápio Personalizado</h3>
+        <div class="text-sm mt-4">
+          {% if cardapio %}
+            <ul>
+              {% for alimento in cardapio.itens.all %}
+                <li>{{ alimento.nome }} - {{ alimento.categoria }}</li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p>Nenhum cardápio gerado ainda.</p>
+          {% endif %}
+        </div>
+      </div>
+    </main>
   </div>
-</div>
 
   <script>
     const toggleBtn = document.getElementById('toggleSidebar');

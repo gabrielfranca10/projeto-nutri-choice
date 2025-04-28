@@ -42,9 +42,8 @@ def cadastro_view(request):
         password2 = request.POST.get('confirmar_senha')
         data_nascimento = request.POST.get('data_nascimento')
         genero = request.POST.get('genero')
-        endereco = request.POST.get('endereco')
 
-        if not all([username, email, password, password2, data_nascimento, genero, endereco]):
+        if not all([username, email, password, password2, data_nascimento, genero]):
             messages.error(request, 'Preencha todos os campos')
             return render(request, 'meu_app/cadastro.html')
 
@@ -79,7 +78,6 @@ def cadastro_view(request):
             idade=idade,
             data_nascimento=nascimento,
             genero=genero,
-            endereco=endereco,
             peso=None,
             altura=None,
             objetivo='',
@@ -144,26 +142,11 @@ def questionario_view(request):
             defaults=dados
         )
 
-        # Atualizando ou criando o Perfil
-        perfil_data = {
-            'nome': dados['nome'] or request.user.username,
-            'idade': dados['idade'],
-            'peso': dados['peso'],
-            'altura': dados['altura'],
-            'objetivo': dados['objetivo'],
-            'restricoes': dados['restricoes'],
-            'preferencia': dados['preferencia']
-        }
-        perfil, perfil_created = Perfil.objects.update_or_create(
-            user=request.user,
-            defaults=perfil_data
-        )
-
         # Gerar cardápio personalizado (função que você já tem)
         descricao_cardapio = gerar_cardapio_personalizado(dados)
 
         # Salvar o cardápio no banco
-        Cardapio.objects.create(
+        cardapio = Cardapio.objects.create(
             usuario=request.user,
             descricao=descricao_cardapio
         )
@@ -174,9 +157,10 @@ def questionario_view(request):
         # Redirecionar para o perfil
         return redirect('perfil_nutricional')  # ajuste o nome da URL se necessário
 
-    return render(request, 'meu_app/questionario.html') 
+    return render(request, 'meu_app/questionario.html')
 
 def gerar_cardapio_personalizado(dados):
+    # Estrutura inicial do cardápio
     cardapio = {
         'Café da Manhã': [],
         'Almoço': [],
@@ -192,17 +176,18 @@ def gerar_cardapio_personalizado(dados):
     gosta_de_legumes = dados.get('gosta_de_legumes', True)
     come_carne = dados.get('come_carne', True)
 
+    # Função de substituição baseada nas preferências e restrições
     def substituir_almoco_e_jantar(almoco_opcao, jantar_opcao):
         if not gosta_de_carne or not come_carne:
             almoco_opcao = almoco_opcao.replace('frango', 'grão-de-bico').replace('carne', 'soja texturizada').replace('peito de frango', 'lentilhas').replace('carne magra', 'tofu grelhado')
             jantar_opcao = jantar_opcao.replace('frango', 'grão-de-bico').replace('carne', 'soja texturizada').replace('peito de frango', 'lentilhas').replace('carne magra', 'tofu grelhado')
         if not gosta_de_legumes:
-            # Substituir legumes/salada por arroz, purê, ou outra alternativa viável
+            # Substituir legumes/salada por alternativas
             almoco_opcao = almoco_opcao.replace('legumes no vapor', 'purê de batata').replace('salada verde', 'arroz integral').replace('salada', 'arroz e feijão')
             jantar_opcao = jantar_opcao.replace('salada', 'quinoa refogada').replace('sopa de legumes', 'creme de abóbora').replace('legumes', 'arroz com ovo')
         return almoco_opcao, jantar_opcao
 
-    # CAFÉ DA MANHÃ E LANCHE
+    # Gerar cardápio com base no objetivo
     if 'ganhar' in objetivo:
         cardapio['Café da Manhã'].append("Ovos mexidos + pão integral + vitamina de banana com aveia")
         cardapio['Lanche da Tarde'].append("Iogurte natural com granola")
@@ -230,15 +215,20 @@ def gerar_cardapio_personalizado(dados):
     cardapio['Almoço'].append(almoco)
     cardapio['Jantar'].append(jantar)
 
-    # Preferência por atum
+    # Preferências alimentares (exemplo: substituir atum por frango)
     if 'atum' in preferencias:
         for key in cardapio:
             cardapio[key] = [item.replace('atum', 'frango') for item in cardapio[key]]
 
-    # Restrições ao glúten
+    # Restrições alimentares (exemplo: sem glúten)
     if 'glúten' in restricoes or 'gluten' in restricoes:
         for key in cardapio:
             cardapio[key] = [item.replace('pão', 'pão sem glúten') for item in cardapio[key]]
+
+    # Restrição sem lactose
+    if 'lactose' in restricoes:
+        for key in cardapio:
+            cardapio[key] = [item.replace('queijo', 'queijo sem lactose') for item in cardapio[key]]
 
     return cardapio
 
@@ -271,14 +261,27 @@ def perfil_nutricional_view(request):
         return render(request, 'meu_app/perfil.html')
 
 # === CARDÁPIO PERSONALIZADO ===
+from django.shortcuts import render
+from .models import Cardapio
+
 def cardapio_view(request):
     try:
-        # Tenta pegar o último cardápio criado pelo usuário
-        cardapio = Cardapio.objects.filter(usuario=request.user).latest('id')
+        # Pega o último cardápio criado pelo usuário
+        cardapio_obj = Cardapio.objects.filter(usuario=request.user).latest('id')
+        
+        # Organiza os alimentos em um formato que se encaixe no template
+        cardapio = {
+            'Café da Manhã': cardapio_obj.itens.filter(categoria='Café da Manhã'),
+            'Almoço': cardapio_obj.itens.filter(categoria='Almoço'),
+            'Jantar': cardapio_obj.itens.filter(categoria='Jantar'),
+            'Lanches': cardapio_obj.itens.filter(categoria='Lanche')
+        }
+
     except Cardapio.DoesNotExist:
         cardapio = None
 
     return render(request, 'meu_app/cardapio.html', {'cardapio': cardapio})
+
 
 # === LOGOUT ===
 def logout_view(request):

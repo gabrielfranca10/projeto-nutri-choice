@@ -79,16 +79,18 @@
 
     <!-- Exibindo o Cardápio -->
     {% if cardapio %}
-      {% for refeicao, itens in cardapio.items %}
-        <div class="mb-6">
-          <h2 class="text-xl font-semibold text-lime-300 mb-2">{{ refeicao }}</h2>
-          <ul class="list-disc list-inside text-white text-opacity-90 space-y-1">
-            {% for item in itens %}
-              <li>{{ item }}</li>
-            {% endfor %}
-          </ul>
-        </div>
-      {% endfor %}
+      <div class="space-y-8">
+        {% for refeicao, itens in cardapio.items %}
+          <div>
+            <h2 class="text-xl font-semibold text-lime-300 mb-2">{{ refeicao }}</h2>
+            <ul class="list-disc list-inside text-white text-opacity-90 space-y-1">
+              {% for item in itens %}
+                <li>{{ item.nome }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endfor %}
+      </div>
     {% else %}
       <p class="text-white text-opacity-80">Ainda não há cardápio gerado. Complete o questionário para obter seu cardápio personalizado.</p>
     {% endif %}

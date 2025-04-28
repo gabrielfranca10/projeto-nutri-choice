@@ -7,7 +7,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
-      background-image: url('');
+      background-image: url(''); /* Coloque a URL da imagem de fundo aqui */
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
@@ -48,6 +48,15 @@
       border-radius: 9999px;
       transition: width 0.4s ease;
     }
+
+    @keyframes aparecer {
+      0% { opacity: 0; transform: scale(0.8); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    .mensagem-parabens {
+      animation: aparecer 0.6s ease forwards;
+    }
   </style>
 </head>
 <body class="min-h-screen overflow-x-hidden">
@@ -59,41 +68,101 @@
       <h1 class="text-3xl font-bold mb-4">💧 Ingestão de Água</h1>
       <p class="mb-6 text-white text-opacity-90">Mantenha-se hidratado! Acompanhe sua ingestão diária de água aqui.</p>
 
-      <div class="mb-6 text-left">
-        <label for="consumo" class="block text-sm mb-2">Quantos copos de água você tomou hoje?</label>
-        <input type="number" id="consumo" name="consumo" min="0" max="20" placeholder="Ex: 5" class="w-full px-4 py-2 rounded-lg bg-white bg-opacity-10 text-white placeholder-white placeholder-opacity-70 focus:outline-none focus:ring-2 focus:ring-blue-300">
+      <!-- Botões de adição -->
+      <div class="flex flex-col gap-4 mb-8">
+        <button onclick="adicionarAgua(250)" class="bg-blue-400 hover:bg-blue-500 px-6 py-3 rounded-xl font-bold transition">+250ml</button>
+        <button onclick="adicionarAgua(500)" class="bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded-xl font-bold transition">+500ml</button>
+        <button onclick="adicionarAgua(1000)" class="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-xl font-bold transition">+1000ml</button>
       </div>
 
-      <button onclick="atualizarProgresso()" class="bg-blue-500 hover:bg-blue-600 px-6 py-2 rounded-xl font-bold transition">Atualizar</button>
-
-      <div class="mt-8 text-left w-full">
+      <!-- Progresso -->
+      <div class="text-left w-full mb-8">
         <h2 class="text-xl font-semibold mb-2">Progresso diário</h2>
         <div class="progress-bar-bg h-6 w-full">
           <div id="progress-bar" class="progress-bar-fill w-0"></div>
         </div>
-        <p class="mt-2 text-sm" id="progresso-texto">0 de 8 copos recomendados</p>
+        <p class="mt-2 text-sm" id="progresso-texto">0ml de 3500ml recomendados</p>
+      </div>
+
+      <!-- Mensagem de Parabéns -->
+      <div id="mensagem-parabens" class="mt-6 hidden text-green-300 font-bold text-2xl mensagem-parabens">
+        🎉 Parabéns! Meta atingida! 🎉
+      </div>
+
+      <!-- Botão Resetar Ingestão -->
+      <div class="mt-8">
+        <button onclick="resetarIngestao()" class="bg-red-500 hover:bg-red-600 px-6 py-2 rounded-full font-bold transition">
+          🔄 Resetar Ingestão
+        </button>
       </div>
 
       <!-- Botão de voltar para o perfil -->
-      <div class="mt-10">
+      <div class="mt-6">
         <a href="{% url 'perfil_nutricional' %}" class="inline-block bg-white bg-opacity-20 hover:bg-opacity-30 text-white font-semibold px-6 py-2 rounded-full transition duration-300">
           ⬅️ Voltar ao Perfil
         </a>
       </div>
-
     </div>
   </div>
 
   <script>
+    let totalIngerido = 0;
+    const meta = 3500; // 3500ml
+
+    // Função para obter a data atual no formato YYYY-MM-DD
+    function getDataAtual() {
+      const hoje = new Date();
+      return hoje.getFullYear() + '-' + (hoje.getMonth() + 1).toString().padStart(2, '0') + '-' + hoje.getDate().toString().padStart(2, '0');
+    }
+
+    // Quando a página carregar
+    window.onload = function() {
+      const salvo = localStorage.getItem('aguaIngerida');
+      const dataSalva = localStorage.getItem('dataAgua');
+      const hoje = getDataAtual();
+
+      // Se não tem data salva ou mudou o dia, reseta
+      if (!dataSalva || dataSalva !== hoje) {
+        totalIngerido = 0;
+        localStorage.setItem('aguaIngerida', totalIngerido);
+        localStorage.setItem('dataAgua', hoje);
+      } else {
+        totalIngerido = parseInt(salvo) || 0;
+      }
+
+      atualizarProgresso();
+    }
+
+    function adicionarAgua(quantidade) {
+      totalIngerido += quantidade;
+      localStorage.setItem('aguaIngerida', totalIngerido);
+      localStorage.setItem('dataAgua', getDataAtual());
+      atualizarProgresso();
+    }
+
+    function resetarIngestao() {
+      if (confirm("Tem certeza que deseja resetar sua ingestão de água?")) {
+        totalIngerido = 0;
+        localStorage.setItem('aguaIngerida', totalIngerido);
+        localStorage.setItem('dataAgua', getDataAtual());
+        atualizarProgresso();
+      }
+    }
+
     function atualizarProgresso() {
-      const copos = document.getElementById("consumo").value;
       const barra = document.getElementById("progress-bar");
       const texto = document.getElementById("progresso-texto");
-      const max = 8;
-      const progresso = Math.min((copos / max) * 100, 100);
+      const mensagem = document.getElementById("mensagem-parabens");
+      const progresso = Math.min((totalIngerido / meta) * 100, 100);
 
       barra.style.width = progresso + "%";
-      texto.textContent = `${copos} de ${max} copos recomendados`;
+      texto.textContent = `${totalIngerido}ml de ${meta}ml recomendados`;
+
+      if (totalIngerido >= meta) {
+        mensagem.classList.remove("hidden");
+      } else {
+        mensagem.classList.add("hidden");
+      }
     }
   </script>
 </body>
