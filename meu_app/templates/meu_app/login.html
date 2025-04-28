@@ -38,7 +38,7 @@
     }
 
     .registration-box {
-      background-color: rgba(255, 255, 255, 0.8); /* Fundo semitransparente */
+      background-color: rgba(255, 255, 255, 0.8);
       border-radius: 1.5rem;
       padding: 3rem;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -46,7 +46,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      width: 400px; /* Largura ajustada */
+      width: 400px;
       color: #333;
       transition: transform 0.3s ease;
     }
@@ -72,7 +72,7 @@
 
     .registration-box a {
       font-weight: bold;
-      background-color: #4CAF50; /* Cor mais forte */
+      background-color: #4CAF50;
       color: white;
       padding: 1rem 2rem;
       border-radius: 30px;
@@ -87,73 +87,108 @@
 
     @media (max-width: 1024px) {
       .registration-box {
-        width: 90%; /* Ajuste para telas menores */
+        width: 90%;
       }
+    }
+
+    /* Nova animação para o rodapé */
+    @keyframes fadeInFooter {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate-fade-in {
+      animation: fadeInFooter 1.5s ease forwards;
     }
   </style>
 </head>
-<body class="font-sans text-white flex items-center justify-center min-h-screen overflow-hidden">
+<body class="font-sans text-white flex flex-col min-h-screen overflow-hidden">
+
+  <!-- Navbar -->
+  <nav class="bg-black bg-opacity-50 text-white py-4 px-6 fixed top-0 left-0 right-0 z-10">
+    <div class="flex justify-between items-center">
+      <a href="#" class="text-2xl font-bold text-lime-400">NutriChoice</a>
+      <div class="space-x-6">
+        <a href="#home" class="hover:text-lime-400">Início</a>
+        <a href="#sobre" class="hover:text-lime-400">Sobre</a>
+        <a href="#servicos" class="hover:text-lime-400">Serviços</a>
+        <a href="#contato" class="hover:text-lime-400">Contato</a>
+      </div>
+    </div>
+  </nav>
 
   <div class="bg-image"></div>
   <div class="bg-overlay"></div>
 
-  <!-- Caixa principal -->
-  <div class="backdrop-blur-md bg-white bg-opacity-10 rounded-2xl shadow-2xl flex flex-col lg:flex-row w-full max-w-6xl mx-4 p-10 gap-10 relative">
+  <main class="flex-grow flex items-center justify-center">
 
-    <!-- Lado Login -->
-    <div class="flex-1 pr-6 relative">
-      <div class="flex justify-center mb-4">
-        <img src="https://cdn-icons-png.flaticon.com/512/415/415744.png" alt="Logo" class="w-14 h-14 transition-all hover:rotate-12 hover:scale-110">
+    <!-- Caixa principal -->
+    <div class="backdrop-blur-md bg-white bg-opacity-10 rounded-2xl shadow-2xl flex flex-col lg:flex-row w-full max-w-6xl mx-4 p-10 gap-10 relative">
+
+      <!-- Lado Login -->
+      <div class="flex-1 pr-6 relative">
+        <div class="flex justify-center mb-4">
+          <img src="https://cdn-icons-png.flaticon.com/512/415/415744.png" alt="Logo" class="w-14 h-14 transition-all hover:rotate-12 hover:scale-110">
+        </div>
+
+        <h1 class="text-3xl font-bold text-center text-lime-300">NutriChoice</h1>
+        <p class="text-center text-gray-200 mb-6">Acesse sua conta 🍀</p>
+
+        {% if erro %}
+          <div class="bg-red-500 bg-opacity-70 text-white px-4 py-2 rounded mb-4 text-sm">
+            {{ erro }}
+          </div>
+        {% endif %}
+
+        <form action="{% url 'login' %}" method="POST" class="space-y-5">
+          {% csrf_token %}
+
+          <div>
+            <label for="username" class="block text-sm font-medium text-white">Usuário</label>
+            <input type="text" id="username" name="username" required placeholder="seu_nome"
+              class="mt-1 w-full px-4 py-2 bg-white bg-opacity-80 text-black border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-400 input-shadow transition-all" />
+          </div>
+
+          <div>
+            <label for="password" class="block text-sm font-medium text-white">Senha</label>
+            <input type="password" id="password" name="password" required placeholder="••••••••"
+              class="mt-1 w-full px-4 py-2 bg-white bg-opacity-80 text-black border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-400 input-shadow transition-all" />
+          </div>
+
+          <button type="submit"
+            class="w-full bg-lime-500 hover:bg-lime-600 text-white py-2 px-4 rounded-lg font-semibold transition-all transform hover:scale-105">
+            Entrar
+          </button>
+        </form>
+
+        <!-- Divisória decorativa -->
+        <div class="absolute top-0 right-0 h-full w-[1px] bg-gradient-to-b from-white/30 via-white/20 to-transparent"></div>
       </div>
 
-      <h1 class="text-3xl font-bold text-center text-lime-300">NutriChoice</h1>
-      <p class="text-center text-gray-200 mb-6">Acesse sua conta 🍀</p>
-
-      {% if erro %}
-        <div class="bg-red-500 bg-opacity-70 text-white px-4 py-2 rounded mb-4 text-sm">
-          {{ erro }}
+      <!-- Lado Cadastro - Caixa Estilizada -->
+      <div class="flex-1 flex items-center justify-center">
+        <div class="registration-box">
+          <h2>Sua jornada saudável começa aqui 🍎</h2>
+          <p>Ainda não tem uma conta? <br>
+            <span class="font-medium">Faça parte da comunidade NutriChoice e cuide melhor de você.</span>
+          </p>
+          <a href="{% url 'cadastro' %}">
+            Cadastre-se agora
+          </a>
         </div>
-      {% endif %}
-
-      <form action="{% url 'login' %}" method="POST" class="space-y-5">
-        {% csrf_token %}
-
-        <div>
-          <label for="username" class="block text-sm font-medium text-white">Usuário</label>
-          <input type="text" id="username" name="username" required placeholder="seu_nome"
-            class="mt-1 w-full px-4 py-2 bg-white bg-opacity-80 text-black border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-400 input-shadow transition-all" />
-        </div>
-
-        <div>
-          <label for="password" class="block text-sm font-medium text-white">Senha</label>
-          <input type="password" id="password" name="password" required placeholder="••••••••"
-            class="mt-1 w-full px-4 py-2 bg-white bg-opacity-80 text-black border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-400 input-shadow transition-all" />
-        </div>
-
-        <button type="submit"
-          class="w-full bg-lime-500 hover:bg-lime-600 text-white py-2 px-4 rounded-lg font-semibold transition-all transform hover:scale-105">
-          Entrar
-        </button>
-      </form>
-
-      <!-- Divisória decorativa -->
-      <div class="absolute top-0 right-0 h-full w-[1px] bg-gradient-to-b from-white/30 via-white/20 to-transparent"></div>
-    </div>
-
-    <!-- Lado Cadastro - Caixa Estilizada -->
-    <div class="flex-1 flex items-center justify-center">
-      <div class="registration-box">
-        <h2>Sua jornada saudável começa aqui 🍎</h2>
-        <p>Ainda não tem uma conta? <br>
-          <span class="font-medium">Faça parte da comunidade NutriChoice e cuide melhor de você.</span>
-        </p>
-        <a href="{% url 'cadastro' %}">
-          Cadastre-se agora
-        </a>
       </div>
+
     </div>
 
-  </div>
+  </main>
+
+  <!-- Rodapé Bonitão -->
+  <footer class="w-full text-center py-6 text-white text-sm backdrop-blur-md bg-black bg-opacity-30 animate-fade-in">
+    <div class="flex flex-col items-center justify-center space-y-2">
+      <img src="https://cdn-icons-png.flaticon.com/512/415/415733.png" alt="Folha" class="w-6 h-6 opacity-80">
+      <p>© 2025 <span class="font-semibold text-lime-400">NutriChoice</span>. Todos os direitos reservados.</p>
+    </div>
+  </footer>
 
 </body>
 </html>

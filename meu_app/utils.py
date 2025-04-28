@@ -28,7 +28,7 @@ def calcular_perfil(idade, peso, altura, objetivo, atividade):
     return calorias, proteinas, carboidratos, gorduras
 
 # Função para gerar o cardápio com base no objetivo do usuário
-def gerar_cardapio(usuario):
+def gerar_cardapio_personalizado(usuario):
     questionario = Questionario.objects.filter(usuario=usuario).last()
     if not questionario:
         return None
@@ -58,4 +58,3 @@ def gerar_cardapio(usuario):
     )
 
     return cardapio
-

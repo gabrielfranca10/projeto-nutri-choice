@@ -63,10 +63,10 @@
   <div class="bg-image"></div>
   <div class="bg-overlay"></div>
 
-  <!-- Botão de Voltar para o Perfil -->
-  <a href="{% url 'perfil_nutricional' %}" class="absolute top-5 left-5 flex items-center gap-2 bg-gray-500 hover:bg-gray-600 text-white font-semibold px-4 py-2 rounded-full shadow-md transition duration-300 z-10">
-    <img src="https://cdn-icons-png.flaticon.com/512/60/60716.png" class="w-5 h-5" alt="back"> Voltar para o Perfil
-  </a>
+  <!-- Botão de Voltar para Perfil -->
+<a href="{% url 'perfil_nutricional' %}" class="absolute top-5 right-5 flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold px-4 py-2 rounded-full shadow-md transition duration-300 z-10">
+  <img src="https://cdn-icons-png.flaticon.com/512/1828/1828459.png" class="w-5 h-5" alt="perfil"> Voltar para o Perfil
+</a>
 
   <div class="w-full max-w-4xl mx-4 main-box">
     <div class="text-center mb-10">
@@ -77,22 +77,21 @@
       <p class="text-white text-opacity-80 mt-2">Montado com base nas suas respostas</p>
     </div>
 
-    <!-- Exibindo o Cardápio -->
     {% if cardapio %}
-      <div class="space-y-8">
+      <div class="text-white space-y-6">
         {% for refeicao, itens in cardapio.items %}
-          <div>
-            <h2 class="text-xl font-semibold text-lime-300 mb-2">{{ refeicao }}</h2>
-            <ul class="list-disc list-inside text-white text-opacity-90 space-y-1">
+          <div class="flex justify-between items-center">
+            <h2 class="text-xl font-semibold">{{ refeicao }}</h2>
+            <ul class="list-disc pl-5">
               {% for item in itens %}
-                <li>{{ item.nome }}</li>
+                <li>{{ item }}</li>
               {% endfor %}
             </ul>
           </div>
         {% endfor %}
       </div>
     {% else %}
-      <p class="text-white text-opacity-80">Ainda não há cardápio gerado. Complete o questionário para obter seu cardápio personalizado.</p>
+      <p class="text-center text-red-300">Não foi possível gerar o cardápio. Verifique suas respostas no questionário.</p>
     {% endif %}
 
     <div class="flex justify-center gap-4 mt-10 flex-wrap">
