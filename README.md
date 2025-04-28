@@ -107,6 +107,8 @@ Esse modelo de trabalho, com colaboração constante, não só acelerou o proces
 
 </details>
 
+<summary>🚀 <strong>Entrega 3</strong></summary>
+
 
 
 
