@@ -106,7 +106,7 @@ Esse modelo de trabalho, com colaboração constante, não só acelerou o proces
 ![image](https://github.com/user-attachments/assets/5fa13a52-cb6c-49fa-9e76-9f261b12a33c)
 
 </details>
-<summary>🚀 <strong>Entrega 2</strong></summary>
+
 
 
 
