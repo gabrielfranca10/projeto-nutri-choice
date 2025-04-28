@@ -114,7 +114,7 @@ Esse modelo de trabalho, com colaboração constante, não só acelerou o proces
 
 </details>
 
-<!-- Conteúdo da Entrega 3 será adicionado aqui -->
+x
 
 </details>
 
