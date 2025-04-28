@@ -107,11 +107,11 @@ Esse modelo de trabalho, com colaboração constante, não só acelerou o proces
 
 </details>
 
+<summary>🚀 <strong>Entrega 3</strong></summary>
 
+### 🔍 Visão Geral
 
+<!-- Conteúdo da Entrega 3 será adicionado aqui -->
 
-
-
-
-
+</details>
 
