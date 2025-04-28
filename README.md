@@ -114,7 +114,3 @@ Esse modelo de trabalho, com colaboração constante, não só acelerou o proces
 
 </details>
 
-x
-
-</details>
-
