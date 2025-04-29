@@ -40,7 +40,7 @@
 ## 🔗 Links Úteis
 
 - 🎨 [**Figma do Projeto**](https://www.figma.com/design/jQSgfpDlNCRetoDEvQjKXb/Untitled?node-id=0-1&p=f&t=L4Ae5OJ66n1Ktpue-0)  
-- 📌 [**Quadro no Jira**](https://nutrichoic.atlassian.net/jira/software/projects/NUT/boards/3)  
+- 📌 [**Quadro no Jira**](https://nutrichoicee.atlassian.net/jira/software/projects/SCRUM/boards/1/backlog)  
 - 📄 [**Documentação no Google Docs**](https://docs.google.com/document/d/1g-iEXbBWo8eqiBazO2CRx4VPKwG2W7-mh7Tq9704AgU/edit?tab=t.0)  
 - 🎥 [**Screencast do Projeto**](https://youtu.be/tU3ncCQZz28)
 
