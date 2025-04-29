@@ -105,11 +105,6 @@ def questionario_view(request):
                 messages.error(request, 'Preencha todos os campos obrigatórios')
                 return render(request, 'meu_app/questionario.html')
 
-        Questionario.objects.update_or_create(
-            usuario=request.user,
-            defaults=dados
-        )
-
         cardapio = gerar_cardapio_personalizado(dados)
         return render(request, 'meu_app/perfil.html', {'cardapio': cardapio, 'dados': dados})
 
