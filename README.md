@@ -116,7 +116,6 @@ Para otimizar o desenvolvimento e garantir entregas de qualidade, decidimos orga
 
 ## 🛠 Criação de nova sprint no JIRA
 
----
 
 ## 🎨 Atualização dos protótipos de Lo-Fi
 - Sketches e storyboards para as novas histórias
