@@ -92,7 +92,6 @@ def questionario_view(request):
             'refeicoes_por_dia': request.POST.get('refeicoes_por_dia'),
             'come_carne': request.POST.get('come_carne') == 'on',
             'gosta_de_legumes': request.POST.get('gosta_de_legumes') == 'on',
-            'agua_bebida': parse_float(request.POST.get('agua_bebida')),
             'sono': request.POST.get('sono') or '',
             'atividade_fisica': request.POST.get('atividade_fisica'),
             'usa_suplementos': request.POST.get('usa_suplementos') == 'on',
