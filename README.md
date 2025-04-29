@@ -154,7 +154,9 @@ https://youtu.be/OXOsJVPyinw
 ---
 
 ## 📌 Quadro da Sprint 02 atualizado refletindo a entrega
-- Adicionar print do quadro da sprint ao README
+##Backlog do Jira:
+![image](https://github.com/user-attachments/assets/b704039c-eea2-4016-ab3e-5231b40cf366)
+
 
 
 </details>
