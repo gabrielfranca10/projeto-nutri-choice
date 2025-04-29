@@ -84,7 +84,7 @@ def questionario_view(request):
 
         dados = {
             'nome': request.POST.get('nome') or '',
-            'idade': parse_int(request.POST.get('idade')) or '',
+            'idade': parse_int(request.POST.get('idade')),
             'objetivo': request.POST.get('objetivo'),
             'restricoes': request.POST.get('restricoes') or '',
             'preferencia': request.POST.get('preferencia') or '',
