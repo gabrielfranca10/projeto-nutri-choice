@@ -131,7 +131,7 @@ Para otimizar o desenvolvimento e garantir entregas de qualidade, decidimos orga
 
 
 ## 🚀 Deployment das novas histórias
-https://youtu.be/OXOsJVPyinw
+https://youtu.be/_xF7cc4UXOI
 
 ---
 
