@@ -154,10 +154,10 @@ https://youtu.be/OXOsJVPyinw
 ---
 
 ## 📌 Quadro da Sprint 02 atualizado refletindo a entrega
-##Backlog Refletindo a Entrega:
+## Backlog Refletindo a Entrega:
 ![image](https://github.com/user-attachments/assets/b704039c-eea2-4016-ab3e-5231b40cf366)
 
-##Quadro Refletindo a Entrega:
+## Quadro Refletindo a Entrega:
 ![image](https://github.com/user-attachments/assets/9552d139-849f-4c13-9d8c-5785043e07f0)
 
 </details>
