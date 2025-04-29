@@ -128,10 +128,6 @@ Para otimizar o desenvolvimento e garantir entregas de qualidade, decidimos orga
 
 ---
 
-## 🌱 Ambiente de versionamento atuante
-- Commits frequentes (_no mínimo semanais_)
-
----
 
 ## 🚀 Deployment das novas histórias
 https://youtu.be/OXOsJVPyinw
