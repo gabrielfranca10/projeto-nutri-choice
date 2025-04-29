@@ -136,7 +136,8 @@ https://youtu.be/OXOsJVPyinw
 ---
 
 ## 🐛 Issue/Bug tracker atualizado (no GitHub):
-![image](https://github.com/user-attachments/assets/bf63f53d-2835-4dd5-a66d-f2d6d2e6519c)
+![image](https://github.com/user-attachments/assets/9b0438b2-bf97-440f-99f6-fc3fa4f95d3d)
+
 
 
 ---
