@@ -129,7 +129,7 @@ Para otimizar o desenvolvimento e garantir entregas de qualidade, decidimos orga
 ---
 
 ## 🚀 Deployment das novas histórias
-- Adicionar novo screencast (ênfase nas novas histórias) ao README / A URL TEM que aparecer no screencast
+https://youtu.be/OXOsJVPyinw
 
 ---
 
