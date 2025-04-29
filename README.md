@@ -114,4 +114,44 @@ Esse modelo de trabalho, com colaboração constante, não só acelerou o proces
 ### 🤝 Programação em Par
 Para otimizar o desenvolvimento e garantir entregas de qualidade, decidimos organizar nossa equipe em duplas, com cada uma responsável por uma história específica. Essa abordagem ajudou a manter o foco em tarefas claras e divididas, aumentando a eficiência no desenvolvimento de cada funcionalidade e permitindo que cada dupla se aprofundasse nas necessidades específicas de cada história. As sessões de pareamento aconteceram via Discord, com compartilhamento de tela, o que facilitou a comunicação instantânea e a revisão de código em tempo real. Fernando e França, por exemplo, ficaram responsáveis por uma das histórias e, com a ajuda do pareamento, conseguiram revisar o código em tempo real, discutindo e ajustando a implementação rapidamente. Caio e Yan trabalharam em outra história, também compartilhando suas telas e resolvendo dúvidas assim que surgiam, o que ajudou a manter o fluxo de trabalho ágil. Burle, em sua dupla, contribuiu com suas experiências e soluções criativas, agregando ainda mais valor à colaboração entre todos. Esse modelo de trabalho, com colaboração constante, não só acelerou o processo de desenvolvimento, mas também reduziu o retrabalho, já que as dúvidas eram resolvidas na hora e todos estavam alinhados com as decisões do projeto. A troca contínua de ideias e a revisão mútua de código garantiram uma qualidade superior no produto final. Com todos os membros colaborando de maneira tão integrada, conseguimos entregar um código mais robusto, sem erros, e perfeitamente alinhado com as expectativas do cliente, elevando a qualidade geral do projeto.
 
+## 🛠 Criação de nova sprint no JIRA
+
+---
+
+## 🎨 Atualização dos protótipos de Lo-Fi
+- Sketches e storyboards para as novas histórias
+- Adicionar novo screencast (ênfase nas novas histórias) ao README
+
+---
+
+## 🌱 Ambiente de versionamento atuante
+- Commits frequentes (_no mínimo semanais_)
+
+---
+
+## 🚀 Deployment das novas histórias
+- Adicionar novo screencast (ênfase nas novas histórias) ao README / A URL TEM que aparecer no screencast
+
+---
+
+## 🐛 Issue/Bug tracker atualizado (no GitHub)
+- Adicionar print da tela ao README
+
+---
+
+## 🔁 CI/CD com build e deployment automatizado
+- Pipeline criada no GitHub
+- Adicionar screencast (disponível no YouTube) do processo de build e deployment ao README
+
+---
+
+## ✅ Testes de Sistema (E2E) Automatizados
+- Adicionar screencast (YouTube) da execução dos testes ao README
+
+---
+
+## 📌 Quadro da Sprint 02 atualizado refletindo a entrega
+- Adicionar print do quadro da sprint ao README
+
+
 </details>
