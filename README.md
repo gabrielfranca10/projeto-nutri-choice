@@ -134,8 +134,9 @@ https://youtu.be/OXOsJVPyinw
 
 ---
 
-## 🐛 Issue/Bug tracker atualizado (no GitHub)
-- Adicionar print da tela ao README
+## 🐛 Issue/Bug tracker atualizado (no GitHub):
+![image](https://github.com/user-attachments/assets/bf63f53d-2835-4dd5-a66d-f2d6d2e6519c)
+
 
 ---
 
