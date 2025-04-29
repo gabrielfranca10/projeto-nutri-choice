@@ -103,7 +103,8 @@ Esse modelo de trabalho, com colaboração constante, não só acelerou o proces
 ---
 
 ## ⚠️ Issues / Bug Tracker
-![image](https://github.com/user-attachments/assets/5fa13a52-cb6c-49fa-9e76-9f261b12a33c)
+![image](https://github.com/user-attachments/assets/90b2582f-c77e-4690-9dd5-d5d62fcf533c)
+
 </details>
 
 ---
