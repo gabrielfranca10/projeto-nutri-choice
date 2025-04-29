@@ -222,11 +222,6 @@ def perfil_nutricional_view(request):
     ultimo = Questionario.objects.filter(usuario=request.user).last()
 
     if ultimo:
-        agua_bebida = ultimo.agua_bebida or 0
-        meta_agua = 2000
-        agua_faltante = max(meta_agua - agua_bebida, 0)
-        porcentagem_agua = min((agua_bebida / meta_agua) * 100, 100)
-
         cardapio = gerar_cardapio_personalizado(vars(ultimo))
 
         return render(request, 'meu_app/perfil.html', {
