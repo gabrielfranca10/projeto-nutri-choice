@@ -168,7 +168,7 @@ def gerar_cardapio_personalizado(dados):
         substituicoes['pão integral'] = 'pão sem glúten integral'
         substituicoes['pão'] = 'pão sem glúten'
     if not come_carne:
-        substituicoes['frango'] = 'grão-de-bico'
+        substituicoes['frango'] = 'seitan'
 
     # Aplicando as substituições
     cardapio = ajustar_substituicoes(cardapio, substituicoes)
@@ -258,7 +258,7 @@ def cardapio_view(request):
         return render(request, 'meu_app/cardapio.html', {'cardapio': cardapio})
     else:
         messages.error(request, 'Complete o questionário para ver seu cardápio.')
-        return redirect('questionario_view')  # ou onde preferir
+        return redirect('cardapio')  # ou onde preferir
 
 
 # === LOGOUT ===
@@ -342,45 +342,6 @@ def excluir_perfil(request):
 
     return render(request, 'meu_app/excluir_conta.html')
 
-# === SUBSTITUIÇÕES ALIMENTARES ===
-@login_required
-def substituicoes_view(request):
-    termo = request.GET.get('busca')
-    substituicoes = []
-    erro = ''
-
-    if termo:
-        try:
-            # Tenta encontrar o alimento
-            alimento = Alimento.objects.get(nome__icontains=termo)
-
-            # Pega preferências do usuário (se tiver questionário preenchido)
-            questionario = Questionario.objects.filter(usuario=request.user).last()
-            preferencias = {
-                'vegetariano': not questionario.come_carne if questionario else False,
-                'sem_lactose': 'lactose' in (questionario.restricoes.lower() if questionario else ''),
-                'sem_gluten': 'gluten' in (questionario.restricoes.lower() if questionario else ''),
-            }
-
-            # Filtra substituições compatíveis
-            substituicoes = Substituicao.objects.filter(alimento_original=alimento)
-            substituicoes = [
-                s for s in substituicoes
-                if (not preferencias['vegetariano'] or s.alternativa.vegetariano)
-                and (not preferencias['sem_lactose'] or s.alternativa.sem_lactose)
-                and (not preferencias['sem_gluten'] or s.alternativa.sem_gluten)
-            ]
-
-        except Alimento.DoesNotExist:
-            erro = "Alimento não encontrado. Tente outro nome ou veja sugestões abaixo."
-            sugestoes = Alimento.objects.filter(nome__icontains=termo[:3])
-            return render(request, 'meu_app/substituicoes.html', {'erro': erro, 'sugestoes': sugestoes})
-
-    return render(request, 'meu_app/substituicoes.html', {
-        'substituicoes': substituicoes,
-        'termo': termo
-    })
-
 def receitas_view(request):
     return render(request, 'meu_app/receitas.html')
 # views.py
@@ -392,30 +353,10 @@ def dicas_nutricionais(request):
 
 @login_required
 def dadoscadastrais(request):
-    # Recupera o questionário do usuário logado, se existir
     questionario = Questionario.objects.filter(usuario=request.user).first()
 
-    if questionario:
-        dados = {
-            'nome': questionario.nome,
-            'idade': questionario.idade,
-            'peso': questionario.peso,
-            'altura': questionario.altura,
-            'genero': questionario.genero,
-            'objetivo': questionario.objetivo,
-            'restricoes': questionario.restricoes,
-            'preferencia': questionario.preferencia,
-            'fome': questionario.fome,
-            'refeicoes_por_dia': questionario.refeicoes_por_dia,
-            'come_carne': questionario.come_carne,
-            'gosta_de_legumes': questionario.gosta_de_legumes,
-            'agua_bebida': questionario.agua_bebida,
-            'sono': questionario.sono,
-            'atividade_fisica': questionario.atividade_fisica,
-            'usa_suplementos': questionario.usa_suplementos,
-            'estresse': questionario.estresse,
-        }
-    else:
-        dados = {}
+    if not questionario:
+        messages.error(request, 'Complete o questionário para visualizar os dados cadastrais.')
+        return redirect('perfil_nutricional')
 
-    return render(request, 'meu_app/dados_cadastrais.html', {'dados': dados, 'questionario': questionario})
+    return render(request, 'meu_app/dados_cadastrais.html', {'questionario': questionario})

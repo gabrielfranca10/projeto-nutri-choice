@@ -122,8 +122,7 @@
       <div class="profile-info">
         <div class="text-3xl">👤</div>
         <div class="flex flex-col">
-          <span class="username">{{ user.username }}</span>
-          <span class="email">{{ user.email }}</span>
+          <span class="username">{{ questionario.nome }}</span>
         </div>
       </div>
 
@@ -148,7 +147,7 @@
 
     <!-- Conteúdo principal -->
     <main class="flex-1 p-10 overflow-auto transition-all duration-300">
-      <h1 class="text-3xl font-bold mb-6">Bem-vindo(a), {{ user.username }} 👋</h1>
+      <h1 class="text-3xl font-bold mb-6">Bem-vindo(a), {{ questionario.nome }} 👋</h1>
 
       <!-- Grid de funcionalidades principais -->
       <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">

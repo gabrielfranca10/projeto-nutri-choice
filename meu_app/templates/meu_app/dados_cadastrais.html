@@ -14,7 +14,6 @@
       color: white;
       font-family: 'Segoe UI', sans-serif;
     }
-
     .overlay {
       position: fixed;
       top: 0; left: 0;
@@ -22,7 +21,6 @@
       background: rgba(0, 0, 0, 0.65);
       z-index: -1;
     }
-
     .glass {
       background: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(20px);
@@ -31,66 +29,53 @@
       transition: transform 0.3s ease;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
     }
-
     .glass:hover {
       transform: translateY(-5px);
     }
-
     .icon-box {
       font-size: 2.5rem;
     }
-
     .menu-link {
       transition: all 0.3s ease;
     }
-
     .menu-link:hover {
       background-color: rgba(255, 255, 255, 0.15);
       border-radius: 0.5rem;
       padding-left: 16px;
     }
-
     .sidebar-header {
       display: flex;
       flex-direction: column;
       align-items: center;
       margin-bottom: 2rem;
     }
-
     .sidebar-header img {
       transition: transform 0.3s;
     }
-
     .sidebar-header img:hover {
       transform: scale(1.1) rotate(12deg);
     }
-
     .profile-info {
       display: flex;
       flex-direction: column;
       align-items: center;
       margin-top: 1rem;
     }
-
     .profile-info .username {
       font-weight: bold;
       font-size: 1.1rem;
     }
-
     .profile-info .email {
       font-size: 0.9rem;
       color: rgba(255, 255, 255, 0.8);
     }
-
     .sidebar-closed .profile-info {
       display: none;
     }
-
     .sidebar-closed .menu-link {
       justify-content: center;
       padding-left: 0;
     }
-
     .sidebar-closed .sidebar-header,
     .sidebar-closed #menuLinks {
       display: none;
@@ -108,13 +93,11 @@
         ☰
       </button>
 
-      <!-- Header: Logo e Título -->
       <div class="sidebar-header">
         <img src="https://cdn-icons-png.flaticon.com/512/415/415744.png" alt="Logo" class="w-14 h-14">
         <h2 class="text-xl font-bold text-center mt-4">NutriChoice</h2>
       </div>
 
-      <!-- Perfil do Usuário -->
       <div class="profile-info">
         <div class="text-3xl">👤</div>
         <div class="flex flex-col">
@@ -125,7 +108,6 @@
 
       <h2 id="menuTitle" class="text-lg font-bold text-white mt-6 mb-4">Menu</h2>
 
-      <!-- Menu -->
       <nav id="menuLinks" class="space-y-4 w-full">
         <a href="{% url 'perfil_nutricional' %}" class="menu-link flex items-center px-4 py-2 text-white">
           <span class="icon-box mr-4">🏠</span> Dashboard
@@ -146,18 +128,17 @@
     <main class="flex-1 p-10 overflow-auto transition-all duration-300">
       <h1 class="text-3xl font-bold mb-6">Dados Cadastrais</h1>
 
-      <!-- Dados Cadastrais -->
+      <!-- Informações do Usuário -->
       <div class="glass p-6 mb-6">
-        <h3 class="text-xl font-semibold">Informações do Usuário</h3>
+        <h3 class="text-xl font-semibold">Informações Pessoais</h3>
         <div class="text-sm mt-4">
-          <p><strong>Nome:</strong> {{ user.username }}</p>
+          <p><strong>Nome:</strong> {{ questionario.nome }}</p>
           <p><strong>Email:</strong> {{ user.email }}</p>
-          <p><strong>Data de Nascimento:</strong> {{ user.data_nascimento }}</p>
-          <p><strong>Gênero:</strong> {{ user.genero }}</p>
+          <p><strong>Idade:</strong> {{ questionario.idade }}</p>
         </div>
       </div>
 
-      <!-- Dados do Questionário Nutricional -->
+      <!-- Dados Nutricionais -->
       <div class="glass p-6 mb-6">
         <h3 class="text-xl font-semibold">Dados Nutricionais</h3>
         <div class="text-sm mt-4">
@@ -167,12 +148,14 @@
           <p><strong>Refeições por Dia:</strong> {{ questionario.refeicoes_por_dia }}</p>
           <p><strong>Horas de Sono:</strong> {{ questionario.sono }}</p>
           <p><strong>Frequência de Atividade Física:</strong> {{ questionario.atividade_fisica }}</p>
-          <p><strong>Consome Carne:</strong> {% if questionario.come_carne %} Sim {% else %} Não {% endif %}</p>
-          <p><strong>Gosta de Legumes:</strong> {% if questionario.gosta_de_legumes %} Sim {% else %} Não {% endif %}</p>
-          <p><strong>Usa Suplementos:</strong> {% if questionario.usa_suplementos %} Sim {% else %} Não {% endif %}</p>
+          <p><strong>Consome Carne:</strong> {% if questionario.come_carne %}Sim{% else %}Não{% endif %}</p>
+          <p><strong>Gosta de Legumes:</strong> {% if questionario.gosta_de_legumes %}Sim{% else %}Não{% endif %}</p>
+          <p><strong>Usa Suplementos:</strong> {% if questionario.usa_suplementos %}Sim{% else %}Não{% endif %}</p>
           <p><strong>Nível de Estresse:</strong> {{ questionario.estresse }}</p>
         </div>
       </div>
+    </main>
+  </div>
 
   <script>
     const toggleBtn = document.getElementById('toggleSidebar');
@@ -184,6 +167,5 @@
       sidebar.classList.toggle('sidebar-closed');
     });
   </script>
-
 </body>
 </html>

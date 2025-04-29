@@ -12,7 +12,6 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('editar-perfil/', views.editar_perfil, name='editar_perfil'),
     path('excluir-perfil/', views.excluir_perfil, name='excluir_perfil'),
-    path('substituicoes/', views.substituicoes_view, name='substituicoes'),
     path('receitas/', views.receitas_view, name='receitas'),  # <-- esta linha resolve o erro
     path('agua/', views.agua_view, name='agua'),
     path('cardapio/', views.cardapio_view, name='cardapio'),
