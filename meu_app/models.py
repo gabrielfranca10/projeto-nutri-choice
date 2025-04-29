@@ -31,20 +31,16 @@ class Questionario(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name="questionarios", verbose_name="Usuário")
     nome = models.CharField(max_length=100, blank=True, null=True)
     idade = models.IntegerField(null=True, blank=True)
-    peso = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)  # em kg
-    altura = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)  # em metros
     objetivo = models.CharField(max_length=100)
     restricoes = models.TextField(blank=True)
     preferencia = models.TextField(blank=True)
     refeicoes_por_dia = models.IntegerField(null=True, blank=True)
     come_carne = models.BooleanField(default=True)
     gosta_de_legumes = models.BooleanField(default=True)
-    agua_bebida = models.DecimalField(max_digits=5, decimal_places=2, default=0, null=True, blank=True)  # ml de água por dia
     usa_suplementos = models.BooleanField(default=False)
     estresse = models.CharField(max_length=100, blank=True)
     atividade_fisica = models.CharField(max_length=100, choices=ATIVIDADE_FISICA_CHOICES, blank=True)
     fome = models.CharField(max_length=100, choices=FOME_CHOICES, blank=True)
-    genero = models.CharField(max_length=50, choices=USUARIO_CHOICES, blank=True)
     sono = models.CharField(max_length=100, choices=SONO_CHOICES, blank=True)
 
     def __str__(self):
@@ -103,10 +99,6 @@ class Perfil(models.Model):
     nome = models.CharField(max_length=100)
     idade = models.IntegerField(null=True, blank=True)
     data_nascimento = models.DateField(null=True, blank=True)
-    genero = models.CharField(max_length=20, blank=True)
-    endereco = models.CharField(max_length=255, blank=True)
-    peso = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
-    altura = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
     objetivo = models.CharField(max_length=100, blank=True)
     restricoes = models.TextField(blank=True)
     preferencia = models.TextField(blank=True)

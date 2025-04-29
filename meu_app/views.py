@@ -84,10 +84,7 @@ def questionario_view(request):
 
         dados = {
             'nome': request.POST.get('nome') or '',
-            'idade': parse_int(request.POST.get('idade')),
-            'peso': parse_float(request.POST.get('peso')),
-            'altura': parse_float(request.POST.get('altura')),
-            'genero': request.POST.get('genero') or '',
+            'idade': parse_int(request.POST.get('idade')) or '',
             'objetivo': request.POST.get('objetivo'),
             'restricoes': request.POST.get('restricoes') or '',
             'preferencia': request.POST.get('preferencia') or '',
@@ -235,13 +232,9 @@ def perfil_nutricional_view(request):
 
         return render(request, 'meu_app/perfil.html', {
             'questionario': ultimo,
-            'agua_faltante': agua_faltante,
-            'porcentagem_agua': round(porcentagem_agua, 2),
             'cardapio': cardapio,
             'usuario': request.user,
             'idade': ultimo.idade,
-            'peso': ultimo.peso,
-            'altura': ultimo.altura,
             'nome': ultimo.nome,
         })
     else:
@@ -284,9 +277,6 @@ def editar_perfil(request):
         # Converte os valores do POST para os tipos apropriados, com tratamento de exceção para float e int
         questionario.nome = request.POST.get('nome', questionario.nome)
         questionario.idade = int(request.POST.get('idade', questionario.idade) or questionario.idade)
-        questionario.peso = float(request.POST.get('peso', questionario.peso) or questionario.peso)
-        questionario.altura = float(request.POST.get('altura', questionario.altura) or questionario.altura)
-        questionario.genero = request.POST.get('genero', questionario.genero)
         questionario.objetivo = request.POST.get('objetivo', questionario.objetivo)
         questionario.restricoes = request.POST.get('restricoes', questionario.restricoes)
         questionario.preferencia = request.POST.get('preferencia', questionario.preferencia)
@@ -298,13 +288,6 @@ def editar_perfil(request):
         questionario.gosta_de_legumes = request.POST.get('gosta_de_legumes') == 'on'
         
         # Tratamento do valor de 'agua_bebida' para float
-        try:
-            questionario.agua_bebida = float(request.POST.get('agua_bebida', 0))
-        except ValueError:
-            questionario.agua_bebida = 0  # Valor padrão caso a conversão falhe
-
-        # Mantém os valores default caso não seja passado
-        questionario.agua_bebida = request.POST.get('agua', questionario.agua_bebida)
         questionario.sono = request.POST.get('sono', questionario.sono)
         questionario.atividade_fisica = request.POST.get('atividade_fisica', questionario.atividade_fisica)
         
