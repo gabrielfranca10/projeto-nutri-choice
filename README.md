@@ -146,7 +146,7 @@ Para otimizar o desenvolvimento e garantir entregas de qualidade, decidimos orga
 ---
 
 ## ✅ Testes de Sistema (E2E) Automatizados
-[Screencast Das Novas Historias](https://youtu.be/_xF7cc4UXOI)
+[Screencast Teste Automatizado](https://youtu.be/_xF7cc4UXOI)
 ---
 
 ## 📌 Quadro da Sprint 02 atualizado refletindo a entrega
