@@ -124,14 +124,13 @@ Para otimizar o desenvolvimento e garantir entregas de qualidade, decidimos orga
 ![image](https://github.com/user-attachments/assets/a1f01d01-8005-46a3-9e76-b1eb861fc664)
 
 ## 🎨 Atualização dos protótipos de Lo-Fi
-- Sketches e storyboards para as novas histórias
-- Adicionar novo screencast (ênfase nas novas histórias) ao README
+[Screencast do Figma](https://youtu.be/oSufE2d3DQ8)
 
 ---
 
 
 ## 🚀 Deployment das novas histórias
-[link do vídeo](https://youtu.be/_xF7cc4UXOI)
+[Screencast Das Novas Historias](https://youtu.be/_xF7cc4UXOI)
 
 ---
 
