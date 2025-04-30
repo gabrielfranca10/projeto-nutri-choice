@@ -83,7 +83,6 @@ jobs:
           
       - name: Cleaning testing files
         run: |
-          cd meu_projeto/
           rm -f db.sqlite3
           rm -f .env
           rm cypress.config.js
