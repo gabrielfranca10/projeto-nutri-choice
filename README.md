@@ -146,8 +146,7 @@ Para otimizar o desenvolvimento e garantir entregas de qualidade, decidimos orga
 ---
 
 ## ✅ Testes de Sistema (E2E) Automatizados
-- Adicionar screencast (YouTube) da execução dos testes ao README
-
+[Screencast Das Novas Historias](https://youtu.be/_xF7cc4UXOI)
 ---
 
 ## 📌 Quadro da Sprint 02 atualizado refletindo a entrega
