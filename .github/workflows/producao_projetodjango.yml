@@ -86,6 +86,12 @@ jobs:
           cd meu_projeto/
           rm -f db.sqlite3
           rm -f .env
+          rm cypress.config.js
+          rm package-lock.json
+          rm package.json
+          rm -rf cypress
+          rm -rf node_modules
+          cd ..
           
       - name: Zip artifact for deployment
         run: |
@@ -93,3 +99,10 @@ jobs:
           zip release.zip ./* -r
           cd ..
           mv meu_projeto/release.zip .
+
+      - name: Run local server
+        run: |
+          python manage.py migrate
+          python manage.py runserver &
+          sleep 5
+          npx cypress run
