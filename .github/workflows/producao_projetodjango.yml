@@ -31,7 +31,6 @@ jobs:
       
       - name: Install dependencies
         run: |
-          cd meu_projeto/
           pip install -r requirements.txt
           npm ci
           cd ..
