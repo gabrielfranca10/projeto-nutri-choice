@@ -102,7 +102,6 @@ jobs:
 
       - name: Run local server
         run: |
-          cd meu_projeto/
           python manage.py migrate
           python manage.py runserver &
           sleep 5
