@@ -1,8 +1,10 @@
 name: End-to-end testes
 on: push
+
 jobs:
   cypress-run:
     runs-on: ubuntu-22.04
+
     services:
       postgres:
         image: postgres:15
@@ -17,6 +19,13 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+
+    env:
+      DBNAME: nutri_db
+      DBUSER: postgres
+      DBPASS: postgres
+      DBHOST: localhost
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -47,5 +56,3 @@ jobs:
 
       - name: Cypress run
         uses: cypress-io/github-action@v6
-        with:
-          start: npm start
