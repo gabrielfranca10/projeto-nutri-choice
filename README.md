@@ -136,9 +136,7 @@ Para otimizar o desenvolvimento e garantir entregas de qualidade, decidimos orga
 ---
 
 ## 🐛 Issue/Bug tracker atualizado (no GitHub):
-
-
-
+![image](https://github.com/user-attachments/assets/98968357-8dc4-46a2-a1de-90a08da18158)
 
 ---
 
