@@ -61,6 +61,13 @@
     .animated-icon {
       animation: float 3s ease-in-out infinite;
     }
+
+    .error-message {
+      color: #f87171;
+      font-weight: 600;
+      text-align: center;
+      margin-top: 1rem;
+    }
   </style>
 </head>
 <body class="flex items-center justify-center min-h-screen overflow-hidden px-4">
@@ -77,6 +84,10 @@
       <p class="text-white text-lg mt-2">Nos ajude a entender seus hábitos para criar um plano alimentar ideal pra você 🍎</p>
     </div>
 
+    {% if erro %}
+      <p class="error-message">⚠️ {{ erro }}</p> 
+    {% endif %}
+
     <form method="post" class="space-y-6">
       {% csrf_token %}
 
@@ -89,31 +100,45 @@
             <option value="perder">Perder peso</option>
             <option value="ganhar">Ganhar massa muscular</option>
           </select>
+          {% if erros.objetivo %}
+            <p class="text-red-500 font-semibold">{{ erros.objetivo }}</p>
+          {% endif %}
         </div>
 
         <!-- Restrições -->
         <div>
           <label class="block text-white font-semibold mb-1">Você possui alguma restrição alimentar?</label>
           <input type="text" name="restricoes" required placeholder="Ex: lactose, glúten" class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black placeholder-gray-600 focus:outline-none">
+          {% if erros.restricoes %}
+            <p class="text-red-500 font-semibold">{{ erros.restricoes }}</p>
+          {% endif %}
         </div>
 
         <!-- Preferências -->
         <div class="md:col-span-2">
           <label class="block text-white font-semibold mb-1">Alimentos que gosta ou evita:</label>
           <textarea name="preferencia" rows="3" required placeholder="Ex: gosto de frango, evito atum e batata doce" class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black placeholder-gray-600 focus:outline-none"></textarea>
+          {% if erros.preferencia %}
+            <p class="text-red-500 font-semibold">{{ erros.preferencia }}</p>
+          {% endif %}
         </div>
 
         <!-- Refeições por dia -->
         <div>
           <label class="block text-white font-semibold mb-1">Quantas refeições por dia?</label>
           <input type="number" name="refeicoes_por_dia" min="1" max="10" required placeholder="Ex: 4" class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black focus:outline-none">
+          {% if erros.refeicoes_por_dia %}
+            <p class="text-red-500 font-semibold">{{ erros.refeicoes_por_dia }}</p>
+          {% endif %}
         </div>
-
 
         <!-- Sono -->
         <div>
           <label class="block text-white font-semibold mb-1">Horas de sono por noite:</label>
           <input type="number" name="sono" min="0" max="24" required placeholder="Ex: 7" class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black focus:outline-none" />
+          {% if erros.sono %}
+            <p class="text-red-500 font-semibold">{{ erros.sono }}</p>
+          {% endif %}
         </div>
 
         <!-- Frequência de atividade física -->
@@ -126,6 +151,9 @@
             <option value="3-4x">3-4 vezes por semana</option>
             <option value="5+">5 ou mais vezes por semana</option>
           </select>
+          {% if erros.atividade_fisica %}
+            <p class="text-red-500 font-semibold">{{ erros.atividade_fisica }}</p>
+          {% endif %}
         </div>
 
         <!-- Blocos agrupados (carne, legumes, suplementos) -->
@@ -136,6 +164,9 @@
               <label class="text-white"><input type="radio" name="come_carne" value="sim" required class="mr-2">Sim</label>
               <label class="text-white"><input type="radio" name="come_carne" value="nao" class="mr-2">Não</label>
             </div>
+            {% if erros.come_carne %}
+              <p class="text-red-500 font-semibold">{{ erros.come_carne }}</p>
+            {% endif %}
           </div>
 
           <div>
@@ -144,6 +175,9 @@
               <label class="text-white"><input type="radio" name="gosta_de_legumes" value="sim" required class="mr-2">Sim</label>
               <label class="text-white"><input type="radio" name="gosta_de_legumes" value="nao" class="mr-2">Não</label>
             </div>
+            {% if erros.gosta_de_legumes %}
+              <p class="text-red-500 font-semibold">{{ erros.gosta_de_legumes }}</p>
+            {% endif %}
           </div>
 
           <div>
@@ -152,6 +186,9 @@
               <label class="text-white"><input type="radio" name="usa_suplementos" value="sim" required class="mr-2">Sim</label>
               <label class="text-white"><input type="radio" name="usa_suplementos" value="nao" class="mr-2">Não</label>
             </div>
+            {% if erros.usa_suplementos %}
+              <p class="text-red-500 font-semibold">{{ erros.usa_suplementos }}</p>
+            {% endif %}
           </div>
         </div>
 
@@ -164,6 +201,9 @@
             <option value="moderado">Moderado</option>
             <option value="alto">Alto</option>
           </select>
+          {% if erros.estresse %}
+            <p class="text-red-500 font-semibold">{{ erros.estresse }}</p>
+          {% endif %}
         </div>
       </div>
 

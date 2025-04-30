@@ -70,12 +70,6 @@ def cadastro_view(request):
 @login_required
 def questionario_view(request):
     if request.method == 'POST':
-        def parse_float(valor):
-            try:
-                return float(valor)
-            except (TypeError, ValueError):
-                return None
-
         def parse_int(valor):
             try:
                 return int(valor)
@@ -83,26 +77,44 @@ def questionario_view(request):
                 return None
 
         dados = {
-            'nome': request.POST.get('nome') or '',
-            'idade': parse_int(request.POST.get('idade')),
             'objetivo': request.POST.get('objetivo'),
             'restricoes': request.POST.get('restricoes') or '',
             'preferencia': request.POST.get('preferencia') or '',
-            'fome': request.POST.get('fome') or '',
-            'refeicoes_por_dia': request.POST.get('refeicoes_por_dia'),
-            'come_carne': request.POST.get('come_carne') == 'on',
-            'gosta_de_legumes': request.POST.get('gosta_de_legumes') == 'on',
-            'sono': request.POST.get('sono') or '',
+            'refeicoes_por_dia': parse_int(request.POST.get('refeicoes_por_dia')),
+            'sono': parse_int(request.POST.get('sono')),
             'atividade_fisica': request.POST.get('atividade_fisica'),
-            'usa_suplementos': request.POST.get('usa_suplementos') == 'on',
             'estresse': request.POST.get('estresse'),
+            'come_carne': request.POST.get('come_carne'),
+            'gosta_de_legumes': request.POST.get('gosta_de_legumes'),
+            'usa_suplementos': request.POST.get('usa_suplementos'),
         }
 
-        campos_obrigatorios = ['objetivo', 'refeicoes_por_dia', 'atividade_fisica', 'estresse']
-        for campo in campos_obrigatorios:
+        erros = {}
+
+        campos_obrigatorios = [
+            ('objetivo', 'O campo "Objetivo" é obrigatório.'),
+            ('restricoes', 'O campo "Restrições" é obrigatório.'),
+            ('preferencia', 'O campo "Preferências alimentares" é obrigatório.'),
+            ('refeicoes_por_dia', 'O campo "Refeições por dia" é obrigatório.'),
+            ('sono', 'O campo "Horas de sono" é obrigatório.'),
+            ('atividade_fisica', 'O campo "Atividade física" é obrigatório.'),
+            ('estresse', 'O campo "Nível de estresse" é obrigatório.'),
+            ('come_carne', 'O campo "Consome carne" é obrigatório.'),
+            ('gosta_de_legumes', 'O campo "Gosta de legumes" é obrigatório.'),
+            ('usa_suplementos', 'O campo "Usa suplementos" é obrigatório.')
+        ]
+
+        for campo, mensagem in campos_obrigatorios:
             if not dados.get(campo):
-                messages.error(request, 'Preencha todos os campos obrigatórios')
-                return render(request, 'meu_app/questionario.html')
+                erros[campo] = mensagem
+
+        if erros:
+            return render(request, 'meu_app/questionario.html', {'erros': erros, 'dados': dados})
+
+        # Conversão booleana após validação
+        dados['come_carne'] = dados['come_carne'] == 'sim'
+        dados['gosta_de_legumes'] = dados['gosta_de_legumes'] == 'sim'
+        dados['usa_suplementos'] = dados['usa_suplementos'] == 'sim'
 
         Questionario.objects.update_or_create(
             usuario=request.user,
@@ -182,6 +194,7 @@ def exibir_cardapio(cardapio):
         cardapio_html += "</ul>"
     return cardapio_html
 
+@login_required
 def questionario(request):
     if request.method == 'POST':
         dados = {
@@ -204,13 +217,16 @@ def questionario(request):
             messages.error(request, 'Selecione um objetivo válido para gerar seu cardápio.')
             return render(request, 'meu_app/questionario.html')
 
-        # Agora sim gerar o cardápio
+        # Gerar o cardápio personalizado
         cardapio = gerar_cardapio_personalizado(dados)
 
         # Verifica se o cardápio gerado tem conteúdo
         if not cardapio:
             messages.error(request, 'Não conseguimos montar seu cardápio. Tente preencher novamente.')
             return render(request, 'meu_app/questionario.html')
+
+        # Adicionar mensagem de sucesso se o cardápio foi gerado
+        messages.success(request, 'Cardápio gerado com sucesso!')
 
         return render(request, 'meu_app/perfil.html', {'cardapio': cardapio})
 

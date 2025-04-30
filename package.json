@@ -1,0 +1,22 @@
+{
+  "name": "projeto-nutri-choice",
+  "version": "1.0.0",
+  "description": "<h1 align=\"center\">🥗 Nutri Choice</h1>",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabrielfranca10/projeto-nutri-choice.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gabrielfranca10/projeto-nutri-choice/issues"
+  },
+  "homepage": "https://github.com/gabrielfranca10/projeto-nutri-choice#readme",
+  "dependencies": {
+    "cypress": "^14.3.2"
+  }
+}
