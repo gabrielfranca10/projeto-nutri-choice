@@ -140,7 +140,7 @@ Para otimizar o desenvolvimento e garantir entregas de qualidade, decidimos orga
 ---
 
 ## 🔁 CI/CD com build e deployment automatizado
-[Screencast Das Novas Historias](https://youtu.be/miOzKAF2dU8)
+[Screencast Das Novas Historias](https://youtu.be/S0UzxWjwqT8)
 
 
 ---
