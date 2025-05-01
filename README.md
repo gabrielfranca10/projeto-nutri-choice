@@ -140,8 +140,8 @@ Para otimizar o desenvolvimento e garantir entregas de qualidade, decidimos orga
 ---
 
 ## 🔁 CI/CD com build e deployment automatizado
-- Pipeline criada no GitHub
-- Adicionar screencast (disponível no YouTube) do processo de build e deployment ao README
+[Screencast Das Novas Historias](https://youtu.be/miOzKAF2dU8)
+
 
 ---
 
