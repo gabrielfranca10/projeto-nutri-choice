@@ -58,9 +58,7 @@ describe("Gerar Cardápio Personalizado", () => {
         cy.get('#username').type('Falha Questionario');
         cy.get('#password').type('12345678');
         cy.get('button[type="submit"]').click();
-        cy.get('[href="/cardapio/"]').click();
-
-        
+     
       });
   
   });

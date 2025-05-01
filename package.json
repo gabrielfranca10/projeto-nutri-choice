@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/gabrielfranca10/projeto-nutri-choice#readme",
   "dependencies": {
-    "cypress": "^14.3.2"
+    "cypress": "^14.3.2",
+    "cypress-cucumber-preprocessor": "^4.3.1"
   }
 }
