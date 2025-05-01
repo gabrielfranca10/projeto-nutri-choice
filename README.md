@@ -140,14 +140,13 @@ Para otimizar o desenvolvimento e garantir entregas de qualidade, decidimos orga
 ---
 
 ## 🔁 CI/CD com build e deployment automatizado
-- Pipeline criada no GitHub
-- Adicionar screencast (disponível no YouTube) do processo de build e deployment ao README
+[Screencast Das Novas Historias](https://youtu.be/S0UzxWjwqT8)
+
 
 ---
 
 ## ✅ Testes de Sistema (E2E) Automatizados
-- Adicionar screencast (YouTube) da execução dos testes ao README
-
+[Screencast Teste Automatizado](https://youtu.be/ZUV2J7fwTbU)
 ---
 
 ## 📌 Quadro da Sprint 02 atualizado refletindo a entrega
