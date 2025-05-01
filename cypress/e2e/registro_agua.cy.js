@@ -40,14 +40,12 @@ describe("Registro diário de Água", () => {
         cy.get('.inline-block').click();
 
     });
-
     it("Cenário Desfavorável: Registro parcial de ingestão de água e abandono", () => {
         cy.get('[href="/agua/"]').click();
         cy.get('.bg-blue-400').click();
         cy.get('.bg-blue-500').click();    
         cy.visit('/perfil/');
         cy.get('[href="/agua/"]').click();
-      });
-  
+      }); 
   });
   
