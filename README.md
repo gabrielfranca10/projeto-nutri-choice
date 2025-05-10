@@ -156,37 +156,41 @@ Para otimizar o desenvolvimento e garantir entregas de qualidade, decidimos orga
 ## Quadro Refletindo a Entrega:
 ![image](https://github.com/user-attachments/assets/9552d139-849f-4c13-9d8c-5785043e07f0)
 
-</details>
+<details>
 <summary>📌 <strong>Entrega 4</strong></summary>
-✅ Histórias implementadas
- Implementação de pelo menos 2 novas histórias
 
- Atualização dos protótipos Lo-Fi
+### ✅ Seleção de Histórias
+- Escolha de pelo menos 2 novas histórias
+- Criação da nova sprint no Jira
 
- Screencast atualizado no README
+### 🧑‍🎨 Atualização dos Protótipos Lo-Fi
+- Sketches e storyboards das novas histórias
+- Novo screencast adicionado ao README
 
-💻 Desenvolvimento
-Commits frequentes (mínimo semanais)
+### 🌱 Ambiente de Versionamento
+- Commits frequentes (mínimo semanais)
 
-Deployment das novas funcionalidades
+### 🚀 Deployment das Novas Histórias
+- Screencast de deploy incluído no README ou link no vídeo
 
-Uso do GitHub Issues com print no README
+### 🐞 Issue/Bug Tracker (fora do GitHub)
+- Print da tela adicionado ao README
 
-🧪 Testes e CI/CD
-Testes E2E automatizados
+### 🧪 Testes de Sistema (E2E)
+- Screencast (YouTube) da execução dos testes
+- Link e descrição no README
 
-Pipeline atualizado com execução de testes e deployment
+### ⚙️ CI/CD com Build e Deployment Automatizado
+- Pipeline com testes e deploy automatizado
+- Screencast da pipeline no README
 
-Screencast do processo incluído
+### 🤝 Programação em Pares
+- Incremento no relato anterior com observações da prática
 
-🤝 Programação em pares
-Código desenvolvido e revisado em dupla
+### 📌 Quadro Sprint 03 Atualizado
+- Print do quadro no README refletindo a entrega
 
-Registro de incremento no relato
-
-🧭 Quadro de Sprint 03 Atualizado
-Print do quadro refletindo a entrega
-
-Nova sprint criada no Jira
+### 📚 Documentação
+- Arquivo `CONTRIBUTING.md` explicando como montar o ambiente e contribuir com o projeto
 
 </details>
