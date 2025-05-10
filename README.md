@@ -179,7 +179,8 @@ Para otimizar o desenvolvimento e garantir entregas de qualidade, decidimos orga
 - Screencast de deploy incluído no README ou link no vídeo
 
 ### 🐞 Issue/Bug Tracker (fora do GitHub)
-- Print da tela adicionado ao README
+![image](https://github.com/user-attachments/assets/b6312890-0651-47ed-bbf9-3254f391f368)
+
 
 ### 🧪 Testes de Sistema (E2E)
 - Screencast (YouTube) da execução dos testes
