@@ -158,6 +158,8 @@ Para otimizar o desenvolvimento e garantir entregas de qualidade, decidimos orga
 
 </details> <!-- Fechamento da Entrega 3 -->
 
+---
+
 <details>
 <summary>📌 <strong>Entrega 4</strong></summary>
 
