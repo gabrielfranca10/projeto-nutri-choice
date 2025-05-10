@@ -157,3 +157,4 @@ Para otimizar o desenvolvimento e garantir entregas de qualidade, decidimos orga
 ![image](https://github.com/user-attachments/assets/9552d139-849f-4c13-9d8c-5785043e07f0)
 
 </details>
+<details> <summary>🚀 <strong>Entrega 4</strong></summary>
