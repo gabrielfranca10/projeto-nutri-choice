@@ -169,30 +169,30 @@ Para otimizar o desenvolvimento e garantir entregas de qualidade, decidimos orga
 ## Quadro do Jira
 ![image](https://github.com/user-attachments/assets/1a545575-af1b-4bfd-8256-32b5f466b962)
 
-
+---
 ### 🧑‍🎨 Atualização dos Protótipos Lo-Fi
 - Sketches e storyboards das novas histórias
 - Novo screencast adicionado ao README
 
-
+---
 ### 🚀 Deployment das Novas Histórias
 - Screencast de deploy incluído no README ou link no vídeo
-
+---
 ### 🐞 Issue/Bug Tracker (fora do GitHub)
 ![image](https://github.com/user-attachments/assets/b6312890-0651-47ed-bbf9-3254f391f368)
 
-
+---
 ### 🧪 Testes de Sistema (E2E)
 - Screencast (YouTube) da execução dos testes
 - Link e descrição no README
-
+---
 ### ⚙️ CI/CD com Build e Deployment Automatizado
 - Pipeline com testes e deploy automatizado
 - Screencast da pipeline no README
-
+---
 ### 🤝 Programação em Par
 Para otimizar o desenvolvimento e garantir entregas de qualidade, decidimos organizar nossa equipe em duplas, com cada uma responsável por uma história específica. Essa abordagem ajudou a manter o foco em tarefas claras e divididas, aumentando a eficiência no desenvolvimento de cada funcionalidade e permitindo que cada dupla se aprofundasse nas necessidades específicas de cada história. As sessões de pareamento aconteceram via Discord, com compartilhamento de tela, o que facilitou a comunicação instantânea e a revisão de código em tempo real. Fernando e França, por exemplo, ficaram responsáveis por uma das histórias e, com a ajuda do pareamento, conseguiram revisar o código em tempo real, discutindo e ajustando a implementação rapidamente. Caio e Yan trabalharam em outra história, também compartilhando suas telas e resolvendo dúvidas assim que surgiam, o que ajudou a manter o fluxo de trabalho ágil. Burle, em sua dupla, contribuiu com suas experiências e soluções criativas, agregando ainda mais valor à colaboração entre todos. Esse modelo de trabalho, com colaboração constante, não só acelerou o processo de desenvolvimento, mas também reduziu o retrabalho, já que as dúvidas eram resolvidas na hora e todos estavam alinhados com as decisões do projeto. A troca contínua de ideias e a revisão mútua de código garantiram uma qualidade superior no produto final. Com todos os membros colaborando de maneira tão integrada, conseguimos entregar um código mais robusto, sem erros, e perfeitamente alinhado com as expectativas do cliente, elevando a qualidade geral do projeto.
-
+---
 ### 📚 Documentação
 - Arquivo `CONTRIBUTING.md` explicando como montar o ambiente e contribuir com o projeto
 
