@@ -194,9 +194,6 @@ Para otimizar o desenvolvimento e garantir entregas de qualidade, decidimos orga
 ### 🤝 Programação em Pares
 - Incremento no relato anterior com observações da prática
 
-### 📌 Quadro Sprint 03 Atualizado
-- Print do quadro no README refletindo a entrega
-
 ### 📚 Documentação
 - Arquivo `CONTRIBUTING.md` explicando como montar o ambiente e contribuir com o projeto
 
