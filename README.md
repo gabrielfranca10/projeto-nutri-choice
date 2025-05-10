@@ -174,8 +174,6 @@ Para otimizar o desenvolvimento e garantir entregas de qualidade, decidimos orga
 - Sketches e storyboards das novas histórias
 - Novo screencast adicionado ao README
 
-### 🌱 Ambiente de Versionamento
-- Commits frequentes (mínimo semanais)
 
 ### 🚀 Deployment das Novas Histórias
 - Screencast de deploy incluído no README ou link no vídeo
