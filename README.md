@@ -164,7 +164,7 @@ Para otimizar o desenvolvimento e garantir entregas de qualidade, decidimos orga
 <summary>📌 <strong>Entrega 4</strong></summary>
 
 ### ✅ Seleção de Histórias
-## Jira Baclokg
+## Jira Backlog
 ![image](https://github.com/user-attachments/assets/7e419cbf-1442-4330-8449-041d28144e42)
 ## Quadro do Jira
 ![image](https://github.com/user-attachments/assets/1a545575-af1b-4bfd-8256-32b5f466b962)
