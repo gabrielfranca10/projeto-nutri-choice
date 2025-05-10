@@ -156,6 +156,8 @@ Para otimizar o desenvolvimento e garantir entregas de qualidade, decidimos orga
 ## Quadro Refletindo a Entrega:
 ![image](https://github.com/user-attachments/assets/9552d139-849f-4c13-9d8c-5785043e07f0)
 
+</details> <!-- Fechamento da Entrega 3 -->
+
 <details>
 <summary>📌 <strong>Entrega 4</strong></summary>
 
