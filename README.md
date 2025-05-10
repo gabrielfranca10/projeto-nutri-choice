@@ -157,49 +157,36 @@ Para otimizar o desenvolvimento e garantir entregas de qualidade, decidimos orga
 ![image](https://github.com/user-attachments/assets/9552d139-849f-4c13-9d8c-5785043e07f0)
 
 </details>
+<summary>📌 <strong>Entrega 4</strong></summary>
+✅ Histórias implementadas
+ Implementação de pelo menos 2 novas histórias
 
-<details> <summary>🚀 <strong>Entrega 4</strong></summary>
-📌 Visão Geral
-Nesta etapa, a equipe focou em incrementar o produto com novas histórias, reforçar o uso de boas práticas de versionamento, aprimorar o CI/CD com testes automatizados, e garantir uma documentação clara para contribuição externa. A colaboração em pares também foi aprofundada, seguindo a dinâmica estabelecida nas entregas anteriores.
+ Atualização dos protótipos Lo-Fi
 
-✨ Funcionalidades Desenvolvidas
-✅ Implementação de pelo menos duas novas histórias
+ Screencast atualizado no README
 
-🧪 Testes de Sistema (E2E) automatizados
+💻 Desenvolvimento
+Commits frequentes (mínimo semanais)
 
-📈 Atualização dos protótipos de baixa fidelidade com novos sketches/storyboards
+Deployment das novas funcionalidades
 
-🌐 Deployment das novas histórias com screencast no README
+Uso do GitHub Issues com print no README
 
-📂 Commits frequentes e organizados (mínimo semanal)
+🧪 Testes e CI/CD
+Testes E2E automatizados
 
-🐛 Uso ativo do bug tracker (GitHub Issues) com print incluído
+Pipeline atualizado com execução de testes e deployment
 
-🔁 Pipeline de CI/CD atualizado, incluindo execução dos testes automatizados
+Screencast do processo incluído
 
-🎥 Screencasts e Evidências
-🖥️ Screencast das novas histórias
+🤝 Programação em pares
+Código desenvolvido e revisado em dupla
 
-🧪 Execução dos testes E2E
+Registro de incremento no relato
 
-🔄 Processo de CI/CD atualizado
+🧭 Quadro de Sprint 03 Atualizado
+Print do quadro refletindo a entrega
 
-🌐 Deploy atualizado
-
-🗂️ Sprint 03 – Atualização
-📌 Backlog atualizado com novas histórias:
-
-
-✅ Quadro refletindo o status atual da Sprint:
-
-
-👥 Programação em Pares
-A dinâmica de pareamento foi mantida e aprofundada. As duplas revisaram entre si tanto o código quanto a lógica das histórias implementadas. Esse modelo garantiu agilidade e melhoria contínua na qualidade das entregas.
-
-🛠 Documentação Técnica
-📄 README atualizado com instruções para ambiente e execução
-
-📘 Arquivo CONTRIBUTING.md adicionado, guiando qualquer novo colaborador sobre como contribuir corretamente
+Nova sprint criada no Jira
 
 </details>
-
