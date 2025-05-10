@@ -194,8 +194,10 @@ Para otimizar o desenvolvimento e garantir entregas de qualidade, decidimos orga
 - Pipeline com testes e deploy automatizado
 - Screencast da pipeline no README
 ---
-## 🤝 Programação em Par  
+### 🤝 Programação em Par  
+
 Para otimizar o desenvolvimento e garantir entregas de qualidade, organizamos a equipe em duplas, com cada uma responsável por uma história específica. Essa abordagem ajudou a manter o foco em tarefas claras, aumentou a eficiência e permitiu que cada dupla se aprofundasse nas necessidades da sua história. As sessões de pareamento ocorreram via Discord, com compartilhamento de tela, o que facilitou a comunicação e a revisão de código em tempo real. Fernando e França, por exemplo, ficaram responsáveis por uma história e, com o pareamento, conseguiram revisar e ajustar o código rapidamente. Caio e Yan atuaram em outra, compartilhando telas e resolvendo dúvidas conforme surgiam, mantendo o fluxo de trabalho ágil. Já Guilherme Burle e Guilherme Baltar contribuíram com suas experiências e soluções criativas, agregando valor ao projeto. Esse modelo de trabalho colaborativo acelerou o desenvolvimento, reduziu o retrabalho e garantiu alinhamento entre todos. A troca constante de ideias e a revisão mútua de código resultaram em um produto mais robusto, sem erros e em conformidade com as expectativas do cliente, elevando a qualidade geral do projeto. 
+
 ---
 
 ### 📚 Documentação
