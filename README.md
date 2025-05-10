@@ -164,9 +164,9 @@ Para otimizar o desenvolvimento e garantir entregas de qualidade, decidimos orga
 <summary>📌 <strong>Entrega 4</strong></summary>
 
 ### ✅ Seleção de Histórias
-##Jira Baclokg
+## Jira Baclokg
 ![image](https://github.com/user-attachments/assets/7e419cbf-1442-4330-8449-041d28144e42)
-##Quadro do JJira
+## Quadro do Jira
 
 
 ### 🧑‍🎨 Atualização dos Protótipos Lo-Fi
