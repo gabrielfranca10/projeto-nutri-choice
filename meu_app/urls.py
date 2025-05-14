@@ -17,5 +17,6 @@ urlpatterns = [
     path('dicas-nutricionais/', views.dicas_nutricionais, name='dicas_nutricionais'),
     path('dados/', views.dadoscadastrais, name='dados'),
     path('registrar-peso/', views.registrar_peso, name='registrar-peso'), 
+    path('calorias/', views.ingestao_calorias, name='ingestao_calorias'),
 ]
 

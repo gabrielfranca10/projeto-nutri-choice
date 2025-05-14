@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ingestão de Calorias - NutriChoice</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background-image: url(''); /* Coloque a URL da imagem de fundo aqui */
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: -1;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-radius: 1.5rem;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+      padding: 2rem;
+      transition: transform 0.3s ease;
+    }
+
+    .glass:hover {
+      transform: translateY(-4px);
+    }
+
+    .progress-bar-bg {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 9999px;
+    }
+
+    .progress-bar-fill {
+      background-color: #facc15;
+      height: 100%;
+      border-radius: 9999px;
+      transition: width 0.4s ease;
+    }
+
+    @keyframes aparecer {
+      0% { opacity: 0; transform: scale(0.8); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    .mensagem-parabens {
+      animation: aparecer 0.6s ease forwards;
+    }
+  </style>
+</head>
+<body class="min-h-screen overflow-x-hidden">
+
+  <div class="overlay"></div>
+
+  <div class="flex min-h-screen flex-col items-center justify-center px-4">
+    <div class="glass w-full max-w-2xl text-center">
+      <h1 class="text-3xl font-bold mb-4">🍽️ Ingestão de Calorias</h1>
+      <p class="mb-6 text-white text-opacity-90">Acompanhe sua ingestão calórica diária de forma simples e prática.</p>
+
+      <!-- Botões de adição -->
+      <div class="flex flex-col gap-4 mb-8">
+        <button onclick="adicionarCalorias(250)" class="bg-yellow-400 hover:bg-yellow-500 px-6 py-3 rounded-xl font-bold transition">+250 kcal</button>
+        <button onclick="adicionarCalorias(500)" class="bg-yellow-500 hover:bg-yellow-600 px-6 py-3 rounded-xl font-bold transition">+500 kcal</button>
+        <button onclick="adicionarCalorias(1000)" class="bg-yellow-600 hover:bg-yellow-700 px-6 py-3 rounded-xl font-bold transition">+1000 kcal</button>
+      </div>
+
+      <!-- Progresso -->
+      <div class="text-left w-full mb-8">
+        <h2 class="text-xl font-semibold mb-2">Progresso diário</h2>
+        <div class="progress-bar-bg h-6 w-full">
+          <div id="progress-bar" class="progress-bar-fill w-0"></div>
+        </div>
+        <p class="mt-2 text-sm" id="progresso-texto">0 kcal de 2500 kcal recomendadas</p>
+      </div>
+
+      <!-- Mensagem de Parabéns -->
+      <div id="mensagem-parabens" class="mt-6 hidden text-green-300 font-bold text-2xl mensagem-parabens">
+        🎉 Parabéns! Meta calórica atingida! 🎉
+      </div>
+
+      <!-- Botão Resetar Ingestão -->
+      <div class="mt-8">
+        <button onclick="resetarIngestao()" class="bg-red-500 hover:bg-red-600 px-6 py-2 rounded-full font-bold transition">
+          🔄 Resetar Ingestão
+        </button>
+      </div>
+
+      <!-- Botão de voltar para o perfil -->
+      <div class="mt-6">
+        <a href="{% url 'perfil_nutricional' %}" class="inline-block bg-white bg-opacity-20 hover:bg-opacity-30 text-white font-semibold px-6 py-2 rounded-full transition duration-300">
+          ⬅️ Voltar ao Perfil
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let totalIngerido = 0;
+    const meta = 2500; // 2500 kcal
+
+    function getDataAtual() {
+      const hoje = new Date();
+      return hoje.getFullYear() + '-' + (hoje.getMonth() + 1).toString().padStart(2, '0') + '-' + hoje.getDate().toString().padStart(2, '0');
+    }
+
+    window.onload = function() {
+      const salvo = localStorage.getItem('caloriasIngeridas');
+      const dataSalva = localStorage.getItem('dataCalorias');
+      const hoje = getDataAtual();
+
+      if (!dataSalva || dataSalva !== hoje) {
+        totalIngerido = 0;
+        localStorage.setItem('caloriasIngeridas', totalIngerido);
+        localStorage.setItem('dataCalorias', hoje);
+      } else {
+        totalIngerido = parseInt(salvo) || 0;
+      }
+
+      atualizarProgresso();
+    }
+
+    function adicionarCalorias(quantidade) {
+      totalIngerido += quantidade;
+      localStorage.setItem('caloriasIngeridas', totalIngerido);
+      localStorage.setItem('dataCalorias', getDataAtual());
+      atualizarProgresso();
+    }
+
+    function resetarIngestao() {
+      if (confirm("Tem certeza que deseja resetar sua ingestão de calorias?")) {
+        totalIngerido = 0;
+        localStorage.setItem('caloriasIngeridas', totalIngerido);
+        localStorage.setItem('dataCalorias', getDataAtual());
+        atualizarProgresso();
+      }
+    }
+
+    function atualizarProgresso() {
+      const barra = document.getElementById("progress-bar");
+      const texto = document.getElementById("progresso-texto");
+      const mensagem = document.getElementById("mensagem-parabens");
+      const progresso = Math.min((totalIngerido / meta) * 100, 100);
+
+      barra.style.width = progresso + "%";
+      texto.textContent = `${totalIngerido} kcal de ${meta} kcal recomendadas`;
+
+      if (totalIngerido >= meta) {
+        mensagem.classList.remove("hidden");
+      } else {
+        mensagem.classList.add("hidden");
+      }
+    }
+  </script>
+</body>
+</html>

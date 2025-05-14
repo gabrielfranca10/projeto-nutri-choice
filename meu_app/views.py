@@ -374,3 +374,6 @@ def registrar_peso(request):
         'form': form,
         'registros': registros,
     })
+
+def ingestao_calorias(request):
+    return render(request, 'meu_app/calorias.html')
