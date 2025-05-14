@@ -364,13 +364,13 @@ def registrar_peso(request):
             registro.usuario = request.user
             registro.save()
             messages.success(request, 'Peso registrado com sucesso!')
-            return redirect('meu_app:registrar_peso')  # Corrigido aqui também
+            return redirect('meu_app/registrar_peso')  # Corrigido aqui também
     else:
         form = RegistroPesoForm()
 
     registros = RegistroPeso.objects.filter(usuario=request.user).order_by('-data')[:5]
     
-    return render(request, 'registrar_peso.html', {
+    return render(request, 'meu_app/registrar_peso.html', {
         'form': form,
         'registros': registros,
     })
