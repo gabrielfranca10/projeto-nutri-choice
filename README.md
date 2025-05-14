@@ -175,8 +175,7 @@ Para otimizar o desenvolvimento e garantir entregas de qualidade, decidimos orga
 
 ---
 ### 🧑‍🎨 Atualização dos Protótipos Lo-Fi
-- Sketches e storyboards das novas histórias
-- Novo screencast adicionado ao README
+https://youtu.be/pQbhss4UbP4
 
 ---
 ### 🚀 Deployment das Novas Histórias
