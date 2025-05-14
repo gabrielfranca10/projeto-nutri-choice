@@ -175,7 +175,7 @@ Para otimizar o desenvolvimento e garantir entregas de qualidade, decidimos orga
 
 ---
 ### 🧑‍🎨 Atualização dos Protótipos Lo-Fi
-Screencast Figma
+- [screencast do figma](https://youtu.be/pQbhss4UbP4)
 
 ---
 ### 🚀 Deployment das Novas Histórias
