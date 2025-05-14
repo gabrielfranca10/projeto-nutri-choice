@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cadastro de Peso - NutriChoice</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background-image: url(''); /* Coloque a URL da imagem de fundo aqui */
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: -1;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-radius: 1.5rem;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+      padding: 2rem;
+      transition: transform 0.3s ease;
+    }
+
+    .glass:hover {
+      transform: translateY(-4px);
+    }
+
+    @keyframes aparecer {
+      0% { opacity: 0; transform: scale(0.8); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    .mensagem-sucesso {
+      animation: aparecer 0.6s ease forwards;
+    }
+  </style>
+</head>
+<body class="min-h-screen overflow-x-hidden">
+
+  <div class="overlay"></div>
+
+  <div class="flex min-h-screen flex-col items-center justify-center px-4">
+    <div class="glass w-full max-w-2xl text-center">
+      <h1 class="text-3xl font-bold mb-4">⚖️ Cadastro de Peso</h1>
+      <p class="mb-6 text-white text-opacity-90">Informe o mês e seu peso atual.</p>
+
+      <form id="form-peso" class="flex flex-col gap-4 items-center">
+        <input
+          type="month"
+          id="mes-peso"
+          required
+          class="w-full max-w-sm bg-white bg-opacity-10 border border-white border-opacity-20 rounded-xl px-4 py-2 text-white placeholder-white placeholder-opacity-60 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+
+        <input
+          type="number"
+          id="peso-atual"
+          placeholder="Peso atual (kg)"
+          step="0.1"
+          required
+          class="w-full max-w-sm bg-white bg-opacity-10 border border-white border-opacity-20 rounded-xl px-4 py-2 text-white placeholder-white placeholder-opacity-60 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+
+        <button
+        type="submit"
+        class="w-full max-w-sm bg-white bg-opacity-20 hover:bg-opacity-30 text-white font-semibold px-6 py-3 rounded-xl transition duration-300 backdrop-blur-md shadow-md"
+>
+        💾 Salvar Peso
+    </button>
+
+      </form>
+
+      <div id="peso-salvo" class="mt-4 text-white text-opacity-80 mensagem-sucesso"></div>
+
+      <!-- Botão de voltar para o perfil -->
+      <div class="mt-6">
+        <a href="{% url 'perfil_nutricional' %}" class="inline-block bg-white bg-opacity-20 hover:bg-opacity-30 text-white font-semibold px-6 py-2 rounded-full transition duration-300">
+          ⬅️ Voltar ao Perfil
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("form-peso").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const mes = document.getElementById("mes-peso").value;
+      const peso = document.getElementById("peso-atual").value;
+
+      if (mes && peso) {
+        localStorage.setItem("mesCadastroPeso", mes);
+        localStorage.setItem("pesoAtual", peso);
+
+        document.getElementById("peso-salvo").innerText =
+          `✅ Peso de ${peso}kg salvo para o mês de ${mes}`;
+      }
+    });
+
+    window.addEventListener("load", function () {
+      const mes = localStorage.getItem("mesCadastroPeso");
+      const peso = localStorage.getItem("pesoAtual");
+
+      if (mes && peso) {
+        document.getElementById("peso-salvo").innerText =
+          `📅 Mês: ${mes} | ⚖️ Peso: ${peso}kg`;
+      }
+    });
+  </script>
+</body>
+</html>

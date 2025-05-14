@@ -1,6 +1,11 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from meu_app import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include(('meu_app.urls', 'meu_app'), namespace='meu_app')),
+]
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -17,4 +22,6 @@ urlpatterns = [
     path('cardapio/', views.cardapio_view, name='cardapio'),
     path('dicas-nutricionais/', views.dicas_nutricionais, name='dicas_nutricionais'),
     path('dados/', views.dadoscadastrais, name='dados'),
+    path('admin/', admin.site.urls),
+    path('', include(('meu_app.urls', 'meu_app'), namespace='meu_app')),
 ]

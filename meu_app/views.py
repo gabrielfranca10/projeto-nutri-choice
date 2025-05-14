@@ -6,7 +6,8 @@ from django.contrib import messages
 from .models import Alimento, Substituicao, Questionario
 from django.http import HttpResponse
 from .models import Perfil, Questionario
-
+from .forms import RegistroPesoForm
+from .models import RegistroPeso
 def debug_host(request):
     return HttpResponse(f"Host recebido: {request.get_host()}")
 
@@ -353,3 +354,23 @@ def dadoscadastrais(request):
         return redirect('perfil_nutricional')
 
     return render(request, 'meu_app/dados_cadastrais.html', {'questionario': questionario})
+
+@login_required
+def registrar_peso(request):
+    if request.method == 'POST':
+        form = RegistroPesoForm(request.POST)
+        if form.is_valid():
+            registro = form.save(commit=False)
+            registro.usuario = request.user
+            registro.save()
+            messages.success(request, 'Peso registrado com sucesso!')
+            return redirect('meu_app:registrar_peso')  # Corrigido aqui também
+    else:
+        form = RegistroPesoForm()
+
+    registros = RegistroPeso.objects.filter(usuario=request.user).order_by('-data')[:5]
+    
+    return render(request, 'registrar_peso.html', {
+        'form': form,
+        'registros': registros,
+    })

@@ -110,3 +110,18 @@ class Perfil(models.Model):
     class Meta:
         verbose_name = "Perfil"
         verbose_name_plural = "Perfis"
+
+class RegistroPeso(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    data = models.DateField(auto_now_add=True)
+    peso_atual = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Peso Atual (kg)")
+    meta_peso = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Meta de Peso (kg)")
+    observacoes = models.TextField(blank=True, null=True)
+
+    class Meta:
+        verbose_name = "Registro_de_Peso"
+        verbose_name_plural = "Registro_de_Peso"
+        ordering = ['-data']
+    
+    def __str__(self):
+        return f"{self.usuario.username} - {self.data}: {self.peso_atual}kg (Meta: {self.meta_peso}kg)"
