@@ -62,9 +62,7 @@ def cadastro_view(request):
         # Login automático (opcional: remova se quiser que o usuário vá para login primeiro)
         login(request, user)
 
-        messages.success(request, 'Cadastro concluído! Faça login para começar.')
-        return redirect('login')
-
+        messages.success(request, 'Cadastro concluído! Agora você pode fazer login para começar.')
     return render(request, 'meu_app/cadastro.html')
 
 # === QUESTIONÁRIO NUTRICIONAL ===
@@ -276,45 +274,67 @@ def redirecionar_para_login(request):
 
 # === EDITAR PERFIL ===
 @login_required
+@login_required
 def editar_perfil(request):
     try:
-        # Obtém o questionário do usuário logado
         questionario = Questionario.objects.get(usuario=request.user)
     except Questionario.DoesNotExist:
         messages.error(request, "Questionário não encontrado. Tente novamente.")
-        return redirect('perfil_nutricional')  # Redireciona caso não exista o questionário
+        return redirect('perfil_nutricional')
 
     if request.method == 'POST':
-        # Converte os valores do POST para os tipos apropriados, com tratamento de exceção para float e int
-        questionario.nome = request.POST.get('nome', questionario.nome)
-        questionario.idade = int(request.POST.get('idade', questionario.idade) or questionario.idade)
+        nome = request.POST.get('nome', '').strip()
+        idade_str = request.POST.get('idade', '').strip()
+
+        # Validação básica dos campos obrigatórios
+        if not nome:
+            messages.error(request, "O campo nome é obrigatório.")
+            return render(request, 'meu_app/editar_perfil.html', {'questionario': questionario})
+
+        if not idade_str:
+            messages.error(request, "O campo idade é obrigatório.")
+            return render(request, 'meu_app/editar_perfil.html', {'questionario': questionario})
+
+        try:
+            idade = int(idade_str)
+            if idade <= 0:
+                raise ValueError
+        except ValueError:
+            messages.error(request, "Informe uma idade válida.")
+            return render(request, 'meu_app/editar_perfil.html', {'questionario': questionario})
+
+        # Atualiza os campos do questionário, usando os valores convertidos
+        questionario.nome = nome
+        questionario.idade = idade
         questionario.objetivo = request.POST.get('objetivo', questionario.objetivo)
         questionario.restricoes = request.POST.get('restricoes', questionario.restricoes)
         questionario.preferencia = request.POST.get('preferencia', questionario.preferencia)
         questionario.fome = request.POST.get('fome', questionario.fome)
-        questionario.refeicoes_por_dia = int(request.POST.get('refeicoes_por_dia', questionario.refeicoes_por_dia) or questionario.refeicoes_por_dia)
+        
+        # Para refeicoes_por_dia, tenta converter para int, senão mantém valor atual
+        try:
+            questionario.refeicoes_por_dia = int(request.POST.get('refeicoes_por_dia', questionario.refeicoes_por_dia))
+        except (ValueError, TypeError):
+            pass
 
-        # Conversão para booleano
+        # Booleanos
         questionario.come_carne = request.POST.get('come_carne') == 'on'
         questionario.gosta_de_legumes = request.POST.get('gosta_de_legumes') == 'on'
-        
-        # Tratamento do valor de 'agua_bebida' para float
+
+        # Campos texto
         questionario.sono = request.POST.get('sono', questionario.sono)
         questionario.atividade_fisica = request.POST.get('atividade_fisica', questionario.atividade_fisica)
-        
-        # Conversão para booleano
+
         questionario.usa_suplementos = request.POST.get('usa_suplementos') == 'on'
         questionario.estresse = request.POST.get('estresse', questionario.estresse)
 
-        # Salva as alterações no questionário
         questionario.save()
 
-        # Mensagem de sucesso
         messages.success(request, 'Perfil atualizado com sucesso!')
         return redirect('perfil_nutricional')
 
-    # Caso o método seja GET, renderiza a página de edição com os dados do questionário
     return render(request, 'meu_app/editar_perfil.html', {'questionario': questionario})
+
 
 
 # === EXCLUIR PERFIL ===

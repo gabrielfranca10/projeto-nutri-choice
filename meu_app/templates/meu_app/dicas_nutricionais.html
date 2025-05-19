@@ -95,6 +95,41 @@
       max-width: 200px;
       animation: fadeIn 1.5s ease-in-out;
     }
+
+    /* Novo estilo para painel de dica diária */
+    .daily-tip-box {
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 1rem 1.5rem;
+      border-radius: 1rem;
+      margin-bottom: 1rem;
+      color: #d1fae5; /* verde claro */
+      font-size: 1.1rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.7);
+      user-select: none;
+    }
+
+    .daily-tip-actions button {
+      margin-left: 0.5rem;
+      background-color: #22c55e;
+      padding: 0.3rem 0.8rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      color: white;
+    }
+
+    .daily-tip-actions button:hover {
+      background-color: #15803d;
+    }
+
+    .daily-tip-actions button.disable-btn {
+      background-color: #ef4444;
+    }
+
+    .daily-tip-actions button.disable-btn:hover {
+      background-color: #b91c1c;
+    }
   </style>
 </head>
 <body class="font-sans text-white flex flex-col items-center justify-start min-h-screen overflow-x-hidden pt-8">
@@ -118,7 +153,7 @@
       <p class="text-white text-lg text-center">Toque em uma dica para ver mais detalhes</p>
       
       <!-- Lista de Dicas -->
-      <div class="space-y-4 mt-6">
+      <div class="space-y-4 mt-6" id="tips-list">
 
         <!-- Dica 1 -->
         <div class="bg-white/30 p-4 rounded-lg shadow-lg backdrop-blur-lg hover:scale-105 transform transition duration-300 ease-in-out">
@@ -186,26 +221,218 @@
         </div>
 
       </div>
+
+      <!-- Novo: Controle de Notificações e Dica Diária -->
+      <div class="mt-10 text-center">
+        <h3 class="text-2xl font-semibold mb-4 text-lime-300">Dica Diária</h3>
+        <div id="daily-tip-container" class="daily-tip-box">Carregando dica diária...</div>
+        <div class="daily-tip-actions mt-2">
+          <button id="btn-activate" class="btn-primary">Ativar dicas diárias</button>
+          <button id="btn-deactivate" class="btn-primary disable-btn hidden">Desativar dicas diárias</button>
+          <button id="btn-know" class="hidden">Já sei essa dica</button>
+        </div>
+        <div id="error-message" class="mt-2 text-red-400 font-semibold hidden"></div>
+      </div>
     </div>
 
   </div>
 
   <script>
-    function showTipDetails(tipId) {
-      const tipDetails = document.getElementById(tipId);
-      const isVisible = tipDetails.classList.contains('hidden');
-      
-      // Ocultar todas as dicas antes de mostrar a selecionada
-      const allTips = document.querySelectorAll('.tip-details');
-      allTips.forEach(tip => tip.classList.add('hidden'));
-      
-      // Alterna a visibilidade da dica selecionada
-      if (isVisible) {
-        tipDetails.classList.remove('hidden');
-      } else {
-        tipDetails.classList.add('hidden');
-      }
+  // Função para mostrar detalhes das dicas na lista (já existente)
+  function showTipDetails(tipId) {
+    const tipDetails = document.getElementById(tipId);
+    const isVisible = tipDetails.classList.contains('hidden');
+
+    // Ocultar todas as dicas antes de mostrar a selecionada
+    const allTips = document.querySelectorAll('.tip-details');
+    allTips.forEach(tip => tip.classList.add('hidden'));
+
+    // Alterna a visibilidade da dica selecionada
+    if (isVisible) {
+      tipDetails.classList.remove('hidden');
+    } else {
+      tipDetails.classList.add('hidden');
     }
-  </script>
-</body>
-</html>
+  }
+
+  // --- NOVO: Lógica para dicas diárias e controle de notificações ---
+
+  const dailyTipContainer = document.getElementById('daily-tip-container');
+  const btnActivate = document.getElementById('btn-activate');
+  const btnDeactivate = document.getElementById('btn-deactivate');
+  const btnKnow = document.getElementById('btn-know');
+  const errorMessage = document.getElementById('error-message');
+
+  // Array com as dicas (copiado do HTML para JS para facilitar a lógica)
+  const tips = [
+    {
+      id: 'tip1',
+      title: "Inclua fibras na sua dieta",
+      benefits: "Melhora a digestão, controla o colesterol e ajuda a manter a saciedade.",
+      examples: "Consuma frutas com casca, vegetais, leguminosas e grãos integrais."
+    },
+    {
+      id: 'tip2',
+      title: "Evite pular refeições",
+      benefits: "Ajuda a manter o metabolismo ativo e evita picos de fome.",
+      examples: "Faça 3 a 5 refeições equilibradas ao longo do dia."
+    },
+    {
+      id: 'tip3',
+      title: "Beba 2 litros de água por dia",
+      benefits: "A hidratação é essencial para a digestão, função renal e saúde da pele.",
+      examples: "Mantenha uma garrafinha de água sempre ao seu lado."
+    },
+    {
+      id: 'tip4',
+      title: "Inclua proteínas magras nas refeições",
+      benefits: "Essenciais para a recuperação muscular e manutenção da saúde da pele.",
+      examples: "Frango, peixe, ovos, legumes e tofu."
+    },
+    {
+      id: 'tip5',
+      title: "Consuma antioxidantes",
+      benefits: "Protege o corpo contra o envelhecimento precoce e os radicais livres.",
+      examples: "Frutas vermelhas, nozes, vegetais verdes e chá verde."
+    },
+  ];
+
+  // Chave para localStorage
+  const LS_KEY = 'nutrichoice_daily_tips';
+
+  // Função para obter dados do localStorage
+  function getStorageData() {
+    const data = localStorage.getItem(LS_KEY);
+    if (!data) return {
+      active: false,
+      lastTipDate: null,
+      ignoredTips: [],
+      lastTipId: null,
+    };
+    return JSON.parse(data);
+  }
+
+  // Função para salvar dados no localStorage
+  function setStorageData(data) {
+    localStorage.setItem(LS_KEY, JSON.stringify(data));
+  }
+
+  // Função para formatar data para string YYYY-MM-DD
+  function formatDate(date) {
+    const d = new Date(date);
+    const month = '' + (d.getMonth() + 1);
+    const day = '' + d.getDate();
+    const year = d.getFullYear();
+
+    return [year, month.padStart(2,'0'), day.padStart(2,'0')].join('-');
+  }
+
+  // Escolhe a próxima dica que não foi ignorada e que não foi a última mostrada
+  function pickNextTip(ignoredTips, lastTipId) {
+    const availableTips = tips.filter(tip => !ignoredTips.includes(tip.id));
+    if (availableTips.length === 0) {
+      // Se todas as dicas foram ignoradas, retorna uma aleatória entre todas
+      return tips[Math.floor(Math.random() * tips.length)];
+    }
+
+    // Evitar repetir a última dica se possível
+    const candidates = availableTips.filter(tip => tip.id !== lastTipId);
+    if (candidates.length === 0) {
+      return availableTips[0];
+    } else {
+      return candidates[Math.floor(Math.random() * candidates.length)];
+    }
+  }
+
+  // Função para mostrar a dica no container
+  function showDailyTip(tip) {
+    dailyTipContainer.innerHTML = `
+      <strong>${tip.title}</strong><br>
+      <small><em>Benefícios:</em> ${tip.benefits}</small><br>
+      <small><em>Exemplos:</em> ${tip.examples}</small>
+    `;
+    btnKnow.classList.remove('hidden');
+  }
+
+  // Atualiza a UI conforme o estado
+  function updateUI() {
+    const data = getStorageData();
+
+    if (data.active) {
+      btnActivate.classList.add('hidden');
+      btnDeactivate.classList.remove('hidden');
+      errorMessage.classList.add('hidden');
+
+      // Check if it's a new day to update the tip
+      const today = formatDate(new Date());
+      if (data.lastTipDate !== today) {
+        // Pick a new tip
+        const nextTip = pickNextTip(data.ignoredTips, data.lastTipId);
+        data.lastTipDate = today;
+        data.lastTipId = nextTip.id;
+        setStorageData(data);
+        showDailyTip(nextTip);
+      } else {
+        // Show last tip stored
+        const lastTip = tips.find(tip => tip.id === data.lastTipId);
+        if (lastTip) {
+          showDailyTip(lastTip);
+        } else {
+          // Caso raro, pega aleatória
+          const anyTip = tips[Math.floor(Math.random() * tips.length)];
+          showDailyTip(anyTip);
+        }
+      }
+    } else {
+      btnActivate.classList.remove('hidden');
+      btnDeactivate.classList.add('hidden');
+      btnKnow.classList.add('hidden');
+      dailyTipContainer.textContent = "Notificações de dicas diárias desativadas.";
+    }
+  }
+
+  // Simular erro na ativação (cenário desfavorável)
+  function simulateActivationError() {
+    // 20% de chance de falha
+    return Math.random() < 0.2;
+  }
+
+  // Ativar notificações
+  btnActivate.addEventListener('click', () => {
+    if (simulateActivationError()) {
+      errorMessage.textContent = "Erro ao ativar notificações. Tente novamente.";
+      errorMessage.classList.remove('hidden');
+      return;
+    }
+
+    errorMessage.classList.add('hidden');
+    const data = getStorageData();
+    data.active = true;
+    data.lastTipDate = null; // Forçar atualização no próximo updateUI
+    setStorageData(data);
+    updateUI();
+  });
+
+  // Desativar notificações
+  btnDeactivate.addEventListener('click', () => {
+    const data = getStorageData();
+    data.active = false;
+    setStorageData(data);
+    updateUI();
+  });
+
+  // Botão "Já sei essa dica"
+  btnKnow.addEventListener('click', () => {
+    const data = getStorageData();
+    if (!data.ignoredTips.includes(data.lastTipId)) {
+      data.ignoredTips.push(data.lastTipId);
+    }
+    setStorageData(data);
+    data.lastTipDate = null; // Forçar atualização para nova dica
+    updateUI();
+  });
+
+  // Inicialização
+  updateUI();
+</script>
+

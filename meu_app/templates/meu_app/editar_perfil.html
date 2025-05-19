@@ -58,6 +58,24 @@
 
     <h1 class="text-3xl font-bold text-center mb-6">Editar Perfil</h1>
 
+    <!-- Mensagens de feedback -->
+    {% if messages %}
+      <div class="mb-4">
+        {% for message in messages %}
+          <div class="
+            {% if 'error' in message.tags %}
+              bg-red-500
+            {% else %}
+              bg-green-500
+            {% endif %}
+            text-white p-3 rounded mb-2
+          ">
+            {{ message }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
     <!-- FORMULÁRIO DE EDIÇÃO -->
     <form action="" method="POST" class="space-y-4">
       {% csrf_token %}

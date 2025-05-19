@@ -134,9 +134,23 @@
         <h1 class="text-3xl font-bold text-center text-lime-300">NutriChoice</h1>
         <p class="text-center text-gray-200 mb-6">Acesse sua conta 🍀</p>
 
-        {% if erro %}
-          <div class="bg-red-500 bg-opacity-70 text-white px-4 py-2 rounded mb-4 text-sm">
-            {{ erro }}
+        {% if messages %}
+          <div class="mb-4">
+            {% for message in messages %}
+              <div
+                class="px-4 py-2 rounded mb-3 text-sm text-white
+                {% if message.tags == 'error' %}
+                  bg-red-500 bg-opacity-70
+                {% elif message.tags == 'success' %}
+                  bg-green-500 bg-opacity-70
+                {% else %}
+                  bg-gray-500 bg-opacity-70
+                {% endif %} 
+                "
+              >
+                {{ message }}
+              </div>
+            {% endfor %}
           </div>
         {% endif %}
 
@@ -190,5 +204,37 @@
     </div>
   </footer>
 
+  <script>
+    const form = document.querySelector('form');
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+
+    // Cria div para mensagens de erro dinamicamente
+    const errorDiv = document.createElement('div');
+    errorDiv.style.color = '#f87171'; // vermelho Tailwind para erro
+    errorDiv.style.marginTop = '0.5rem';
+    errorDiv.style.fontSize = '0.875rem';
+    errorDiv.style.display = 'none'; // começa escondida
+    form.appendChild(errorDiv);
+
+    form.addEventListener('submit', (e) => {
+      let errors = [];
+
+      if (!usernameInput.value.trim()) {
+        errors.push('O campo usuário é obrigatório.');
+      }
+      if (!passwordInput.value.trim()) {
+        errors.push('O campo senha é obrigatório.');
+      }
+
+      if (errors.length > 0) {
+        e.preventDefault(); // impede envio
+        errorDiv.innerHTML = errors.join('<br>');
+        errorDiv.style.display = 'block';
+      } else {
+        errorDiv.style.display = 'none';
+      }
+    });
+  </script>
 </body>
 </html>

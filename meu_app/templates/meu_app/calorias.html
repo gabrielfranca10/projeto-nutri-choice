@@ -7,7 +7,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
-      background-image: url(''); /* Coloque a URL da imagem de fundo aqui */
+      background-image: url(''); /* Adicione a URL da imagem de fundo se quiser */
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
@@ -60,7 +60,6 @@
   </style>
 </head>
 <body class="min-h-screen overflow-x-hidden">
-
   <div class="overlay"></div>
 
   <div class="flex min-h-screen flex-col items-center justify-center px-4">
@@ -76,12 +75,13 @@
       </div>
 
       <!-- Progresso -->
-      <div class="text-left w-full mb-8">
+      <div class="text-left w-full mb-6">
         <h2 class="text-xl font-semibold mb-2">Progresso diário</h2>
         <div class="progress-bar-bg h-6 w-full">
           <div id="progress-bar" class="progress-bar-fill w-0"></div>
         </div>
-        <p class="mt-2 text-sm" id="progresso-texto">0 kcal de 2500 kcal recomendadas</p>
+        <p class="mt-2 text-sm" id="progresso-texto">Carregando dados...</p>
+        <p class="mt-2 text-red-300 text-sm hidden" id="mensagem-nenhum-dado">⚠️ Nenhuma refeição registrada para hoje.</p>
       </div>
 
       <!-- Mensagem de Parabéns -->
@@ -107,7 +107,7 @@
 
   <script>
     let totalIngerido = 0;
-    const meta = 2500; // 2500 kcal
+    const meta = 2500;
 
     function getDataAtual() {
       const hoje = new Date();
@@ -150,8 +150,19 @@
       const barra = document.getElementById("progress-bar");
       const texto = document.getElementById("progresso-texto");
       const mensagem = document.getElementById("mensagem-parabens");
-      const progresso = Math.min((totalIngerido / meta) * 100, 100);
+      const avisoSemDados = document.getElementById("mensagem-nenhum-dado");
 
+      if (totalIngerido === 0) {
+        barra.style.width = "0%";
+        texto.textContent = `0 kcal de ${meta} kcal recomendadas`;
+        avisoSemDados.classList.remove("hidden");
+        mensagem.classList.add("hidden");
+        return;
+      }
+
+      avisoSemDados.classList.add("hidden");
+
+      const progresso = Math.min((totalIngerido / meta) * 100, 100);
       barra.style.width = progresso + "%";
       texto.textContent = `${totalIngerido} kcal de ${meta} kcal recomendadas`;
 

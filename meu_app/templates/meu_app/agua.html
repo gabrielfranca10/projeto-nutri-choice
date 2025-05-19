@@ -2,168 +2,165 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ingestão de Água - NutriChoice</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Registro de Água - NutriChoice</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
-      background-image: url(''); /* Coloque a URL da imagem de fundo aqui */
+      background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1932&auto=format&fit=crop') no-repeat center center fixed;
       background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-      color: white;
-      font-family: 'Segoe UI', sans-serif;
+      color: #f9fafb; /* branco quase puro */
+      font-family: 'Inter', sans-serif;
+      text-shadow: 0 0 4px rgba(0,0,0,0.7);
     }
-
-    .overlay {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.6);
-      z-index: -1;
+    h1, h2, label, button, span, p {
+      text-shadow: 0 0 5px rgba(0, 0, 0, 0.75);
     }
-
-    .glass {
-      background: rgba(255, 255, 255, 0.12);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
+    .glass-box {
+      background-color: rgba(255, 255, 255, 0.20);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       border-radius: 1.5rem;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-      padding: 2rem;
+      padding: 2.5rem;
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      max-width: 700px;
+      width: 90%;
+      margin: 3rem auto;
       transition: transform 0.3s ease;
     }
-
-    .glass:hover {
-      transform: translateY(-4px);
+    .glass-box:hover {
+      transform: scale(1.02);
     }
-
-    .progress-bar-bg {
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 9999px;
+    .scroll-list {
+      max-height: 300px;
+      overflow-y: auto;
+      margin-top: 1rem;
+      padding-right: 0.5rem;
+      background: rgba(0,0,0,0.3);
+      border-radius: 0.75rem;
     }
-
-    .progress-bar-fill {
-      background-color: #38bdf8;
-      height: 100%;
-      border-radius: 9999px;
-      transition: width 0.4s ease;
+    .scroll-list::-webkit-scrollbar {
+      width: 8px;
     }
-
-    @keyframes aparecer {
-      0% { opacity: 0; transform: scale(0.8); }
-      100% { opacity: 1; transform: scale(1); }
+    .scroll-list::-webkit-scrollbar-thumb {
+      background-color: rgba(46, 204, 113, 0.6);
+      border-radius: 20px;
     }
-
-    .mensagem-parabens {
-      animation: aparecer 0.6s ease forwards;
+    input[type="number"] {
+      color: black;
+      font-weight: 600;
     }
   </style>
 </head>
-<body class="min-h-screen overflow-x-hidden">
+<body>
 
-  <div class="overlay"></div>
+  <section class="glass-box">
+    <h1 class="text-3xl font-bold text-lime-400 mb-6 text-center">Registro de Ingestão de Água</h1>
 
-  <div class="flex min-h-screen flex-col items-center justify-center px-4">
-    <div class="glass w-full max-w-2xl text-center">
-      <h1 class="text-3xl font-bold mb-4">💧 Ingestão de Água</h1>
-      <p class="mb-6 text-white text-opacity-90">Mantenha-se hidratado! Acompanhe sua ingestão diária de água aqui.</p>
+    <form id="water-form" class="flex flex-col gap-4">
+      <label for="quantidade" class="font-semibold">Quantidade consumida (ml):</label>
+      <input
+        type="number"
+        id="quantidade"
+        min="1"
+        placeholder="Exemplo: 250"
+        class="rounded-lg px-4 py-2 text-black focus:outline-none focus:ring-2 focus:ring-lime-400"
+        required
+      />
+      <button
+        type="submit"
+        class="bg-lime-500 hover:bg-lime-600 text-white px-6 py-2 rounded-lg font-semibold transition transform hover:scale-105"
+      >
+        Registrar
+      </button>
+    </form>
 
-      <!-- Botões de adição -->
-      <div class="flex flex-col gap-4 mb-8">
-        <button onclick="adicionarAgua(250)" class="bg-blue-400 hover:bg-blue-500 px-6 py-3 rounded-xl font-bold transition">+250ml</button>
-        <button onclick="adicionarAgua(500)" class="bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded-xl font-bold transition">+500ml</button>
-        <button onclick="adicionarAgua(1000)" class="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-xl font-bold transition">+1000ml</button>
-      </div>
+    <div id="message" class="mt-4 text-center font-semibold"></div>
 
-      <!-- Progresso -->
-      <div class="text-left w-full mb-8">
-        <h2 class="text-xl font-semibold mb-2">Progresso diário</h2>
-        <div class="progress-bar-bg h-6 w-full">
-          <div id="progress-bar" class="progress-bar-fill w-0"></div>
-        </div>
-        <p class="mt-2 text-sm" id="progresso-texto">0ml de 3500ml recomendados</p>
-      </div>
+    <h2 class="mt-8 text-xl font-bold text-lime-300">Histórico de Hidratação</h2>
+    <div id="history" class="scroll-list mt-2 p-4"></div>
 
-      <!-- Mensagem de Parabéns -->
-      <div id="mensagem-parabens" class="mt-6 hidden text-green-300 font-bold text-2xl mensagem-parabens">
-        🎉 Parabéns! Meta atingida! 🎉
-      </div>
-
-      <!-- Botão Resetar Ingestão -->
-      <div class="mt-8">
-        <button onclick="resetarIngestao()" class="bg-red-500 hover:bg-red-600 px-6 py-2 rounded-full font-bold transition">
-          🔄 Resetar Ingestão
-        </button>
-      </div>
-
-      <!-- Botão de voltar para o perfil -->
-      <div class="mt-6">
-        <a href="{% url 'perfil_nutricional' %}" class="inline-block bg-white bg-opacity-20 hover:bg-opacity-30 text-white font-semibold px-6 py-2 rounded-full transition duration-300">
-          ⬅️ Voltar ao Perfil
-        </a>
-      </div>
-    </div>
-  </div>
+    <button
+      onclick="window.location.href='{% url 'meu_app:perfil_nutricional' %}'"
+      class="mt-10 block mx-auto bg-lime-500 hover:bg-lime-600 text-white px-6 py-2 rounded-lg font-semibold transition transform hover:scale-105"
+    >
+      ← Voltar para o Perfil
+    </button>
+  </section>
 
   <script>
-    let totalIngerido = 0;
-    const meta = 3500; // 3500ml
+    const form = document.getElementById('water-form');
+    const quantidadeInput = document.getElementById('quantidade');
+    const messageDiv = document.getElementById('message');
+    const historyDiv = document.getElementById('history');
 
-    // Função para obter a data atual no formato YYYY-MM-DD
-    function getDataAtual() {
-      const hoje = new Date();
-      return hoje.getFullYear() + '-' + (hoje.getMonth() + 1).toString().padStart(2, '0') + '-' + hoje.getDate().toString().padStart(2, '0');
+    // Simula armazenamento local (pode ser substituído por backend)
+    let historico = JSON.parse(localStorage.getItem('historicoAgua')) || [];
+
+    function renderHistory() {
+      if (historico.length === 0) {
+        historyDiv.innerHTML = '<p>Nenhum registro ainda.</p>';
+        return;
+      }
+      historyDiv.innerHTML = '';
+      historico.forEach((item, index) => {
+        const data = new Date(item.data).toLocaleString();
+        const div = document.createElement('div');
+        div.className = 'mb-2 p-2 rounded bg-lime-900/30 flex justify-between items-center';
+        div.innerHTML = `
+          <span>${data} - ${item.quantidade} ml</span>
+          <button onclick="editarRegistro(${index})" class="text-lime-300 hover:text-lime-100 font-semibold">Editar</button>
+        `;
+        historyDiv.appendChild(div);
+      });
     }
 
-    // Quando a página carregar
-    window.onload = function() {
-      const salvo = localStorage.getItem('aguaIngerida');
-      const dataSalva = localStorage.getItem('dataAgua');
-      const hoje = getDataAtual();
+    function salvarHistorico() {
+      localStorage.setItem('historicoAgua', JSON.stringify(historico));
+    }
 
-      // Se não tem data salva ou mudou o dia, reseta
-      if (!dataSalva || dataSalva !== hoje) {
-        totalIngerido = 0;
-        localStorage.setItem('aguaIngerida', totalIngerido);
-        localStorage.setItem('dataAgua', hoje);
-      } else {
-        totalIngerido = parseInt(salvo) || 0;
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const quantidade = quantidadeInput.value.trim();
+
+      // Validação básica
+      if (!quantidade || isNaN(quantidade) || quantidade <= 0) {
+        messageDiv.textContent = 'Por favor, insira um valor válido e positivo.';
+        messageDiv.className = 'mt-4 text-center font-semibold text-red-500';
+        return;
       }
 
-      atualizarProgresso();
-    }
+      // Adiciona registro com data atual
+      historico.push({ quantidade: Number(quantidade), data: new Date().toISOString() });
+      salvarHistorico();
+      renderHistory();
 
-    function adicionarAgua(quantidade) {
-      totalIngerido += quantidade;
-      localStorage.setItem('aguaIngerida', totalIngerido);
-      localStorage.setItem('dataAgua', getDataAtual());
-      atualizarProgresso();
-    }
+      messageDiv.textContent = 'Registro salvo com sucesso! 🎉';
+      messageDiv.className = 'mt-4 text-center font-semibold text-lime-400';
 
-    function resetarIngestao() {
-      if (confirm("Tem certeza que deseja resetar sua ingestão de água?")) {
-        totalIngerido = 0;
-        localStorage.setItem('aguaIngerida', totalIngerido);
-        localStorage.setItem('dataAgua', getDataAtual());
-        atualizarProgresso();
+      quantidadeInput.value = '';
+    });
+
+    window.editarRegistro = function(index) {
+      const item = historico[index];
+      const novaQuantidade = prompt('Edite a quantidade (ml):', item.quantidade);
+      if (novaQuantidade === null) return; // cancelou
+
+      if (isNaN(novaQuantidade) || novaQuantidade.trim() === '' || Number(novaQuantidade) <= 0) {
+        alert('Valor inválido. Por favor, insira um número positivo.');
+        return;
       }
+
+      historico[index].quantidade = Number(novaQuantidade);
+      salvarHistorico();
+      renderHistory();
+
+      messageDiv.textContent = 'Registro atualizado com sucesso! ✏️';
+      messageDiv.className = 'mt-4 text-center font-semibold text-lime-400';
     }
 
-    function atualizarProgresso() {
-      const barra = document.getElementById("progress-bar");
-      const texto = document.getElementById("progresso-texto");
-      const mensagem = document.getElementById("mensagem-parabens");
-      const progresso = Math.min((totalIngerido / meta) * 100, 100);
-
-      barra.style.width = progresso + "%";
-      texto.textContent = `${totalIngerido}ml de ${meta}ml recomendados`;
-
-      if (totalIngerido >= meta) {
-        mensagem.classList.remove("hidden");
-      } else {
-        mensagem.classList.add("hidden");
-      }
-    }
+    renderHistory();
   </script>
+
 </body>
 </html>

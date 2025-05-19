@@ -95,29 +95,49 @@
 
   <script>
     document.getElementById("form-peso").addEventListener("submit", function (e) {
-      e.preventDefault();
+    e.preventDefault();
 
-      const mes = document.getElementById("mes-peso").value;
-      const peso = document.getElementById("peso-atual").value;
+    const mes = document.getElementById("mes-peso").value;
+    const peso = parseFloat(document.getElementById("peso-atual").value);
+    const pesoSalvo = JSON.parse(localStorage.getItem("pesosRegistrados") || "{}");
 
-      if (mes && peso) {
-        localStorage.setItem("mesCadastroPeso", mes);
-        localStorage.setItem("pesoAtual", peso);
+    const mensagemDiv = document.getElementById("peso-salvo");
 
-        document.getElementById("peso-salvo").innerText =
-          `✅ Peso de ${peso}kg salvo para o mês de ${mes}`;
+    // Cenário 3: valor inválido
+    if (isNaN(peso) || peso <= 0) {
+      mensagemDiv.innerText = "❌ Por favor, insira um valor válido de peso (maior que 0).";
+      return;
+    }
+
+    // Cenário 2: data já existe
+    if (pesoSalvo[mes]) {
+      const substituir = confirm(`⚠️ Já existe um peso registrado para ${mes}: ${pesoSalvo[mes]}kg.\nDeseja substituir?`);
+      if (!substituir) {
+        mensagemDiv.innerText = "❌ Registro não alterado.";
+        return;
       }
-    });
+    }
 
-    window.addEventListener("load", function () {
-      const mes = localStorage.getItem("mesCadastroPeso");
-      const peso = localStorage.getItem("pesoAtual");
+    // Cenário 1: salvar ou substituir
+    pesoSalvo[mes] = peso;
+    localStorage.setItem("pesosRegistrados", JSON.stringify(pesoSalvo));
 
-      if (mes && peso) {
-        document.getElementById("peso-salvo").innerText =
-          `📅 Mês: ${mes} | ⚖️ Peso: ${peso}kg`;
-      }
-    });
+    mensagemDiv.innerText = `✅ Peso de ${peso.toFixed(1)}kg salvo para o mês de ${mes}.`;
+  });
+
+  window.addEventListener("load", function () {
+    const pesoSalvo = JSON.parse(localStorage.getItem("pesosRegistrados") || "{}");
+
+    const mensagemDiv = document.getElementById("peso-salvo");
+
+    if (Object.keys(pesoSalvo).length > 0) {
+      const meses = Object.keys(pesoSalvo).sort();
+      const ultimoMes = meses[meses.length - 1];
+      const peso = pesoSalvo[ultimoMes];
+
+      mensagemDiv.innerText = `📅 Último registro - Mês: ${ultimoMes} | ⚖️ Peso: ${peso}kg`;
+    }
+  });
   </script>
 </body>
 </html>
