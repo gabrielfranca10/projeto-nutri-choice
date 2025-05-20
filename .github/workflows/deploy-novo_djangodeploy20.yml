@@ -4,7 +4,7 @@ name: Build and deploy Python app to Azure Web App - djangodeploy20
 on:
   push:
     branches:
-      - prod
+      - deploy-novo
   workflow_dispatch:
 
 jobs:
