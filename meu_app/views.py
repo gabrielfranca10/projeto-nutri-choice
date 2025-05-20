@@ -248,7 +248,10 @@ def perfil_nutricional_view(request):
         })
     else:
         messages.error(request, 'Complete o questionário para ver seu perfil nutricional!')
-        return render(request, 'meu_app/perfil.html')
+        return render(request, 'meu_app/perfil.html', {
+            'questionario': None,
+            'usuario': request.user,
+        })
 
 # === CARDÁPIO PERSONALIZADO ===
 @login_required

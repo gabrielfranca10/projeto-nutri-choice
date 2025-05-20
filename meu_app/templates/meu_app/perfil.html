@@ -97,7 +97,6 @@
     .sidebar-closed #menuLinks {
       display: none;
     }
-
   </style>
 </head>
 <body class="min-h-screen overflow-x-hidden">
@@ -122,7 +121,13 @@
       <div class="profile-info">
         <div class="text-3xl">👤</div>
         <div class="flex flex-col">
-          <span class="username">{{ questionario.nome }}</span>
+          <span class="username">
+            {% if questionario %}
+              {{ questionario.nome }}
+            {% else %}
+              Usuário
+            {% endif %}
+          </span>
         </div>
       </div>
 
@@ -147,9 +152,19 @@
 
     <!-- Conteúdo principal -->
     <main class="flex-1 p-10 overflow-auto transition-all duration-300">
-      <h1 class="text-3xl font-bold mb-6">Bem-vindo(a), {{ questionario.nome }} 👋</h1>
+      <h1 class="text-3xl font-bold mb-6">
+        Bem-vindo(a), {% if questionario %}{{ questionario.nome }}{% else %}visitante{% endif %} 👋
+      </h1>
 
-      <!-- Grid de funcionalidades principais -->
+      {% if not questionario %}
+        <div class="mt-6 p-4 bg-yellow-400 bg-opacity-20 border border-yellow-300 rounded-lg text-yellow-200 flex items-center gap-3 animate-pulse">
+          <div class="text-3xl">⚠️</div>
+          <p class="text-lg font-semibold">
+            Complete seu questionário nutricional para aproveitar um plano personalizado! 🌱
+          </p>
+        </div>
+      {% endif %}
+
       <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         <a href="{% url 'questionario' %}" class="glass p-6 flex flex-col items-center text-center">
           <div class="icon-box">📋</div>
