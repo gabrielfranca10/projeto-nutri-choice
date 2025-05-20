@@ -1,17 +1,16 @@
-
 name: Build and deploy Python app to Azure Web App - djangodeploy20
 
 on:
   push:
     branches:
-      - prod
+      - deploy-novo
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read # This is required for actions/checkout
+      contents: read
 
     steps:
       - uses: actions/checkout@v4
@@ -30,10 +29,7 @@ jobs:
         run: |
           pip install -r requirements.txt
           npm ci
-          cd ..
         
-      # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
-
       - name: Zip artifact for deployment
         run: zip release.zip ./* -r
 
@@ -52,8 +48,8 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write # This is required for requesting the JWT
-      contents: read  # This is required for actions/checkout
+      id-token: write
+      contents: read
 
     steps:
       - name: Download artifact from build job
@@ -75,9 +71,9 @@ jobs:
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
-          app-name: 'djangodeploy20'
+          app-name: 'djangodeploy20-bmhvhaezguaefhaj'  # <- nome exato do App Service
           slot-name: 'Production'
-          
+
       - name: Cleaning testing files
         run: |
           cd meu_projeto/
@@ -89,7 +85,7 @@ jobs:
           rm -rf cypress
           rm -rf node_modules
           cd ..
-          
+
       - name: Zip artifact for deployment
         run: |
           cd meu_projeto/
