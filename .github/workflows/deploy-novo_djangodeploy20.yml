@@ -1,3 +1,7 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+# More info on Python, GitHub Actions, and Azure App Service: https://aka.ms/python-webapps-actions
+
 name: Build and deploy Python app to Azure Web App - djangodeploy20
 
 on:
@@ -10,7 +14,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: read #This is required for actions/checkout
 
     steps:
       - uses: actions/checkout@v4
@@ -26,10 +30,10 @@ jobs:
           source venv/bin/activate
       
       - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
-          npm ci
+        run: pip install -r requirements.txt
         
+      # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
+
       - name: Zip artifact for deployment
         run: zip release.zip ./* -r
 
@@ -48,8 +52,8 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write
-      contents: read
+      id-token: write #This is required for requesting the JWT
+      contents: read #This is required for actions/checkout
 
     steps:
       - name: Download artifact from build job
@@ -60,42 +64,18 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip
 
+      
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_AC3C986B1912469198C6D4ADB7587DA8 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_80BE748A2A1040A59CF946F9BB300979 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_0C744D246A4741358E2F00A69A2960F1 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_7EDAF2250DD3433BB6E54350963FF2EE }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_F920071D37A8474983C5C0BF35E1EB9F }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_28953D58BA0441FD9040119C19802D1B }}
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
-          app-name: 'djangodeploy20-bmhvhaezguaefhaj'  # <- nome exato do App Service
+          app-name: 'djangodeploy20'
           slot-name: 'Production'
-
-      - name: Cleaning testing files
-        run: |
-          cd meu_projeto/
-          rm -f db.sqlite3
-          rm -f .env
-          rm cypress.config.js
-          rm package-lock.json
-          rm package.json
-          rm -rf cypress
-          rm -rf node_modules
-          cd ..
-
-      - name: Zip artifact for deployment
-        run: |
-          cd meu_projeto/
-          zip release.zip ./* -r
-          cd ..
-          mv meu_projeto/release.zip .
-
-      - name: Run local server
-        run: |
-          python manage.py migrate
-          python manage.py runserver &
-          sleep 5
-          npx cypress run
+          
