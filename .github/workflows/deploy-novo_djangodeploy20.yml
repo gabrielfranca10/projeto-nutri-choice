@@ -1,6 +1,5 @@
 
-
-name: Build and deploy Python app to Azure Web App - projetodjango
+name: Build and deploy Python app to Azure Web App - djangodeploy20
 
 on:
   push:
@@ -76,7 +75,7 @@ jobs:
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
-          app-name: 'projetodjango'
+          app-name: 'djangodeploy20'
           slot-name: 'Production'
           
       - name: Cleaning testing files
@@ -104,4 +103,3 @@ jobs:
           python manage.py runserver &
           sleep 5
           npx cypress run
-
