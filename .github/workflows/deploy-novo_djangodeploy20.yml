@@ -104,3 +104,4 @@ jobs:
           python manage.py runserver &
           sleep 5
           npx cypress run
+
