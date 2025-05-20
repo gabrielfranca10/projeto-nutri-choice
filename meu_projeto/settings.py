@@ -12,8 +12,7 @@ NOT_PROD = not TARGET_ENV.lower().startswith('prod')
 
 # Configurações de CSRF confiáveis para produção
 CSRF_TRUSTED_ORIGINS = [
-    'https://projetodjango-e7fvgbbchbapdvgn.brazilsouth-01.azurewebsites.net',
-    'https://www.projetodjango-e7fvgbbchbapdvgn.brazilsouth-01.azurewebsites.net',
+    'https://djangodeploy20-bmhvhaezguaefhaj.brazilsouth-01.azurewebsites.net',
 ]
 
 # Cookies CSRF e sessões seguras para produção
@@ -28,8 +27,7 @@ if NOT_PROD:
     ALLOWED_HOSTS = [
         'localhost',
         '127.0.0.1',
-        'projetodjango-e7fvgbbchbapdvgn.brazilsouth-01.azurewebsites.net',
-        'www.projetodjango-e7fvgbbchbapdvgn.brazilsouth-01.azurewebsites.net',
+        'https://djangodeploy20-bmhvhaezguaefhaj.brazilsouth-01.azurewebsites.net',
     ]
     DATABASES = {
         'default': {
