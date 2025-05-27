@@ -37,7 +37,7 @@ describe("Cardápio Personalizado - NutriChoice", () => {
     cy.get('.bg-green-500').should('exist');
   });
 
-  it("Cenário 1: Receber um cardápio adequado ao meu perfil", () => {
+  it("Cenário 1: Receber um cardápio adequado ao meu perfil (Favorável)", () => {
     cy.get('.p-4 > .bg-white').click();
     cy.get('[href="/cardapio/"]').click();
     cy.contains('Seu Cardápio Personalizado').should('exist');
@@ -45,7 +45,7 @@ describe("Cardápio Personalizado - NutriChoice", () => {
     });
   });
 
-  it("Cenário 2: Atualizar o cardápio após mudanças no perfil", () => {
+  it("Cenário 2: Atualizar o cardápio após mudanças no perfil (Favorável) ", () => {
     cy.get('.p-4 > .bg-white').click();
     cy.get('[href="/questionario/"]').click();
     cy.get('select[name="objetivo"]').select('ganhar');
@@ -71,7 +71,7 @@ describe("Cardápio Personalizado - NutriChoice", () => {
     });
   });
 
-  it("Cenário 3: Receber um cardápio desatualizado", () => {
+  it("Cenário 3: Receber um cardápio desatualizado (Desfavorável)", () => {
     cy.get('.p-4 > .bg-white').click();
     cy.get('[href="/cardapio/"]').click();
 
