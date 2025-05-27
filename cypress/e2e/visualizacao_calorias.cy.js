@@ -15,13 +15,6 @@ describe('Ingestão de Calorias - NutriChoice', () => {
     cy.get('#username').type('usuario_teste');
     cy.get('#password').type('12345');
     cy.get('button[type="submit"]').click();
-
-    // Limpa o localStorage de calorias antes de cada teste
-    cy.visit('/calorias', {
-      onBeforeLoad(win) {
-        win.localStorage.clear();
-      }
-    });
   });
 
   it('Cenário 1: Exibir total de calorias corretamente (Favorável)', () => {
