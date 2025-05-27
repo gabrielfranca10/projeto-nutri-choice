@@ -4,15 +4,15 @@ describe('Registro de Ingestão de Água - NutriChoice', () => {
     cy.exec('python manage.py flush --noinput');
     cy.exec('python manage.py migrate');
     cy.visit('/cadastro/');
-    cy.get('#nome').type('Usuário Teste');
-    cy.get('#username').type('usuario_teste');
-    cy.get('#email').type('teste@exemplo.com');
+    cy.get('#nome').type('Luis Guilherme');
+    cy.get('#username').type('luisin');
+    cy.get('#email').type('luisgx10@gmail.com');
     cy.get('#senha').type('12345');
     cy.get('#confirmar_senha').type('12345');
     cy.get('.btn-cadastrar').click();
     cy.get('.msg-success').should('exist');
     cy.visit('/');
-    cy.get('#username').type('usuario_teste');
+    cy.get('#username').type('luisin');
     cy.get('#password').type('12345');
     cy.get('button[type="submit"]').click();
     // Limpa o localStorage antes de cada teste

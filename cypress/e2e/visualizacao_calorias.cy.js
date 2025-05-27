@@ -4,27 +4,22 @@ describe('Ingestão de Calorias - NutriChoice', () => {
     cy.exec('python manage.py flush --noinput');
     cy.exec('python manage.py migrate');
     cy.visit('/cadastro/');
-    cy.get('#nome').type('Usuário Teste');
-    cy.get('#username').type('usuario_teste');
-    cy.get('#email').type('teste@exemplo.com');
+    cy.get('#nome').type('Lil Gabi');
+    cy.get('#username').type('lilgabi22');
+    cy.get('#email').type('france@gmail.com');
     cy.get('#senha').type('12345');
     cy.get('#confirmar_senha').type('12345');
     cy.get('.btn-cadastrar').click();
     cy.get('.msg-success').should('exist');
     cy.visit('/');
-    cy.get('#username').type('usuario_teste');
+    cy.get('#username').type('lilgabi22');
     cy.get('#password').type('12345');
     cy.get('button[type="submit"]').click();
 
-    // Limpa o localStorage de calorias antes de cada teste
-    cy.visit('/calorias', {
-      onBeforeLoad(win) {
-        win.localStorage.clear();
-      }
-    });
   });
 
   it('Cenário 1: Exibir total de calorias corretamente (Favorável)', () => {
+    cy.get('[href="/calorias/"]').click();
     // Adiciona refeições
     cy.contains('+250 kcal').click();
     cy.contains('+500 kcal').click();
@@ -36,6 +31,7 @@ describe('Ingestão de Calorias - NutriChoice', () => {
   });
 
   it('Cenário 2: Nenhum alimento registrado (Desfavorável)', () => {
+    cy.get('[href="/calorias/"]').click();
     // Não adiciona nada, só acessa a página
     cy.get('#progresso-texto')
       .should('contain', '0 kcal de 2500 kcal recomendadas');
@@ -45,6 +41,7 @@ describe('Ingestão de Calorias - NutriChoice', () => {
   });
 
   it('Cenário 3: Atualizar total após nova refeição (Favorável)', () => {
+    cy.get('[href="/calorias/"]').click();
     // Adiciona uma refeição
     cy.contains('+500 kcal').click();
     cy.get('#progresso-texto')

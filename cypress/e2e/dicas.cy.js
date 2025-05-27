@@ -55,12 +55,5 @@ describe('Dicas Diárias de Alimentação Saudável - História do Usuário', ()
   it('Cenário 3: Receber dicas repetidas constantemente (Desfavorável)', () => {
     cy.get('[href="/dicas-nutricionais/"]').click();
     cy.get('#btn-activate').should('be.visible').click();
-    cy.get('#btn-know').click();
-    cy.get('#btn-know').click();
-    cy.get('#btn-know').click();
-    cy.get('#btn-know').click();
-    cy.get('#btn-know').click();
-    cy.get('#btn-know').click();
-    cy.get('#btn-know').click();
   });
 });

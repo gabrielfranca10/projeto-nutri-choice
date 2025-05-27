@@ -4,21 +4,21 @@ describe('Registro de Peso - NutriChoice', () => {
     cy.exec('python manage.py flush --noinput');
     cy.exec('python manage.py migrate');
     cy.visit('/cadastro/');
-    cy.get('#nome').type('Usuário Teste');
-    cy.get('#username').type('usuario_teste');
-    cy.get('#email').type('teste@exemplo.com');
+    cy.get('#nome').type('Caio Leimig');
+    cy.get('#username').type('cain10');
+    cy.get('#email').type('cain@gmail.com');
     cy.get('#senha').type('12345');
     cy.get('#confirmar_senha').type('12345');
     cy.get('.btn-cadastrar').click();
     cy.get('.msg-success').should('exist');
     cy.visit('/');
-    cy.get('#username').type('usuario_teste');
+    cy.get('#username').type('cain10');
     cy.get('#password').type('12345');
     cy.get('button[type="submit"]').click();
   });
 
   it('Cenário 1: Adicionar novo peso com sucesso (Favorável)', () => {
-    cy.get('[href="/registrar-peso/"]').click();
+    cy.get('[href="/registrar-peso/"]', { timeout: 10000 }).should('be.visible').click();  
     // Preenche mês e peso
     cy.get('#mes-peso').type('2024-06');
     cy.get('#peso-atual').type('70.5');
@@ -30,7 +30,7 @@ describe('Registro de Peso - NutriChoice', () => {
   });
 
   it('Cenário 2: Inserir peso com data repetida (Desfavorável)', () => {
-    cy.get('[href="/registrar-peso/"]').click();
+    cy.get('[href="/registrar-peso/"]', { timeout: 10000 }).should('be.visible').click();
     // Registra um peso para o mês
     cy.get('#mes-peso').type('2024-06');
     cy.get('#peso-atual').type('70.5');
@@ -58,7 +58,7 @@ describe('Registro de Peso - NutriChoice', () => {
   });
 
   it('Cenário 3: Inserir valor inválido de peso (Desfavorável)', () => {
-    cy.get('[href="/registrar-peso/"]').click();
+    cy.get('[href="/registrar-peso/"]', { timeout: 10000 }).should('be.visible').click();
     // Peso negativo
     cy.get('#mes-peso').type('2024-07');
     cy.get('#peso-atual').type('-10');
