@@ -5,23 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Questionário Nutricional - NutriChoice</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
   <style>
     @keyframes fadeIn {
       0% { opacity: 0; }
       100% { opacity: 1; }
     }
-
     @keyframes float {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-8px); }
     }
-
     body {
       font-family: 'Poppins', sans-serif;
       cursor: url('https://cdn-icons-png.flaticon.com/512/1642/1642495.png'), auto;
     }
-
     .bg-image {
       background: url('https://images.unsplash.com/photo-1617957743097-0d20aa2ea762?q=80&w=1932&auto=format&fit=crop') no-repeat center center fixed;
       background-size: cover;
@@ -31,7 +28,6 @@
       z-index: -2;
       animation: fadeIn 2s ease-in-out;
     }
-
     .bg-overlay {
       background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.1));
       position: fixed;
@@ -39,7 +35,6 @@
       width: 100%; height: 100%;
       z-index: -1;
     }
-
     .form-box {
       background-color: rgba(255, 255, 255, 0.2);
       border-radius: 1.75rem;
@@ -48,20 +43,16 @@
       backdrop-filter: blur(16px);
       transition: transform 0.3s ease;
     }
-
     .form-box:hover {
       transform: scale(1.02);
     }
-
     .input-field:focus {
       transform: scale(1.02);
       box-shadow: 0 0 0 3px rgba(163, 230, 53, 0.6);
     }
-
     .animated-icon {
       animation: float 3s ease-in-out infinite;
     }
-
     .error-message {
       color: #f87171;
       font-weight: 600;
@@ -72,20 +63,67 @@
 </head>
 <body class="flex items-center justify-center min-h-screen overflow-hidden px-4">
 
+  <!-- Botão Voltar ao Perfil -->
+  <a href="{% url 'perfil_nutricional' %}" 
+     class="fixed top-6 left-6 z-20 bg-white bg-opacity-80 hover:bg-green-100 text-green-700 font-bold px-5 py-2 rounded-lg shadow-lg flex items-center gap-2 transition">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+    </svg>
+    Voltar ao Perfil
+  </a>
+
   <div class="bg-image"></div>
   <div class="bg-overlay"></div>
 
   <div class="w-full max-w-5xl mx-auto p-10 relative form-box">
     <div class="text-center mb-8">
       <h1 class="text-white text-4xl font-bold flex justify-center items-center gap-3">
-        <img src="https://cdn-icons-png.flaticon.com/512/415/415682.png" alt="Ícone Nutrição" class="w-10 h-10 animated-icon" />
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/415/415682.png"
+          alt="Ícone Nutrição"
+          class="w-10 h-10 animated-icon"
+        />
         Questionário Nutricional
       </h1>
-      <p class="text-white text-lg mt-2">Nos ajude a entender seus hábitos para criar um plano alimentar ideal pra você 🍎</p>
+      <p class="text-white text-lg mt-2">
+        Nos ajude a entender seus hábitos para criar um plano alimentar ideal pra você 🍎
+      </p>
     </div>
 
+    <!-- MENSAGENS DO DJANGO -->
+    {% if messages %}
+      <div class="mb-6">
+        {% for message in messages %}
+          <div
+            class="p-4 rounded-lg flex items-center justify-between gap-4 animate-fadeIn
+              {% if message.tags == 'success' %}
+                bg-green-500 bg-opacity-80 text-white
+              {% elif message.tags == 'error' %}
+                bg-red-500 bg-opacity-80 text-white
+              {% elif message.tags == 'warning' %}
+                bg-yellow-400 bg-opacity-90 text-black
+              {% else %}
+                bg-gray-700 bg-opacity-80 text-white
+              {% endif %}">
+            <p class="font-semibold text-lg">
+              {% if message.tags == 'success' %}✅ {% endif %}
+              {{ message }}
+            </p>
+            {% if message.tags == 'success' %}
+              <a
+                href="{% url 'perfil_nutricional' %}"
+                class="bg-white text-green-600 font-semibold px-4 py-2 rounded-lg hover:bg-green-100 transition"
+              >
+                Voltar ao Perfil
+              </a>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
     {% if erro %}
-      <p class="error-message">⚠️ {{ erro }}</p> 
+      <p class="error-message">⚠️ {{ erro }}</p>
     {% endif %}
 
     <form method="post" class="space-y-6">
@@ -95,10 +133,18 @@
         <!-- Objetivo -->
         <div>
           <label class="block text-white font-semibold mb-1">Qual seu objetivo principal?</label>
-          <select name="objetivo" required class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black focus:outline-none">
+          <select
+            name="objetivo"
+            required
+            class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black focus:outline-none"
+          >
             <option value="">Selecione...</option>
-            <option value="perder">Perder peso</option>
-            <option value="ganhar">Ganhar massa muscular</option>
+            <option value="perder" {% if dados.objetivo == 'perder' %}selected{% endif %}>
+              Perder peso
+            </option>
+            <option value="ganhar" {% if dados.objetivo == 'ganhar' %}selected{% endif %}>
+              Ganhar massa muscular
+            </option>
           </select>
           {% if erros.objetivo %}
             <p class="text-red-500 font-semibold">{{ erros.objetivo }}</p>
@@ -108,7 +154,14 @@
         <!-- Restrições -->
         <div>
           <label class="block text-white font-semibold mb-1">Você possui alguma restrição alimentar?</label>
-          <input type="text" name="restricoes" required placeholder="Ex: lactose, glúten" class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black placeholder-gray-600 focus:outline-none">
+          <input
+            type="text"
+            name="restricoes"
+            required
+            placeholder="Ex: lactose, glúten"
+            class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black placeholder-gray-600 focus:outline-none"
+            value="{{ dados.restricoes|default:'' }}"
+          />
           {% if erros.restricoes %}
             <p class="text-red-500 font-semibold">{{ erros.restricoes }}</p>
           {% endif %}
@@ -117,7 +170,13 @@
         <!-- Preferências -->
         <div class="md:col-span-2">
           <label class="block text-white font-semibold mb-1">Alimentos que gosta ou evita:</label>
-          <textarea name="preferencia" rows="3" required placeholder="Ex: gosto de frango, evito atum e batata doce" class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black placeholder-gray-600 focus:outline-none"></textarea>
+          <textarea
+            name="preferencia"
+            rows="3"
+            required
+            placeholder="Ex: gosto de frango, evito atum e batata doce"
+            class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black placeholder-gray-600 focus:outline-none"
+          >{{ dados.preferencia|default:'' }}</textarea>
           {% if erros.preferencia %}
             <p class="text-red-500 font-semibold">{{ erros.preferencia }}</p>
           {% endif %}
@@ -126,7 +185,16 @@
         <!-- Refeições por dia -->
         <div>
           <label class="block text-white font-semibold mb-1">Quantas refeições por dia?</label>
-          <input type="number" name="refeicoes_por_dia" min="1" max="10" required placeholder="Ex: 4" class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black focus:outline-none">
+          <input
+            type="number"
+            name="refeicoes_por_dia"
+            min="1"
+            max="10"
+            required
+            placeholder="Ex: 4"
+            class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black focus:outline-none"
+            value="{{ dados.refeicoes_por_dia|default:'' }}"
+          />
           {% if erros.refeicoes_por_dia %}
             <p class="text-red-500 font-semibold">{{ erros.refeicoes_por_dia }}</p>
           {% endif %}
@@ -135,7 +203,16 @@
         <!-- Sono -->
         <div>
           <label class="block text-white font-semibold mb-1">Horas de sono por noite:</label>
-          <input type="number" name="sono" min="0" max="24" required placeholder="Ex: 7" class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black focus:outline-none" />
+          <input
+            type="number"
+            name="sono"
+            min="0"
+            max="24"
+            required
+            placeholder="Ex: 7"
+            class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black focus:outline-none"
+            value="{{ dados.sono|default:'' }}"
+          />
           {% if erros.sono %}
             <p class="text-red-500 font-semibold">{{ erros.sono }}</p>
           {% endif %}
@@ -144,72 +221,112 @@
         <!-- Frequência de atividade física -->
         <div>
           <label class="block text-white font-semibold mb-1">Frequência de atividade física:</label>
-          <select name="atividade_fisica" required class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black focus:outline-none">
+          <select
+            name="atividade_fisica"
+            required
+            class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black focus:outline-none"
+          >
             <option value="">Selecione...</option>
-            <option value="nunca">Nunca</option>
-            <option value="1-2x">1-2 vezes por semana</option>
-            <option value="3-4x">3-4 vezes por semana</option>
-            <option value="5+">5 ou mais vezes por semana</option>
+            <option value="nunca" {% if dados.atividade_fisica == 'nunca' %}selected{% endif %}>
+              Nunca
+            </option>
+            <option value="1-2x" {% if dados.atividade_fisica == '1-2x' %}selected{% endif %}>
+              1-2 vezes por semana
+            </option>
+            <option value="3-4x" {% if dados.atividade_fisica == '3-4x' %}selected{% endif %}>
+              3-4 vezes por semana
+            </option>
+            <option value="5+" {% if dados.atividade_fisica == '5+' %}selected{% endif %}>
+              5 ou mais vezes por semana
+            </option>
           </select>
           {% if erros.atividade_fisica %}
             <p class="text-red-500 font-semibold">{{ erros.atividade_fisica }}</p>
           {% endif %}
         </div>
 
-        <!-- Blocos agrupados (carne, legumes, suplementos) -->
-        <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div>
-            <label class="block text-white font-semibold mb-1">Você consome carne?</label>
-            <div class="flex gap-4">
-              <label class="text-white"><input type="radio" name="come_carne" value="sim" required class="mr-2">Sim</label>
-              <label class="text-white"><input type="radio" name="come_carne" value="nao" class="mr-2">Não</label>
-            </div>
-            {% if erros.come_carne %}
-              <p class="text-red-500 font-semibold">{{ erros.come_carne }}</p>
-            {% endif %}
-          </div>
-
-          <div>
-            <label class="block text-white font-semibold mb-1">Você gosta de legumes?</label>
-            <div class="flex gap-4">
-              <label class="text-white"><input type="radio" name="gosta_de_legumes" value="sim" required class="mr-2">Sim</label>
-              <label class="text-white"><input type="radio" name="gosta_de_legumes" value="nao" class="mr-2">Não</label>
-            </div>
-            {% if erros.gosta_de_legumes %}
-              <p class="text-red-500 font-semibold">{{ erros.gosta_de_legumes }}</p>
-            {% endif %}
-          </div>
-
-          <div>
-            <label class="block text-white font-semibold mb-1">Você usa suplementos?</label>
-            <div class="flex gap-4">
-              <label class="text-white"><input type="radio" name="usa_suplementos" value="sim" required class="mr-2">Sim</label>
-              <label class="text-white"><input type="radio" name="usa_suplementos" value="nao" class="mr-2">Não</label>
-            </div>
-            {% if erros.usa_suplementos %}
-              <p class="text-red-500 font-semibold">{{ erros.usa_suplementos }}</p>
-            {% endif %}
-          </div>
-        </div>
-
         <!-- Estresse -->
-        <div class="md:col-span-2">
-          <label class="block text-white font-semibold mb-1">Nível de estresse atual:</label>
-          <select name="estresse" required class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black focus:outline-none">
+        <div>
+          <label class="block text-white font-semibold mb-1">Nível de estresse:</label>
+          <select
+            name="estresse"
+            required
+            class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black focus:outline-none"
+          >
             <option value="">Selecione...</option>
-            <option value="baixo">Baixo</option>
-            <option value="moderado">Moderado</option>
-            <option value="alto">Alto</option>
+            <option value="baixo" {% if dados.estresse == 'baixo' %}selected{% endif %}>
+              Baixo
+            </option>
+            <option value="medio" {% if dados.estresse == 'medio' %}selected{% endif %}>
+              Médio
+            </option>
+            <option value="alto" {% if dados.estresse == 'alto' %}selected{% endif %}>
+              Alto
+            </option>
           </select>
           {% if erros.estresse %}
             <p class="text-red-500 font-semibold">{{ erros.estresse }}</p>
           {% endif %}
         </div>
+
+        <!-- Come carne -->
+        <div>
+          <label class="block text-white font-semibold mb-1">Você consome carne?</label>
+          <select
+            name="come_carne"
+            required
+            class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black focus:outline-none"
+          >
+            <option value="">Selecione...</option>
+            <option value="sim" {% if dados.come_carne %}selected{% endif %}>Sim</option>
+            <option value="nao" {% if dados.come_carne == False %}selected{% endif %}>Não</option>
+          </select>
+          {% if erros.come_carne %}
+            <p class="text-red-500 font-semibold">{{ erros.come_carne }}</p>
+          {% endif %}
+        </div>
+
+        <!-- Gosta de legumes -->
+        <div>
+          <label class="block text-white font-semibold mb-1">Você gosta de legumes?</label>
+          <select
+            name="gosta_de_legumes"
+            required
+            class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black focus:outline-none"
+          >
+            <option value="">Selecione...</option>
+            <option value="sim" {% if dados.gosta_de_legumes %}selected{% endif %}>Sim</option>
+            <option value="nao" {% if dados.gosta_de_legumes == False %}selected{% endif %}>Não</option>
+          </select>
+          {% if erros.gosta_de_legumes %}
+            <p class="text-red-500 font-semibold">{{ erros.gosta_de_legumes }}</p>
+          {% endif %}
+        </div>
+
+        <!-- Usa suplementos -->
+        <div>
+          <label class="block text-white font-semibold mb-1">Você usa suplementos?</label>
+          <select
+            name="usa_suplementos"
+            required
+            class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black focus:outline-none"
+          >
+            <option value="">Selecione...</option>
+            <option value="sim" {% if dados.usa_suplementos %}selected{% endif %}>Sim</option>
+            <option value="nao" {% if dados.usa_suplementos == False %}selected{% endif %}>Não</option>
+          </select>
+          {% if erros.usa_suplementos %}
+            <p class="text-red-500 font-semibold">{{ erros.usa_suplementos }}</p>
+          {% endif %}
+        </div>
       </div>
 
-      <div class="flex justify-center mt-8">
-        <button type="submit" class="bg-lime-500 hover:bg-lime-600 text-white px-8 py-3 rounded-full font-semibold shadow-lg transition-transform transform hover:scale-105">
-          Enviar Respostas
+      <div class="pt-6 flex justify-center">
+        <button
+          type="submit"
+          class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-12 rounded-lg shadow-lg transition"
+        >
+          Enviar
         </button>
       </div>
     </form>

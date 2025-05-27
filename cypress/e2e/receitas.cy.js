@@ -1,55 +1,75 @@
 describe("Visualizar receitas culinárias", () => {
-    const uniqueId = Date.now();
-  
-    beforeEach(() => {
-      cy.exec('python manage.py flush --noinput');
-      cy.exec('python manage.py migrate');
-      
-      // Cadastro
-      cy.visit('/');
-      cy.get('.cadastro').click();
-      cy.get('#username').type('Gabriel França');
-      cy.get('#email').type(`gfap${uniqueId}@cesar.school`);
-      cy.get('#senha').type('franca123');
-      cy.get('#confirmar_senha').type('franca123');
-      cy.get('#data_nascimento').type('2005-06-19');
-      cy.get('#genero').type('Masculino');
-      cy.get('.bg-lime-500').click();
-  
-      // Login
-      cy.visit('/');
-      cy.get('#username').type('Gabriel França');
-      cy.get('#password').type('franca123');
-      cy.get('button[type="submit"]').click();
-  
-      // Preenche questionário
-      cy.get('[href="/questionario/"]').click();
-      cy.get('select[name="objetivo"]').select('Perder peso');
-      cy.get('input[name="restricoes"]').type('lactose');
-      cy.get('textarea[name="preferencia"]').type('Gosto de frango, evito atum e batata doce');
-      cy.get('input[name="refeicoes_por_dia"]').type('4');
-      cy.get('input[name="sono"]').type('7');
-      cy.get('select[name="atividade_fisica"]').select('3-4 vezes por semana');
-      cy.get('input[name="come_carne"][value="sim"]').check();
-      cy.get('input[name="gosta_de_legumes"][value="sim"]').check();
-      cy.get('input[name="usa_suplementos"][value="nao"]').check();
-      cy.get('select[name="estresse"]').select('Moderado');
-      cy.get('button[type="submit"]').click();
-    });
-  
-    it("Cenário Favorável: Buscar receita e exibir ingredientes e modo de preparo", () => {
-      cy.get('[href="/perfil/"]').click();
-      cy.get('[href="/receitas/"]').click();
-      cy.get(':nth-child(1) > button > .text-xl').click();
-      cy.get('.space-y-4 > :nth-child(2)').click();
-      cy.get('.space-y-4 > :nth-child(3)').click();
-      cy.get(':nth-child(4) > button > .text-xl').click();
-      cy.get(':nth-child(5) > button > .text-xl').click();
-      cy.get('.space-y-4 > :nth-child(6)').click();
-      cy.get(':nth-child(7) > button > .text-xl').click();
-      cy.get(':nth-child(8) > button > .text-xl').click();
-      cy.get('.btn-primary').click();
-    });
-  
+  const uniqueId = Date.now();
+
+  beforeEach(() => {
+    cy.exec('python manage.py flush --noinput');
+    cy.exec('python manage.py migrate');
+    cy.visit('/cadastro/');
+    cy.get('#nome').type('Usuário Teste');
+    cy.get('#username').type('usuario_teste');
+    cy.get('#email').type('teste@exemplo.com');
+    cy.get('#senha').type('12345');
+    cy.get('#confirmar_senha').type('12345');
+    cy.get('.btn-cadastrar').click();
+    cy.get('.msg-success').should('exist');
+    cy.visit('/');
+    cy.get('#username').type('usuario_teste');
+    cy.get('#password').type('12345');
+    cy.get('button[type="submit"]').click();
   });
-  
+
+  it("Cenário 1: Buscar receita e exibir ingredientes e modo de preparo (Favorável)", () => {
+    // Dado que o usuário deseja visualizar a receita do chef;
+    cy.get('[href="/receitas/"]').click();
+
+    // Quando ele acessar a aba de Receitas Culinária e procurar por uma receita;
+    cy.get('#search-recipe').type('Panqueca de Banana');
+    cy.get('#btn-search').click();
+
+    // Então o sistema exibirá os ingredientes e modo de preparo.
+    cy.get('.recipe-title')
+      .should('be.visible')
+      .and('contain', 'Panqueca de Banana');
+    cy.get('.recipe-ingredients')
+      .should('be.visible')
+      .and('not.be.empty');
+    cy.get('.recipe-preparation')
+      .should('be.visible')
+      .and('not.be.empty');
+  });
+
+  it("Cenário 2: Buscar receita inexistente ou erro de digitação (Desfavorável)", () => {
+    // Dado que o usuário acessa a aba de Receitas Culinárias e digita uma receita inexistente ou com erro de digitação;
+    cy.get('[href="/receitas/"]').click();
+    cy.get('#search-recipe').type('Cuscuz com Ovo');
+    cy.get('#btn-search').click();
+
+    // Então o sistema informará que a receita não foi encontrada
+    cy.get('.msg-not-found')
+      .should('be.visible')
+      .and('contain', 'Receita não encontrada');
+
+    // e sugerirá receitas semelhantes (se houver) ou recomendará ao usuário tentar novamente com outro nome.
+    cy.get('.suggested-recipes').then($el => {
+      if ($el.children().length > 0) {
+        cy.get('.suggested-recipes').should('be.visible');
+      } else {
+        cy.get('.suggested-recipes').should('contain', 'tente novamente com outro nome');
+      }
+    });
+  });
+
+  it("Cenário 3: Campo de busca deixado em branco (Desfavorável)", () => {
+    // Dado que o usuário acessa a aba de Receitas Culinárias;
+    cy.get('[href="/receitas/"]').click();
+
+    // Quando ele tenta realizar a busca sem digitar nada no campo de pesquisa;
+    cy.get('#search-recipe').clear();
+    cy.get('#btn-search').click();
+
+    // Então o sistema exibirá uma mensagem de aviso solicitando que o usuário informe o nome de uma receita antes de prosseguir com a busca.
+    cy.get('.msg-warning')
+      .should('be.visible')
+      .and('contain', 'digite o nome de uma receita antes de buscar');
+  });
+});

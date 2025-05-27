@@ -46,11 +46,11 @@
       padding: 3rem;
       backdrop-filter: blur(16px);
       box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
     }
 
     .main-box:hover {
       transform: scale(1.01);
-      transition: transform 0.3s ease;
     }
 
     .animated-icon {
@@ -63,26 +63,62 @@
   <div class="bg-image"></div>
   <div class="bg-overlay"></div>
 
+  <!-- Bloco para mensagens Django -->
+  {% if messages %}
+  <div class="fixed top-5 right-5 z-50 space-y-2 max-w-xs">
+    {% for message in messages %}
+      <div class="px-4 py-3 rounded shadow
+        {% if 'error' in message.tags %}
+          bg-red-600 text-white
+        {% elif 'success' in message.tags %}
+          bg-green-600 text-white
+        {% elif 'warning' in message.tags %}
+          bg-yellow-400 text-black
+        {% else %}
+          bg-gray-700 text-white
+        {% endif %}">
+        {{ message }}
+      </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
   <!-- Botão de Voltar para Perfil -->
-<a href="{% url 'perfil_nutricional' %}" class="absolute top-5 right-5 flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold px-4 py-2 rounded-full shadow-md transition duration-300 z-10">
-  <img src="https://cdn-icons-png.flaticon.com/512/1828/1828459.png" class="w-5 h-5" alt="perfil"> Voltar para o Perfil
-</a>
+  <a href="{% url 'perfil_nutricional' %}" class="absolute top-5 right-5 flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold px-4 py-2 rounded-full shadow-md transition duration-300 z-10">
+    <img src="https://cdn-icons-png.flaticon.com/512/1828/1828459.png" class="w-5 h-5" alt="perfil" /> Voltar para o Perfil
+  </a>
 
   <div class="w-full max-w-4xl mx-4 main-box">
+
     <div class="text-center mb-10">
       <h1 class="text-3xl md:text-4xl font-bold flex items-center justify-center gap-3">
-        <img src="https://cdn-icons-png.flaticon.com/512/869/869636.png" alt="logo" class="w-10 h-10 animated-icon">
+        <img src="https://cdn-icons-png.flaticon.com/512/869/869636.png" alt="logo" class="w-10 h-10 animated-icon" />
         Seu Cardápio Personalizado 🥗
       </h1>
       <p class="text-white text-opacity-80 mt-2">Montado com base nas suas respostas</p>
     </div>
 
+    <!-- Aviso perfil desatualizado -->
+    {% if perfil_desatualizado %}
+      <div class="mb-6 p-4 bg-yellow-200 text-yellow-900 rounded-lg shadow-md">
+        ⚠️ Seu perfil está desatualizado. Para um cardápio mais adequado, <a href="{% url 'questionario' %}" class="underline font-semibold hover:text-yellow-700">clique aqui para atualizar seus dados</a>.
+      </div>
+    {% endif %}
+
+    <!-- Aviso de perfil atualizado recentemente -->
+    {% if perfil_atualizado %}
+      <div class="mb-6 p-4 bg-green-200 text-green-900 rounded-lg shadow-md">
+        ✅ Seu cardápio foi atualizado com base nas suas últimas informações.
+      </div>
+    {% endif %}
+
+    <!-- Exibir cardápio -->
     {% if cardapio %}
-      <div class="text-white space-y-6">
+      <div class="text-white space-y-10">
         {% for refeicao, itens in cardapio.items %}
-          <div class="flex justify-between items-center">
-            <h2 class="text-xl font-semibold">{{ refeicao }}</h2>
-            <ul class="list-disc pl-5">
+          <div>
+            <h2 class="text-2xl font-semibold border-b border-green-400 pb-2 mb-3">{{ refeicao }}</h2>
+            <ul class="list-disc list-inside space-y-1">
               {% for item in itens %}
                 <li>{{ item }}</li>
               {% endfor %}
@@ -91,16 +127,15 @@
         {% endfor %}
       </div>
     {% else %}
-      <p class="text-center text-red-300">Não foi possível gerar o cardápio. Verifique suas respostas no questionário.</p>
+      <p class="text-center text-red-300 mt-10">
+        Não foi possível gerar o cardápio. Verifique suas respostas no questionário.
+      </p>
     {% endif %}
 
-    <div class="flex justify-center gap-4 mt-10 flex-wrap">
-      <a href="{% url 'questionario' %}" class="bg-lime-500 hover:bg-lime-600 text-white font-semibold py-2 px-6 rounded-full shadow-lg transition-transform transform hover:scale-105">
+    <div class="flex justify-center gap-4 mt-12 flex-wrap">
+      <a href="{% url 'questionario' %}" class="bg-lime-500 hover:bg-lime-600 text-white font-semibold py-3 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105">
         Refazer Questionário
       </a>
-    </div>
-  </div>
-      </div>
     </div>
   </div>
 
