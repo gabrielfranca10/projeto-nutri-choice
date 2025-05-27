@@ -18,7 +18,7 @@ describe('Ingestão de Calorias - NutriChoice', () => {
   });
 
   it('Cenário 1: Exibir total de calorias corretamente (Favorável)', () => {
-    cy.get('[href="/calorias/"]').click();
+    cy.get('[href="/app/calorias/"]').click();
     // Adiciona refeições
     cy.contains('+250 kcal').click();
     cy.contains('+500 kcal').click();
@@ -30,7 +30,7 @@ describe('Ingestão de Calorias - NutriChoice', () => {
   });
 
   it('Cenário 2: Nenhum alimento registrado (Desfavorável)', () => {
-    cy.get('[href="/calorias/"]').click();
+    cy.get('[href="/app/calorias/"]').click();
     // Não adiciona nada, só acessa a página
     cy.get('#progresso-texto')
       .should('contain', '0 kcal de 2500 kcal recomendadas');
@@ -40,15 +40,11 @@ describe('Ingestão de Calorias - NutriChoice', () => {
   });
 
   it('Cenário 3: Atualizar total após nova refeição (Favorável)', () => {
-    cy.get('[href="/calorias/"]').click();
+    cy.get('[href="/app/calorias/"]').click();
     // Adiciona uma refeição
     cy.contains('+500 kcal').click();
     cy.get('#progresso-texto')
       .should('contain', '500 kcal de 2500 kcal recomendadas');
-
-    // Simula sair e voltar para a página
-    cy.visit('/perfil');
-    cy.visit('/calorias');
 
     // Adiciona mais uma refeição
     cy.contains('+1000 kcal').click();

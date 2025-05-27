@@ -18,7 +18,7 @@ describe('Registro de Peso - NutriChoice', () => {
   });
 
   it('Cenário 1: Adicionar novo peso com sucesso (Favorável)', () => {
-    cy.get('[href="/registrar-peso/"]', { timeout: 10000 }).should('be.visible').click();  
+    cy.get('[href="/app/registrar-peso/"]').click();
     cy.get('#mes-peso').type('2024-06');
     cy.get('#peso-atual').type('70.5');
     cy.get('form#form-peso button[type="submit"]').click();
@@ -29,7 +29,7 @@ describe('Registro de Peso - NutriChoice', () => {
   });
 
   it('Cenário 2: Inserir peso com data repetida (Desfavorável)', () => {
-    cy.get('[href="/registrar-peso/"]', { timeout: 10000 }).should('be.visible').click();
+    cy.get('[href="/app/registrar-peso/"]').click();
     // Registra um peso para o mês
     cy.get('#mes-peso').type('2024-06');
     cy.get('#peso-atual').type('70.5');
@@ -57,7 +57,7 @@ describe('Registro de Peso - NutriChoice', () => {
   });
 
   it('Cenário 3: Inserir valor inválido de peso (Desfavorável)', () => {
-    cy.get('[href="/registrar-peso/"]', { timeout: 10000 }).should('be.visible').click();
+    cy.get('[href="/app/registrar-peso/"]').click();
     // Peso negativo
     cy.get('#mes-peso').type('2024-07');
     cy.get('#peso-atual').type('-10');
