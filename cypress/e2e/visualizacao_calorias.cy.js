@@ -15,7 +15,6 @@ describe('Ingestão de Calorias - NutriChoice', () => {
     cy.get('#username').type('lilgabi22');
     cy.get('#password').type('12345');
     cy.get('button[type="submit"]').click();
-
   });
 
   it('Cenário 1: Exibir total de calorias corretamente (Favorável)', () => {
