@@ -2,162 +2,189 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Cadastro - NutriChoice</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
-    @keyframes fadeIn {
-      0% { opacity: 0; }
-      100% { opacity: 1; }
-    }
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
     body {
-      font-family: 'Poppins', sans-serif;
-      cursor: url('https://cdn-icons-png.flaticon.com/512/1642/1642495.png'), auto;
-    }
-    .bg-image {
-      background: url('https://images.unsplash.com/photo-1617957743097-0d20aa2ea762?q=80&w=1932&auto=format&fit=crop') no-repeat center center fixed;
+      background-image: url('https://images.unsplash.com/photo-1617957743097-0d20aa2ea762?q=80&w=1932&auto=format&fit=crop');
       background-size: cover;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: -2;
-      animation: fadeIn 2s ease-in-out;
+      background-position: center;
+      background-attachment: fixed;
+      font-family: 'Segoe UI', sans-serif;
+      color: #333;
     }
-    .bg-overlay {
-      background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.1));
+    .overlay {
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.65);
       z-index: -1;
     }
-    .registration-box {
-      background-color: rgba(255, 255, 255, 0.2);
-      border-radius: 1.75rem;
-      padding: 3rem;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-      color: #333;
-      backdrop-filter: blur(16px);
-      transition: transform 0.3s ease;
+    .glass {
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(22px);
+      border-radius: 2.5rem;
+      padding: 3.5rem 3rem 2.5rem 3rem;
+      max-width: 600px;
+      min-width: 340px;
+      width: 100%;
+      margin: auto;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+      animation: fade-in 0.7s ease-out;
+      border: 1.5px solid rgba(255,255,255,0.18);
     }
-    .registration-box:hover {
-      transform: scale(1.02);
+    @media (max-width: 700px) {
+      .glass {
+        padding: 2rem 1rem 1.5rem 1rem;
+        max-width: 98vw;
+      }
     }
-    .heading-logo {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: white;
-      text-align: center;
-      margin-bottom: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 2px;
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(30px);}
+      to { opacity: 1; transform: translateY(0);}
     }
-    .subheading {
-      font-size: 1.2rem;
-      color: white;
-      text-align: center;
-      margin-bottom: 2rem;
+    .input-field {
+      background-color: rgba(255,255,255,0.92);
+      color: #222;
+      border: 1.5px solid #e5e7eb;
+      font-size: 1.08rem;
+      transition: border 0.2s, box-shadow 0.2s;
     }
     .input-field:focus {
-      transform: scale(1.02);
-      box-shadow: 0 0 0 3px rgba(163, 230, 53, 0.6);
+      border-color: #84cc16;
+      box-shadow: 0 0 0 2px #bbf7d0;
+      outline: none;
     }
-    .animated-icon {
-      animation: float 3s ease-in-out infinite;
+    .logo {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 1.2rem;
+      transition: transform 0.3s;
+      filter: drop-shadow(0 2px 8px rgba(132,204,22,0.18));
+    }
+    .logo:hover {
+      transform: scale(1.08) rotate(10deg);
+    }
+    .link-login {
+      color: #84cc16;
+      font-weight: bold;
+      text-decoration: underline;
+      transition: color 0.2s;
+    }
+    .link-login:hover {
+      color: #65a30d;
+    }
+    .form-title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #65a30d;
+      letter-spacing: -1px;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+    .form-subtitle {
+      color: #fff;
+      font-size: 1.1rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-weight: 400;
+    }
+    .form-label {
+      color: #333;
+      font-weight: 600;
+      margin-bottom: 0.2rem;
+      font-size: 1rem;
+      letter-spacing: 0.01em;
+    }
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+    .btn-cadastrar {
+      background: linear-gradient(90deg, #84cc16 60%, #65a30d 100%);
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.15rem;
+      padding: 0.85rem 0;
+      border-radius: 0.8rem;
+      box-shadow: 0 2px 12px rgba(132,204,22,0.13);
+      transition: background 0.2s, transform 0.2s;
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+    .btn-cadastrar:hover {
+      background: linear-gradient(90deg, #65a30d 60%, #84cc16 100%);
+      transform: translateY(-2px) scale(1.03);
+    }
+    .msg {
+      padding: 0.7rem 1rem;
+      border-radius: 0.7rem;
+      text-align: center;
+      font-weight: 600;
+      margin-bottom: 1.1rem;
+      font-size: 1rem;
+    }
+    .msg-success {
+      background: #22c55e;
+      color: #fff;
+    }
+    .msg-error {
+      background: #ef4444;
+      color: #fff;
     }
   </style>
 </head>
-<body class="flex items-center justify-center min-h-screen overflow-hidden">
+<body class="flex items-center justify-center min-h-screen">
 
-  <div class="bg-image"></div>
-  <div class="bg-overlay"></div>
+  <div class="overlay"></div>
 
-  <div class="w-full max-w-3xl mx-4 p-10 relative backdrop-blur-md bg-white bg-opacity-10 rounded-2xl shadow-2xl">
-    <h1 class="heading-logo text-white flex items-center justify-center gap-3">
-      <img src="https://cdn-icons-png.flaticon.com/512/869/869636.png" alt="logo" class="w-10 h-10 animated-icon"> NutriChoice
-    </h1>
-    <div class="subheading">
-      <p>Comece sua jornada de saúde com a gente 💪</p>
+  <div class="glass">
+    <div class="flex flex-col items-center mb-7">
+      <img src="https://cdn-icons-png.flaticon.com/512/415/415744.png" alt="Logo" class="logo">
+      <div class="form-title">NutriChoice</div>
+      <div class="form-subtitle">Crie sua conta e comece sua jornada saudável 🍎</div>
     </div>
 
     {% if messages %}
-      <div class="mb-6 space-y-2">
+      <div>
         {% for message in messages %}
-          <div class="fade-out p-4 rounded-lg text-white 
-            {% if message.tags == 'success' %} bg-green-500 
-            {% elif message.tags == 'error' %} bg-red-500 
-            {% else %} bg-blue-500 {% endif %}">
+          <div class="msg {% if message.tags == 'error' %}msg-error{% else %}msg-success{% endif %}">
             {{ message }}
           </div>
         {% endfor %}
       </div>
     {% endif %}
 
-    <form method="POST" action="{% url 'cadastro' %}">
+    <form method="POST" class="space-y-2">
       {% csrf_token %}
-      <div class="registration-box space-y-6">
-        <h2 class="text-white text-xl font-semibold text-center">Informações da Conta</h2>
-        <div class="flex flex-col space-y-4">
-          <div class="flex flex-col">
-            <label for="username" class="text-white">Usuário</label>
-            <input id="username" name="username" type="text" placeholder="Usuário" required autocomplete="username"
-              class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black placeholder-gray-600 focus:outline-none">
-          </div>
-          <div class="flex flex-col">
-            <label for="email" class="text-white">Email</label>
-            <input id="email" name="email" type="email" placeholder="Email" required autocomplete="email"
-              class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black placeholder-gray-600 focus:outline-none">
-          </div>
-          <div class="flex flex-col">
-            <label for="senha" class="text-white">Senha</label>
-            <input id="senha" name="senha" type="password" placeholder="Senha" required autocomplete="new-password"
-              class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black placeholder-gray-600 focus:outline-none">
-          </div>
-          <div class="flex flex-col">
-            <label for="confirmar_senha" class="text-white">Confirmar Senha</label>
-            <input id="confirmar_senha" name="confirmar_senha" type="password" placeholder="Confirmar Senha" required autocomplete="new-password"
-              class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black placeholder-gray-600 focus:outline-none">
-          </div>
-          <div class="flex flex-col">
-            <label for="data_nascimento" class="text-white">Data de Nascimento</label>
-            <input id="data_nascimento" name="data_nascimento" type="date" required
-              class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black focus:outline-none">
-          </div>
-          <div class="flex flex-col">
-            <label for="genero" class="text-white">Gênero</label>
-            <select id="genero" name="genero" required
-              class="input-field w-full px-4 py-2 rounded-lg bg-white bg-opacity-70 text-black focus:outline-none">
-              <option value="masculino">Masculino</option>
-              <option value="feminino">Feminino</option>
-              <option value="outro">Outro</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="flex flex-wrap gap-4 justify-center mt-8">
-          <button type="submit" class="bg-lime-500 hover:bg-lime-600 text-white px-8 py-3 rounded-full font-semibold shadow-lg transition-transform transform hover:scale-105">
-            Criar Conta
-          </button>
-          <a href="{% url 'login' %}" class="bg-white bg-opacity-30 hover:bg-opacity-50 text-white px-6 py-3 rounded-full font-semibold shadow-md transition-transform transform hover:scale-105">
-            Voltar ao Login
-          </a>
-        </div>
+      <div class="form-group">
+        <label class="form-label" for="nome">Nome completo</label>
+        <input type="text" id="nome" name="nome" class="input-field w-full p-3 rounded-lg" required>
       </div>
+      <div class="form-group">
+        <label class="form-label" for="username">Usuário</label>
+        <input type="text" id="username" name="username" class="input-field w-full p-3 rounded-lg" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="email">E-mail</label>
+        <input type="email" id="email" name="email" class="input-field w-full p-3 rounded-lg" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="senha">Senha</label>
+        <input type="password" id="senha" name="senha" class="input-field w-full p-3 rounded-lg" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="confirmar_senha">Confirmar senha</label>
+        <input type="password" id="confirmar_senha" name="confirmar_senha" class="input-field w-full p-3 rounded-lg" required>
+      </div>
+      <button type="submit" class="btn-cadastrar">Cadastrar</button>
     </form>
+
+    <p class="mt-7 text-center text-white text-base">
+      Já tem uma conta?
+      <a href="{% url 'meu_app:login' %}" class="link-login">Entrar</a>
+    </p>
   </div>
 
-  <script>
-    setTimeout(() => {
-      const alerts = document.querySelectorAll('.fade-out');
-      alerts.forEach(alert => {
-        alert.classList.add('opacity-0', 'transition-opacity', 'duration-1000');
-        setTimeout(() => alert.remove(), 1000);
-      });
-    }, 4000);
-  </script>
 </body>
 </html>

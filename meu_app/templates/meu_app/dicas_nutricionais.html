@@ -80,12 +80,10 @@
       }
     }
 
-    /* Ajustes para responsividade */
     @media (max-width: 768px) {
       .glass-box {
         padding: 1.5rem;
       }
-
       .text-3xl {
         font-size: 1.875rem;
       }
@@ -96,13 +94,12 @@
       animation: fadeIn 1.5s ease-in-out;
     }
 
-    /* Novo estilo para painel de dica diária */
     .daily-tip-box {
       background-color: rgba(0, 0, 0, 0.5);
       padding: 1rem 1.5rem;
       border-radius: 1rem;
       margin-bottom: 1rem;
-      color: #d1fae5; /* verde claro */
+      color: #d1fae5;
       font-size: 1.1rem;
       box-shadow: 0 4px 15px rgba(0,0,0,0.7);
       user-select: none;
@@ -129,6 +126,17 @@
 
     .daily-tip-actions button.disable-btn:hover {
       background-color: #b91c1c;
+    }
+    .all-tips-viewed {
+      color: #fde68a;
+      background: rgba(255,255,0,0.08);
+      border-radius: 0.5rem;
+      padding: 0.5rem 1rem;
+      margin-top: 0.5rem;
+      font-size: 1rem;
+      text-align: center;
+      font-weight: 600;
+      display: inline-block;
     }
   </style>
 </head>
@@ -238,16 +246,11 @@
   </div>
 
   <script>
-  // Função para mostrar detalhes das dicas na lista (já existente)
   function showTipDetails(tipId) {
     const tipDetails = document.getElementById(tipId);
     const isVisible = tipDetails.classList.contains('hidden');
-
-    // Ocultar todas as dicas antes de mostrar a selecionada
     const allTips = document.querySelectorAll('.tip-details');
     allTips.forEach(tip => tip.classList.add('hidden'));
-
-    // Alterna a visibilidade da dica selecionada
     if (isVisible) {
       tipDetails.classList.remove('hidden');
     } else {
@@ -255,15 +258,12 @@
     }
   }
 
-  // --- NOVO: Lógica para dicas diárias e controle de notificações ---
-
   const dailyTipContainer = document.getElementById('daily-tip-container');
   const btnActivate = document.getElementById('btn-activate');
   const btnDeactivate = document.getElementById('btn-deactivate');
   const btnKnow = document.getElementById('btn-know');
   const errorMessage = document.getElementById('error-message');
 
-  // Array com as dicas (copiado do HTML para JS para facilitar a lógica)
   const tips = [
     {
       id: 'tip1',
@@ -297,10 +297,8 @@
     },
   ];
 
-  // Chave para localStorage
   const LS_KEY = 'nutrichoice_daily_tips';
 
-  // Função para obter dados do localStorage
   function getStorageData() {
     const data = localStorage.getItem(LS_KEY);
     if (!data) return {
@@ -312,29 +310,24 @@
     return JSON.parse(data);
   }
 
-  // Função para salvar dados no localStorage
   function setStorageData(data) {
     localStorage.setItem(LS_KEY, JSON.stringify(data));
   }
 
-  // Função para formatar data para string YYYY-MM-DD
   function formatDate(date) {
     const d = new Date(date);
     const month = '' + (d.getMonth() + 1);
     const day = '' + d.getDate();
     const year = d.getFullYear();
-
     return [year, month.padStart(2,'0'), day.padStart(2,'0')].join('-');
   }
 
-  // Escolhe a próxima dica que não foi ignorada e que não foi a última mostrada
   function pickNextTip(ignoredTips, lastTipId) {
     const availableTips = tips.filter(tip => !ignoredTips.includes(tip.id));
     if (availableTips.length === 0) {
       // Se todas as dicas foram ignoradas, retorna uma aleatória entre todas
       return tips[Math.floor(Math.random() * tips.length)];
     }
-
     // Evitar repetir a última dica se possível
     const candidates = availableTips.filter(tip => tip.id !== lastTipId);
     if (candidates.length === 0) {
@@ -344,17 +337,17 @@
     }
   }
 
-  // Função para mostrar a dica no container
-  function showDailyTip(tip) {
+  // Atualização: mostra aviso se todas as dicas já foram vistas
+  function showDailyTip(tip, allIgnored = false) {
     dailyTipContainer.innerHTML = `
       <strong>${tip.title}</strong><br>
       <small><em>Benefícios:</em> ${tip.benefits}</small><br>
       <small><em>Exemplos:</em> ${tip.examples}</small>
+      ${allIgnored ? '<div class="all-tips-viewed">Você já viu todas as dicas! As próximas podem se repetir.</div>' : ''}
     `;
     btnKnow.classList.remove('hidden');
   }
 
-  // Atualiza a UI conforme o estado
   function updateUI() {
     const data = getStorageData();
 
@@ -363,24 +356,22 @@
       btnDeactivate.classList.remove('hidden');
       errorMessage.classList.add('hidden');
 
-      // Check if it's a new day to update the tip
       const today = formatDate(new Date());
       if (data.lastTipDate !== today) {
-        // Pick a new tip
         const nextTip = pickNextTip(data.ignoredTips, data.lastTipId);
+        const allIgnored = tips.length === data.ignoredTips.length;
         data.lastTipDate = today;
         data.lastTipId = nextTip.id;
         setStorageData(data);
-        showDailyTip(nextTip);
+        showDailyTip(nextTip, allIgnored);
       } else {
-        // Show last tip stored
         const lastTip = tips.find(tip => tip.id === data.lastTipId);
+        const allIgnored = tips.length === data.ignoredTips.length;
         if (lastTip) {
-          showDailyTip(lastTip);
+          showDailyTip(lastTip, allIgnored);
         } else {
-          // Caso raro, pega aleatória
           const anyTip = tips[Math.floor(Math.random() * tips.length)];
-          showDailyTip(anyTip);
+          showDailyTip(anyTip, allIgnored);
         }
       }
     } else {
@@ -391,29 +382,25 @@
     }
   }
 
-  // Simular erro na ativação (cenário desfavorável)
   function simulateActivationError() {
     // 20% de chance de falha
     return Math.random() < 0.2;
   }
 
-  // Ativar notificações
   btnActivate.addEventListener('click', () => {
     if (simulateActivationError()) {
       errorMessage.textContent = "Erro ao ativar notificações. Tente novamente.";
       errorMessage.classList.remove('hidden');
       return;
     }
-
     errorMessage.classList.add('hidden');
     const data = getStorageData();
     data.active = true;
-    data.lastTipDate = null; // Forçar atualização no próximo updateUI
+    data.lastTipDate = null;
     setStorageData(data);
     updateUI();
   });
 
-  // Desativar notificações
   btnDeactivate.addEventListener('click', () => {
     const data = getStorageData();
     data.active = false;
@@ -421,18 +408,31 @@
     updateUI();
   });
 
-  // Botão "Já sei essa dica"
   btnKnow.addEventListener('click', () => {
     const data = getStorageData();
+    const lastTipIdBefore = data.lastTipId;
     if (!data.ignoredTips.includes(data.lastTipId)) {
       data.ignoredTips.push(data.lastTipId);
     }
+    data.lastTipDate = null; // Corrigido: atualize ANTES de salvar!
     setStorageData(data);
-    data.lastTipDate = null; // Forçar atualização para nova dica
     updateUI();
+
+    // Assert: a dica deve mudar (se ainda houver dicas não ignoradas)
+    const newData = getStorageData();
+    if (tips.length > newData.ignoredTips.length) {
+      setTimeout(() => {
+        const tipTitle = document.querySelector('#daily-tip-container strong')?.textContent;
+        const newTip = tips.find(t => t.id === newData.lastTipId);
+        console.assert(
+          newTip && newTip.title === tipTitle && newData.lastTipId !== lastTipIdBefore,
+          'A dica diária deveria ter mudado após clicar em "Já sei".'
+        );
+      }, 100);
+    }
   });
 
-  // Inicialização
   updateUI();
-</script>
-
+  </script>
+</body>
+</html>

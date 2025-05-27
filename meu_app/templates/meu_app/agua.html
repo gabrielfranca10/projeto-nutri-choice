@@ -9,7 +9,7 @@
     body {
       background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1932&auto=format&fit=crop') no-repeat center center fixed;
       background-size: cover;
-      color: #f9fafb; /* branco quase puro */
+      color: #f9fafb;
       font-family: 'Inter', sans-serif;
       text-shadow: 0 0 4px rgba(0,0,0,0.7);
     }
@@ -69,6 +69,7 @@
       />
       <button
         type="submit"
+        id="btn-registrar"
         class="bg-lime-500 hover:bg-lime-600 text-white px-6 py-2 rounded-lg font-semibold transition transform hover:scale-105"
       >
         Registrar
@@ -99,19 +100,26 @@
 
     function renderHistory() {
       if (historico.length === 0) {
-        historyDiv.innerHTML = '<p>Nenhum registro ainda.</p>';
+        historyDiv.innerHTML = '<p class="registro-vazio">Nenhum registro ainda.</p>';
         return;
       }
       historyDiv.innerHTML = '';
       historico.forEach((item, index) => {
         const data = new Date(item.data).toLocaleString();
         const div = document.createElement('div');
-        div.className = 'mb-2 p-2 rounded bg-lime-900/30 flex justify-between items-center';
+        div.className = 'registro-item mb-2 p-2 rounded bg-lime-900/30 flex justify-between items-center';
         div.innerHTML = `
-          <span>${data} - ${item.quantidade} ml</span>
-          <button onclick="editarRegistro(${index})" class="text-lime-300 hover:text-lime-100 font-semibold">Editar</button>
+          <span class="registro-info">${data} - <span class="registro-quantidade">${item.quantidade} ml</span></span>
+          <button type="button" class="btn-editar text-lime-300 hover:text-lime-100 font-semibold" data-index="${index}">Editar</button>
         `;
         historyDiv.appendChild(div);
+      });
+
+      // Adiciona evento para todos os botões de editar
+      document.querySelectorAll('.btn-editar').forEach(btn => {
+        btn.onclick = function() {
+          editarRegistro(Number(btn.getAttribute('data-index')));
+        }
       });
     }
 

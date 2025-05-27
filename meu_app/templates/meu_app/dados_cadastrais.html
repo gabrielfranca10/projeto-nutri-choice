@@ -101,7 +101,7 @@
       <div class="profile-info">
         <div class="text-3xl">👤</div>
         <div class="flex flex-col">
-          <span class="username">{{ user.username }}</span>
+          <span class="username">{{ nome|default:user.username }}</span>
           <span class="email">{{ user.email }}</span>
         </div>
       </div>
@@ -132,7 +132,7 @@
       <div class="glass p-6 mb-6">
         <h3 class="text-xl font-semibold">Informações Pessoais</h3>
         <div class="text-sm mt-4">
-          <p><strong>Nome:</strong> {{ questionario.nome }}</p>
+          <p><strong>Nome:</strong> {{ nome|default:user.username }}</p>
           <p><strong>Email:</strong> {{ user.email }}</p>
           <p><strong>Idade:</strong> {{ questionario.idade }}</p>
         </div>
