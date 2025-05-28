@@ -186,12 +186,11 @@ Para otimizar o desenvolvimento e garantir entregas de qualidade, decidimos orga
 
 ---
 ### 🧪 Testes de Sistema (E2E)
-- Screencast (YouTube) da execução dos testes
-- Link e descrição no README
+- [Screencast do teste automatizado(CYPRESS)](https://youtu.be/K1mjt1oLzM0)
 ---
 ### ⚙️ CI/CD com Build e Deployment Automatizado
-- Pipeline com testes e deploy automatizado
-- Screencast da pipeline no README
+- [Screencast do CI/CD](https://youtu.be/8xfs7JcvJIY)
+
 ---
 ### 🤝 Programação em Par  
 
