@@ -27,7 +27,7 @@ Você pode ajudar de diversas formas:
 
 2. **Clone o fork localmente**  
    ```bash
-   git clone https://github.com/seuusuario/projeto-nutri-choice.git
+   git clone https://github.com/gabrielfranca10/projeto-nutri-choice.git
    cd projeto-nutri-choice
    ```
 
