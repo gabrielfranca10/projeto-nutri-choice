@@ -1,122 +1,143 @@
-🥗 Guia de Contribuição para o Projeto NutriChoice
+# 🥗 Guia de Contribuição para o Projeto NutriChoice
 
-Seja bem-vindo(a) à comunidade de desenvolvimento do NutriChoice! Agradecemos por seu interesse em contribuir com este projeto, uma plataforma de recomendação nutricional personalizada, desenvolvida com o framework Django. O NutriChoice nasceu como um projeto acadêmico da CESAR School com o objetivo de ajudar pessoas a adotarem hábitos alimentares mais saudáveis com base em seu perfil.
+Seja bem-vindo(a) à comunidade de desenvolvimento do **NutriChoice**! Agradecemos por seu interesse em contribuir com este projeto, uma plataforma de recomendação nutricional personalizada, desenvolvida com o framework Django. O NutriChoice nasceu como um projeto acadêmico da CESAR School com o objetivo de ajudar pessoas a adotarem hábitos alimentares mais saudáveis com base em seu perfil.
 
 Este guia tem como objetivo orientá-lo sobre como colaborar com o projeto, seja implementando novas funcionalidades, corrigindo bugs ou propondo melhorias. Recomendamos a leitura completa antes de começar, para entender nosso fluxo de trabalho e as boas práticas adotadas pela equipe.
 
-🚀 Como Você Pode Contribuir?
+---
+
+## 🚀 Como Você Pode Contribuir?
 
 Você pode ajudar de diversas formas:
 
-Desenvolvendo novas funcionalidades (ex: histórico de peso, chatbot NutriBot, dicas diárias, etc.)
+- Desenvolvendo novas funcionalidades (ex: histórico de peso, chatbot NutriBot, dicas diárias, etc.)
+- Corrigindo erros e bugs detectados no sistema
+- Sugerindo melhorias na interface (UI/UX) com Tailwind CSS
+- Melhorando a organização do backend
+- Criando ou melhorando a documentação
 
-Corrigindo erros e bugs detectados no sistema
+> 💡 Para ideias e tarefas disponíveis, confira a aba **Issues** do repositório.
 
-Sugerindo melhorias na interface (UI/UX) com Tailwind CSS
+---
 
-Melhorando a organização do backend
+## ⚙️ Preparando Seu Ambiente
 
-Criando ou melhorando a documentação
+1. **Faça um fork do projeto**  
+   Crie um fork do repositório [`gabrielfranca10/projeto-nutri-choice`](https://github.com/gabrielfranca10/projeto-nutri-choice) para a sua conta no GitHub.
 
-Para ideias e tarefas disponíveis, confira a aba "Issues" do repositório.
+2. **Clone o fork localmente**  
+   ```bash
+   git clone https://github.com/seuusuario/projeto-nutri-choice.git
+   cd projeto-nutri-choice
+   ```
 
-⚙️ Preparando Seu Ambiente
+3. **Crie uma nova branch para suas alterações**  
+   ```bash
+   git checkout -b nome-da-sua-nova-branch
+   ```  
+   Use nomes descritivos como `fix/correcao-formulario` ou `feature/chatbot-nutribot`.
 
-1. Faça um fork do projeto
+---
 
-Crie um fork do repositório gabrielfranca10/projeto-nutri-choice para a sua conta no GitHub.
+## 🛠️ Configurando o Ambiente de Desenvolvimento
 
-2. Clone o fork
+1. Crie e ative um ambiente virtual:
 
-git clone https://github.com/gabrielfranca10/projeto-nutri-choice.git
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # Windows: venv\Scripts\activate
+   ```
 
-3. Crie uma branch para suas alterações
+2. Instale as dependências:
 
-git checkout -b nome da sua nova branch
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-Use nomes descritivos como fix/correcao-formulario ou feature/chatbot-nutribot.
+3. Aplique as migrações do banco de dados:
 
-🛠️ Configurando o Ambiente de Desenvolvimento
+   ```bash
+   python manage.py migrate
+   ```
 
-Crie e ative um ambiente virtual:
+4. Execute o servidor local:
 
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
+   ```bash
+   python manage.py runserver
+   ```
 
-Instale as dependências:
+---
 
-pip install -r requirements.txt
+## ✅ Regras e Boas Práticas
 
-Aplique as migrações do banco de dados:
+- ❌ Não utilize Django Forms nem Generic Views (restrição do projeto).
+- ✅ Use views baseadas em função (FBVs) e manipulação direta de `request.POST`.
+- 🎨 Mantenha o estilo visual consistente (Tailwind CSS, design moderno).
+- 🧪 Teste suas alterações antes de abrir um Pull Request.
+- 📝 Utilize mensagens de commit claras e explicativas.
 
-python manage.py migrate
+---
 
-Execute o servidor local:
+## 🧪 Testes e Qualidade
 
-python manage.py runserver
-.
+1. Certifique-se de ter o Node.js instalado em sua máquina (recomendamos a versão LTS).
 
-✅ Regras e Boas Práticas
+2. Instale as dependências do frontend, se aplicável:
 
-Não utilize Django Forms nem Generic Views (restrição do projeto).
+   ```bash
+   npm ci
+   ```
 
-Use views baseadas em função (FBVs) e manipulação direta de request.POST.
+3. Execute os testes com Cypress:
 
-Mantenha o estilo visual consistente (Tailwind CSS, design moderno).
+   ```bash
+   npx cypress run
+   ```
 
-Teste suas alterações antes de fazer o PR.
+---
 
-Utilize mensagens de commit claras e explicativas.
+## 📄 Submetendo seu Pull Request
 
-🧪 Testes e Qualidade
+1. Commit suas alterações:
 
-Certifique-se de ter o Node.js instalado em sua máquina (recomendamos a versão LTS).
-Instale as dependências do Node.js listadas no package.json (se houver um e for necessário para os testes):
+   ```bash
+   git add .
+   git commit -m "feat: adiciona funcionalidade X"
+   ```
 
-npm ci
+2. Envie sua branch para seu fork:
 
-Execute os testes Cypress:
-npx cypress run
+   ```bash
+   git push origin nome-da-sua-branch-nova
+   ```
 
-📄 Submetendo seu Pull Request
+3. Vá até o seu repositório no GitHub e clique em **"Compare & pull request"**.
 
-Commit suas alterações:
+4. Preencha o título e a descrição detalhando o que foi feito e por quê.
 
-git add .
-git commit -m "feat: adiciona funcionalidade X"
+5. Aguarde a revisão e possíveis comentários da equipe.
 
-Envie sua branch para seu fork:
+---
 
-git push origin nome-da-sua-branch-nova
-
-Vá até o seu repositório no GitHub e clique em "Compare & pull request".
-
-Preencha o título e a descrição detalhando o que foi feito e por quê.
-
-Aguarde a revisão e possíveis comentários da equipe.
-
-👥 Revisão e Agradecimentos
+## 👥 Revisão e Agradecimentos
 
 Seu PR será revisado com atenção e carinho 💚. A revisão poderá incluir:
 
-Sugestões de melhoria no código
-
-Solicitação de ajustes para manter a consistência do projeto
-
-Discussões sobre design ou funcionalidade
+- Sugestões de melhoria no código
+- Solicitação de ajustes para manter a consistência do projeto
+- Discussões sobre design ou funcionalidade
 
 Agradecemos desde já pela sua contribuição! Cada colaboração nos aproxima de oferecer uma plataforma mais útil, bonita e funcional para os usuários.
 
-📬 Contato
+---
+
+## 📬 Contato
 
 Dúvidas, sugestões ou problemas? Entre em contato com o time:
 
-Caio Leimig Rodrigues da Silva(@caioleimig) -
-Fernando Soares da Silva (@Fernandosoares10) - 
-Gabriel França de Albuquerque Pernambuco (@gabrielfranca10) – francagabriel285@gmail.com
-Guilherme Baltar () -
-Guilherme Burle Medeiros () -
-Yan Ribeiro Nunes (@yan791) - 
-
-
-
+- **Caio Leimig Rodrigues da Silva** (@caioleimig)  
+- **Fernando Soares da Silva** (@Fernandosoares10)  
+- **Gabriel França de Albuquerque Pernambuco** (@gabrielfranca10) – francagabriel285@gmail.com  
+- **Guilherme Baltar**
+- **Guilherme Burle Medeiros**
+- **Yan Ribeiro Nunes** (@yan791)
