@@ -16,7 +16,7 @@ Você pode ajudar de diversas formas:
 - Melhorando a organização do backend
 - Criando ou melhorando a documentação
 
-> 💡 Para ideias e tarefas disponíveis, confira a aba **Issues** do repositório.
+> 💡 Para ideias e tarefas disponíveis, confira a aba [**Issues**](https://github.com/gabrielfranca10/projeto-nutri-choice/issues) do repositório.
 
 ---
 
@@ -135,9 +135,9 @@ Agradecemos desde já pela sua contribuição! Cada colaboração nos aproxima d
 
 Dúvidas, sugestões ou problemas? Entre em contato com o time:
 
-- **Caio Leimig Rodrigues da Silva** (@caioleimig)  
-- **Fernando Soares da Silva** (@Fernandosoares10)  
-- **Gabriel França de Albuquerque Pernambuco** (@gabrielfranca10) – francagabriel285@gmail.com  
-- **Guilherme Baltar**
-- **Guilherme Burle Medeiros**
-- **Yan Ribeiro Nunes** (@yan791)
+- [**Caio Leimig Rodrigues da Silva**](https://github.com/caioleimig) | [LinkedIn](https://www.linkedin.com/in/caio-leimig-rodrigues-da-silva/) | E-mail: caiolrs2005@gmail.com
+- [**Fernando Soares da Silva**](https://github.com/Fernandosoares10) | [LinkedIn](https://www.linkedin.com/in/fernando-soares-/) |  E-mail: nandosoares719@gmail.com
+- [**Gabriel França de Albuquerque Pernambuco**](https://github.com/gabrielfranca10) | [LinkedIn](https://www.linkedin.com/in/gabriel-pernambuco-/) | E-mail: francagabriel285@gmail.com  
+- [**Guilherme Baltar**](https://github.com/gcbgoat) | [LinkedIn](https://www.linkedin.com/in/guilherme-cireno-baltar/) | E-mail:
+- [**Guilherme Burle Medeiros**](https://github.com/Guilherme-burle) | [LinkedIn](https://www.linkedin.com/in/guilherme-burle/) | E-mail: guiburle1320@gmail.com
+- [**Yan Ribeiro Nunes**](https://github.com/yan791) | [LinkedIn](https://www.linkedin.com/in/yan-ribeiro-nunes/) | E-mail: yanyago2529@gmail.com
