@@ -179,7 +179,7 @@ Para otimizar o desenvolvimento e garantir entregas de qualidade, decidimos orga
 
 ---
 ### 🚀 Deployment das Novas Histórias
-- Screencast de deploy incluído no README ou link no vídeo
+- [Screencast do deployment](https://youtu.be/k5wUOImB1e8)
 ---
 ### 🐞 Issue/Bug Tracker (fora do GitHub)
 ![image](https://github.com/user-attachments/assets/b6312890-0651-47ed-bbf9-3254f391f368)
