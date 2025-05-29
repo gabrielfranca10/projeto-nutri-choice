@@ -199,6 +199,6 @@ Para otimizar o desenvolvimento e garantir entregas de qualidade, organizamos a 
 ---
 
 ### 📚 Documentação
-- Arquivo `CONTRIBUTING.md` explicando como montar o ambiente e contribuir com o projeto
+- Arquivo [`CONTRIBUTING.md`](https://github.com/gabrielfranca10/projeto-nutri-choice/blob/main/Contributing.md) explicando como montar o ambiente e contribuir com o projeto
 
 </details>
