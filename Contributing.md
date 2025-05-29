@@ -16,7 +16,7 @@ Você pode ajudar de diversas formas:
 - Melhorando a organização do backend
 - Criando ou melhorando a documentação
 
-> 💡 Para ideias e tarefas disponíveis, confira a aba [**Issues**](https://github.com/gabrielfranca10/projeto-nutri-choice/issues) do repositório.
+> 💡 caso deseje relatar algum Bug, confira a aba [**Issues**](https://github.com/gabrielfranca10/projeto-nutri-choice/issues/new) do repositório.
 
 ---
 
